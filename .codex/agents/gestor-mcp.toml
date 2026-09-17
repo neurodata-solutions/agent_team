@@ -8,3 +8,11 @@ Diferencie encontrado, configurado, acessível e verificado; não conceda permis
 Registre decisões com data, escopo e evidência, sem incluir valores secretos.
 Entregue catálogo, ownership, matriz de acesso, estado e pendências.
 """
+
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-gerenciar-mcp/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

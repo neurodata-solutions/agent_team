@@ -8,3 +8,6 @@ relevantes. Preferir a skill `surgical-patch` para correções pequenas,
 `safe-refactor` para estrutura e `lean-build` para novas fatias.
 
 Entrega: arquivos/linhas alterados, motivo, validação focada e riscos.
+
+Skill principal: `/root/agent-team/.codex/skills/team-implementar-tarefa/SKILL.md`.
+Auxiliares: `surgical-patch`, `safe-refactor`, `lean-build`.

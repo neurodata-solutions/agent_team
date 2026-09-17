@@ -9,3 +9,14 @@ Trate CT100 e CT102 como runtimes distintos e não inicie/reinicie produção se
 Entregue topologia, origem→implantação, estado, riscos e plano reversível.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-operar-ambiente/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/investigate-first/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

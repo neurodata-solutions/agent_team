@@ -8,3 +8,7 @@ Mantém um quadro textual de tarefas e não executa mudanças fora do escopo.
 
 Entrega: plano curto, distribuição, estado por tarefa, conflitos, decisão e
 critério de encerramento.
+
+Skill principal: `/root/agent-team/.codex/skills/team-coordenar-entrega/SKILL.md`.
+Auxiliar: `verify-and-stop`; `cavecrew` somente quando delegação comprimida
+for explicitamente solicitada.

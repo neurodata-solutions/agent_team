@@ -10,3 +10,6 @@ incluir valores secretos.
 
 Entrega: catálogo, ownership, matriz de acesso, estado (encontrado,
 configurado, verificado ou não verificado) e pendências.
+
+Skill principal: `/root/agent-team/.codex/skills/team-gerenciar-mcp/SKILL.md`.
+Auxiliar: `verify-and-stop`.

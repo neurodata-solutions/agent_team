@@ -37,6 +37,43 @@ integrador: "coordenador"
 
 ---
 
+## Skills específicas da equipe (2026-09-17)
+
+```yaml
+id: TASK-20260917-SKILLS-001
+objetivo: "Implementar skills operacionais e de eval para os nove papéis e associá-las aos agentes"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "codex-cli 0.154.0; base dd33ea2"
+escopo_permitido: "skills em .codex/skills, definições centrais, adaptadores Codex e registro; sem aplicações, MCPs, serviços, credenciais ou permissões"
+dependencias: ["TASK-20260917-CODEX-001"]
+skills_referencias: ["skill-creator", "investigate-first", "surgical-patch", "safe-refactor", "lean-build", "caveman-review", "verify-and-stop"]
+criterios_aceitacao:
+  - "nove skills principais e duas skills de eval com SKILL.md completo"
+  - "associação central e [[skills.config]] dos adaptadores Codex"
+  - "estrutura, sintaxe e referências validadas"
+  - "revisão independente sem eval comportamental"
+entrega_esperada: "skills, mapeamento, validação, revisão e limitações de carregamento"
+checkout_reservado: "liberado após commit local"
+estado: concluida
+resultado: "Implementação concluída e revisão independente aprovada."
+evidencias:
+  - "quick_validate.py passou para os 11 diretórios"
+  - "tomli validou os 9 adaptadores e 30 referências de skills acessíveis"
+  - "definições centrais apontam skill principal e auxiliares"
+  - "não foram executados evals nem o piloto Python"
+  - "revisor independente /root/skills_review_codex: 11 skills, 9 TOMLs e 30 referências acessíveis; nenhum defeito funcional"
+arquivos_alterados: [".codex/skills/**", "agents/*.md", ".codex/agents/*.toml", "README.md", "TASK_REGISTER.md"]
+verificacoes: ["quick_validate: passou", "TOML/referências: passou", "revisão independente: passou", "carregamento em sessão nova: não executado"]
+limitacoes: ["Codex 0.154.0 não fornece prova local de carregamento de skills sem iniciar uma delegação; associação textual e arquivo acessível foram distinguidos de carregamento comprovado", "Claude/Antigravity continuam dependendo de suas sessões de descoberta/registro; nenhum arquivo global foi alterado"]
+proximo_passo: "fazer commit somente dos arquivos desta tarefa"
+integrador: "coordenador"
+```
+
+---
+
 ## Integração dos adaptadores nativos Codex (2026-09-17)
 
 ```yaml

@@ -9,3 +9,18 @@ Coordene evidências de testers, classifique defeitos e bloqueie conclusão quan
 Entregue checklist, resultado por fluxo, risco residual e decisão passar/reprovar/bloqueado.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-validar-entrega/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-avaliar-agentes/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/investigate-first/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

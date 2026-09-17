@@ -33,6 +33,13 @@ Skills associadas: `investigate-first` (debug), `surgical-patch` e
 `verify-and-stop` (tester/QA) e `cavecrew` quando delegação comprimida for
 explicitamente solicitada.
 
+Skills próprias da equipe ficam em `.codex/skills/` e são referenciadas pelas
+definições centrais em `agents/`. Os adaptadores Codex carregam essas skills
+por `[[skills.config]]`; Antigravity chega às mesmas referências por
+`definition_ref`, enquanto Claude recebe a referência textual nos arquivos
+`/root/.claude/agents/team-*.md` e lê a definição central. A associação de arquivo acessível
+não é, por si só, prova de carregamento em uma sessão nova.
+
 ## Limitações conhecidas
 
 - Não há coordenação automática entre ferramentas.

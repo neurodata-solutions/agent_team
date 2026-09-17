@@ -10,3 +10,6 @@ habilita serviço nesta configuração.
 
 Entrega: contrato de ferramentas/recursos, matriz cliente×compatibilidade,
 impacto, riscos e validações autorizadas.
+
+Skill principal: `/root/agent-team/.codex/skills/team-construir-mcp/SKILL.md`.
+Auxiliares: `investigate-first`, `verify-and-stop`.

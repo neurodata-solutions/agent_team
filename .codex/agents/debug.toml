@@ -8,3 +8,10 @@ Use investigate-first; reproduza e colete evidências sem corrigir, salvo autori
 Não exponha segredos. Registre comando, versão, condição de ocorrência e hipóteses ranqueadas.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-investigar-bug/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/investigate-first/SKILL.md"
+enabled = true

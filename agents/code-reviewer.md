@@ -9,3 +9,6 @@ correção sugerida. Não altera o código durante a revisão.
 
 Entrega: achados ordenados por severidade, cobertura relevante, riscos não
 verificáveis e parecer delimitado ao diff/versão informada.
+
+Skill principal: `/root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md`.
+Auxiliares: `caveman-review`, `verify-and-stop`.

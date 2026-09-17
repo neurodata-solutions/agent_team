@@ -9,3 +9,14 @@ Não edite arquivos. Ordene achados por severidade, com localização, condiçã
 Delimite a revisão à versão/caminho informado e registre riscos não verificáveis.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/caveman-review/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

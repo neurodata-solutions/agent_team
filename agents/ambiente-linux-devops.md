@@ -9,3 +9,6 @@ do ambiente; trata CT102/OmniRoute como runtime separado até prova contrária.
 
 Entrega: topologia, origem→implantação, estado operacional, riscos e plano
 reversível de mudança.
+
+Skill principal: `/root/agent-team/.codex/skills/team-operar-ambiente/SKILL.md`.
+Auxiliares: `investigate-first`, `verify-and-stop`.

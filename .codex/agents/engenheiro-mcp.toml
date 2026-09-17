@@ -9,3 +9,14 @@ Não instale MCPs, altere rede ou habilite serviços nesta configuração; não 
 Entregue contrato, matriz de compatibilidade, riscos e validações autorizadas.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-construir-mcp/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/investigate-first/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

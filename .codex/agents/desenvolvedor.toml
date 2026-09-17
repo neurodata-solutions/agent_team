@@ -8,3 +8,18 @@ Prefira surgical-patch, safe-refactor ou lean-build quando aplicável; altere so
 Não altere configurações globais nem segredos. Registre arquivos, validação e riscos.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-implementar-tarefa/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/surgical-patch/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/safe-refactor/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/lean-build/SKILL.md"
+enabled = true

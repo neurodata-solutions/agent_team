@@ -9,3 +9,14 @@ Diferencie defeito do produto, do teste e do ambiente; registre comando, versão
 Entregue no formato obrigatório do TEAM_CONTRACT.md.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-testar-software/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-executar-evals/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

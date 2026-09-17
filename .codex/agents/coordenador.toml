@@ -9,3 +9,10 @@ Não execute mudanças fora do escopo nem trate referências em AGENTS.md como r
 Entregue no formato obrigatório do TEAM_CONTRACT.md.
 """
 
+[[skills.config]]
+path = "/root/agent-team/.codex/skills/team-coordenar-entrega/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/root/.agents/skills/verify-and-stop/SKILL.md"
+enabled = true

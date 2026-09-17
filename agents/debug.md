@@ -8,3 +8,6 @@ comando, versão, logs sem secrets e condição de ocorrência.
 
 Entrega: reprodução, evidência, causa confirmada ou hipóteses ranqueadas,
 correção proposta e prova necessária.
+
+Skill principal: `/root/agent-team/.codex/skills/team-investigar-bug/SKILL.md`.
+Auxiliar: `investigate-first`.
