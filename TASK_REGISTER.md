@@ -96,6 +96,65 @@ integrador: "coordenador"
 
 ---
 
+## Catálogo inicial de MCPs (2026-09-17)
+
+```yaml
+id: TASK-20260917-MCP-CATALOG-001
+objetivo: "Catalogar MCPs configurados para Codex, Claude e Gemini/Antigravity e propor acessos sem habilitar servidores"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "branch master; base 248b3d6; modo padrão"
+escopo_permitido: "MCP_CATALOG.md, TASK_REGISTER.md e leituras direcionadas das configurações MCP pertinentes"
+fora_do_escopo: "inventário geral de infraestrutura, conexões, handshakes, inicialização, instalação, testes remotos, mudanças em configurações, credenciais, rede, serviços ou permissões"
+dependencias: ["TEAM_CONTRACT.md", "team-gerenciar-mcp", "team-construir-mcp"]
+skills_referencias: ["team-gerenciar-mcp", "team-construir-mcp", "verify-and-stop"]
+criterios_aceitacao:
+  - "catálogo com estados, evidências, origem, transporte, capacidades e autenticação sem segredos"
+  - "matriz de acesso separando propostas de controles verificados"
+  - "levantamento e conferência por papéis nativos explicitamente delegados"
+  - "nenhuma configuração externa alterada ou servidor conectado"
+entrega_esperada: "MCP_CATALOG.md, conferência independente, lacunas e commit local"
+checkout_reservado: "liberado após commit"
+modo_escolhido: "padrão"
+justificativa_modo: "Levantamento delimitado com conferência técnica independente; não requer paralelismo adicional."
+estado: concluida
+resultado: "Catálogo criado. Gestor /root/gestor_mcp_catalog levantou cinco configurações MCP catalogáveis e uma fonte Gemini vazia. Engenheiro /root/engenheiro_mcp_conferer conferiu transporte, classificação, capacidades, segredos e separação proposta/estado; cinco ajustes documentais foram aplicados."
+evidencias:
+  - "Leituras explícitas do contrato, papéis e skills pelos dois subagentes."
+  - "Configurações examinadas: Codex config.toml, .mcp.json/Claude, .claude.json e Gemini/Antigravity mcp_config/settings."
+  - "Nenhum servidor, comando de inicialização, conexão, teste remoto, instalador ou hook executado."
+  - "Valores secretos não foram lidos; somente o nome POSTMAN_API_KEY foi registrado."
+  - "git diff --check passou."
+ferramenta: "não disponível"
+modelo: "não disponível"
+provedor: "não disponível"
+agentes: 2
+tentativas: 2
+tokens_entrada: "não disponíveis"
+tokens_saida: "não disponíveis"
+tokens_cache: "não disponíveis"
+custo: "não disponível; nenhum preço consultado"
+resultado_retrabalho: "uma conferência independente; cinco correções documentais concretas; sem repetição de inventário"
+arquivos_alterados:
+  - "MCP_CATALOG.md"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "referências e estrutura do catálogo revisadas"
+  - "conferência independente concluída"
+  - "integração Ponytail, onze skills e nove adaptadores preservados"
+limitacoes:
+  - "nenhum handshake ou funcionamento atual verificado"
+  - "cliente da execução histórica de get_review_context não identificado"
+  - "versões, owners e ferramentas Claude/Gemini não enumeradas permanecem não disponíveis"
+  - "não há MCP configurado para pesquisa geral na internet ou consulta autorizada a serviços internos"
+proximo_passo: "Se houver necessidade concreta, autorizar uma verificação pontual de conexão de um cliente específico; não habilitar ou instalar MCP por este catálogo."
+integrador: "coordenador"
+```
+
+---
+
 ## Triagem dos achados da revisão Antigravity (2026-09-17)
 
 ```yaml
