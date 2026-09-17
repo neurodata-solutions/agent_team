@@ -37,6 +37,65 @@ integrador: "coordenador"
 
 ---
 
+## Verificação operacional do MCP Codex code-review-graph (2026-09-17)
+
+```yaml
+id: TASK-20260917-MCP-CODEX-GRAPH-VERIFY-001
+objetivo: "Verificar conexão e uma consulta de leitura do codex.code-review-graph sem atualizar o grafo"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "branch master; catálogo ef7179f; HEAD ef7179fd6a6f28e13fbfb9e669a875e7a648b370"
+escopo_permitido: "MCP_CATALOG.md, TASK_REGISTER.md, configuração Codex pertinente e uma consulta de leitura sobre /root/agent-team"
+fora_do_escopo: "Postman, Caveman, outros clientes, build/update/indexação, escrita, conexão remota, instalação, rede, credenciais e permissões"
+dependencias: ["MCP_CATALOG.md", "/root/.codex/config.toml", "code-review-graph 2.3.8"]
+skills_referencias: ["team-gerenciar-mcp", "verify-and-stop"]
+criterios_aceitacao:
+  - "servidor, cliente, versão e ferramentas enumerados sem segredos"
+  - "uma consulta de leitura executada sobre /root/agent-team"
+  - "projeto/versão indexada e desatualização diferenciados"
+  - "nenhuma atualização ou escrita acionada"
+entrega_esperada: "catálogo e registro atualizados com resultado operacional e limitações"
+checkout_reservado: "liberado após commit"
+modo_escolhido: "econômico"
+justificativa_modo: "Um MCP, uma enumeração e uma consulta de leitura; sem revisão documental adicional."
+estado: concluida
+resultado: "Conexão do code-review-graph funcionou. list_repos_tool retornou somente /root/jaaz. A consulta get_minimal_context_tool para /root/agent-team foi aceita, mas retornou stale_graph porque o grafo era de f114d48 e o HEAD era ef7179f; build/update não executado."
+evidencias:
+  - "Comando configurado examinado: /root/.local/bin/code-review-graph serve --repo /root/jaaz, cwd /root/jaaz; nenhum segredo exposto."
+  - "Versão local: code-review-graph 2.3.8."
+  - "Superfície MCP enumerou 30 ferramentas."
+  - "list_repos_tool: status ok, 1 repositório (/root/jaaz)."
+  - "get_minimal_context_tool: status not_ready, reason stale_graph; sugestão build_or_update_graph não executada."
+  - "Nenhum servidor foi iniciado manualmente, instalado, atualizado, indexado ou escrito."
+ferramenta: "MCP do Codex (identificador de cliente não exposto além da superfície MCP)"
+modelo: "não disponível"
+provedor: "não disponível"
+agentes: 0
+tentativas: 1
+tokens_entrada: "não disponíveis"
+tokens_saida: "não disponíveis"
+tokens_cache: "não disponíveis"
+custo: "não disponível; nenhum preço consultado"
+resultado_retrabalho: "sem retrabalho; nenhuma revisão adicional delegada"
+arquivos_alterados:
+  - "MCP_CATALOG.md"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "conexão e enumeração passaram"
+  - "consulta executada e classificada como dados inadequados para o HEAD atual"
+  - "git diff --check passou"
+limitacoes:
+  - "servidor registrado para /root/jaaz, não para /root/agent-team"
+  - "não há versão/estado do grafo de /root/agent-team porque ele não está registrado"
+  - "não há prova de funcionamento atual além da resposta do servidor às duas chamadas"
+proximo_passo: "Autorizar separadamente registro/build do grafo de /root/agent-team, se houver necessidade concreta; não executar por este catálogo."
+integrador: "coordenador"
+```
+
+---
+
 ## Política de execução econômica (2026-09-17)
 
 ```yaml

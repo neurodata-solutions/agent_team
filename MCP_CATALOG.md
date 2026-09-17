@@ -23,7 +23,7 @@ usados para inferir ferramentas.
 
 | Identificador | Finalidade e origem | Configuração, execução e transporte | Classe | Ferramentas clientes configuradas | Projeto/dados e efeitos conhecidos | Autenticação | Estado, evidência e responsável |
 |---|---|---|---|---|---|---|---|
-| `codex.code-review-graph` | Grafo local de análise de código; origem `/root/.local/bin/code-review-graph`; versão não declarada | `/root/.codex/config.toml:29-37`; comando local `serve --repo /root/jaaz`, `cwd=/root/jaaz`; transporte não declarado explicitamente (processo local, stdio apenas inferido) | interno | `semantic_search_nodes_tool`, `query_graph_tool`, `list_repos_tool`, `get_architecture_overview_tool`, `get_minimal_context_tool`, `get_review_context_tool` (`config.toml:39-55`) | Projeto `/root/jaaz`; consultas de nós, arquitetura, contexto e impacto conforme nomes configurados; nenhuma ferramenta de escrita declarada | `CRG_SERIAL_PARSE=1`; mecanismo de autenticação não declarado; nenhum segredo lido | **Configurado** e **execução anteriormente comprovada** por chamadas registradas de `get_review_context` no `TASK_REGISTER.md`; funcionamento atual não verificado; responsável não identificado |
+| `codex.code-review-graph` | Grafo local de análise de código; origem `/root/.local/bin/code-review-graph`; versão `2.3.8` observada em `--version` | `/root/.codex/config.toml:29-37`; comando local `serve --repo /root/jaaz`, `cwd=/root/jaaz`; transporte não declarado explicitamente (processo local, stdio apenas inferido) | interno | `semantic_search_nodes_tool`, `query_graph_tool`, `list_repos_tool`, `get_architecture_overview_tool`, `get_minimal_context_tool`, `get_review_context_tool` (`config.toml:39-55`) | Projeto registrado `/root/jaaz`; consultas de nós, arquitetura, contexto e impacto conforme nomes configurados; nenhuma ferramenta de escrita declarada | `CRG_SERIAL_PARSE=1`; mecanismo de autenticação não declarado; nenhum segredo lido | **Configurado**; conexão operacional comprovada por `list_repos_tool`; funcionamento do servidor respondeu; execução histórica de `get_review_context` permanece registrada; consulta de `/root/agent-team` não forneceu dados por `stale_graph`; responsável não identificado |
 | `codex.postman` | MCP remoto Postman; origem `https://mcp.postman.com/mcp`; versão não declarada | `/root/.codex/config.toml:22-27`; HTTPS remoto; transporte remoto HTTPS | externo | Somente `createCollectionRequest` aparece configurado, com aprovação `approve` | Coleções/requisições Postman; a operação configurada pode criar uma requisição, mas não foi executada | Bearer via variável `POSTMAN_API_KEY`; valor não lido | **Configurado**; nenhuma execução comprovada; funcionamento não verificado; responsável não identificado |
 | `claude.code-review-graph` | Mesma origem local do grafo; versão não declarada | `/root/.mcp.json:2-15`, habilitado em `/root/.claude/settings.local.json:29-31`; comando local com `type=stdio`, `cwd=/root/jaaz` | interno | Não enumeradas na configuração Claude; não inferir o conjunto do Codex | Projeto `/root/jaaz`; capacidades não confirmadas para este cliente | `CRG_SERIAL_PARSE=1`; autenticação não declarada | **Configurado**; há registro histórico de `get_review_context`, mas o cliente não é distinguido; funcionamento atual não verificado; responsável não identificado |
 | `claude.caveman` | MCP Caveman executado localmente; origem `/root/.caveman/bin/caveman-mcp`; versão/propriedade não declaradas | `/root/.claude.json:1297-1303`; comando local stdio, `args=[]` | externo (classificação provisória; origem/propriedade externa não comprovada) | Nenhuma ferramenta listada; não inferir capacidades | Projeto/dados não declarados; efeitos não verificáveis | Ambiente declarado vazio; autenticação não declarada | **Configurado**; sem execução comprovada; funcionamento não verificado; responsável não identificado |
@@ -86,3 +86,32 @@ expostas entre clientes; nenhuma sincronização ou equivalência foi presumida.
 
 Nenhum valor de credencial foi lido ou incluído. Nenhum comando de inicialização
 foi executado.
+
+## Verificação operacional do Codex (2026-09-17)
+
+Cliente: superfície MCP do Codex. Servidor: `/root/.local/bin/code-review-graph
+2.3.8`, configurado como `serve --repo /root/jaaz`. O transporte não possui
+campo explícito na configuração; não é declarado como fato além do processo
+local configurado.
+
+Enumeração observada na superfície MCP: 30 ferramentas, incluindo
+`list_repos_tool`, `get_minimal_context_tool`, `get_review_context_tool`,
+`query_graph_tool`, `semantic_search_nodes_tool`, ferramentas de arquitetura,
+impacto, fluxos e refatoração. A enumeração não implica autorização para usar
+operações de escrita.
+
+Operações realizadas:
+
+1. `list_repos_tool({})` — conexão funcionou; retornou um único repositório
+   registrado, `/root/jaaz`, com data_dir `/root/.code-review-graph/repos/jaaz`.
+2. `get_minimal_context_tool` com `repo_root=/root/agent-team`, `base=HEAD`,
+   `changed_files=[]` e tarefa de validação — consulta executável, mas retornou
+   `status=not_ready`, `reason=stale_graph`. O grafo foi construído em
+   `f114d48357f7316ce2b234568b658b6f1057a026`; o HEAD consultado era
+   `ef7179fd6a6f28e13fbfb9e669a875e7a648b370`. A ferramenta sugeriu
+   `build_or_update_graph`, que não foi executado.
+
+Conclusão operacional: conexão funcionando; enumeração funcionando; consulta
+aceita pelo servidor, porém dados inadequados para analisar `/root/agent-team`
+no HEAD atual. O servidor está registrado para `/root/jaaz`, não para o projeto
+da equipe. Não houve instalação, atualização, download, indexação ou escrita.
