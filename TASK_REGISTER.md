@@ -37,6 +37,50 @@ integrador: "coordenador"
 
 ---
 
+## Verificação de carregamento efetivo de skill (2026-09-17)
+
+```yaml
+id: TASK-20260917-SKILLS-LOAD-001
+objetivo: "Verificar carregamento nativo de team-revisar-alteracao durante revisão do commit 5f3e687"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "codex-cli 0.154.0; commit 5f3e687ff4c461528d22372ca3011295fe29961d"
+escopo_permitido: "revisão somente leitura do commit; registro; sem piloto, evals, instalação, edição de skills ou configuração global"
+dependencias: ["TASK-20260917-SKILLS-001"]
+skills_referencias: ["team-revisar-alteracao", "caveman-review", "verify-and-stop"]
+criterios_aceitacao:
+  - "delegação nativa code-reviewer executada ou bloqueio comprovado"
+  - "adaptador, conteúdo e mecanismo de acesso distinguidos por evidência"
+  - "uma única nova tentativa após falha inicial, sem declarar carregamento não observado"
+entrega_esperada: "id real, parecer, eventos/metadados de carregamento, ajustes e limitações"
+checkout_reservado: "nenhum (somente leitura)"
+estado: parcial
+resultado: "A revisão estática foi executada por /root/code_reviewer_skill_load, mas não houve prova de que o adaptador Codex tenha sido resolvido nem de carregamento nativo da skill. O conteúdo apareceu após leitura explícita do SKILL.md. A única tentativa posterior em sessão fresca 01a0aea1-30e2-7700-87cd-ece424704ec0 também não criou um subagente: não houve evento SubAgentActivity, agent_role/adaptador resolvido ou metadado de skills."
+evidencias:
+  - "execução real inicial: /root/code_reviewer_skill_load; revisão do commit 5f3e687 sem alterações, nenhum defeito confirmado"
+  - "metadado da sessão inicial: agent_role=null e ausência de lista/evento de skills carregadas"
+  - "team-revisar-alteracao só foi acessada por leitura explícita de /root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md"
+  - "auxiliares realmente necessários/acessíveis: /root/.agents/skills/caveman-review/SKILL.md e /root/.agents/skills/verify-and-stop/SKILL.md"
+  - "tentativa única: sessão fresca 01a0aea1-30e2-7700-87cd-ece424704ec0; o pai leu team-coordenar-entrega, mas não emitiu SubAgentActivity para code-reviewer"
+  - "não foram executados piloto, evals ou instalação"
+arquivos_alterados: ["TASK_REGISTER.md"]
+verificacoes:
+  - "revisão estática: passou"
+  - "carregamento nativo automático: não comprovado"
+  - "tentativa única de recuperação: falhou sem criar subagente"
+  - "configuração pertinente alterada: nenhuma; causa é a superfície de delegação sem seleção de agente TOML"
+limitacoes:
+  - "spawn_agent desta sessão não expõe escolha de agente TOML; seu evento registrou agent_role nulo"
+  - "codex exec não ofereceu uma evidência de subagente personalizado na tentativa única"
+  - "o parecer comprova somente a revisão com leitura explícita, não todas as onze skills nem descoberta automática"
+proximo_passo: "usar uma superfície Codex que exponha seleção nativa de custom agent antes de repetir esta verificação"
+integrador: "coordenador"
+```
+
+---
+
 ## Skills específicas da equipe (2026-09-17)
 
 ```yaml
