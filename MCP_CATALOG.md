@@ -23,7 +23,7 @@ usados para inferir ferramentas.
 
 | Identificador | Finalidade e origem | Configuração, execução e transporte | Classe | Ferramentas clientes configuradas | Projeto/dados e efeitos conhecidos | Autenticação | Estado, evidência e responsável |
 |---|---|---|---|---|---|---|---|
-| `codex.code-review-graph` | Grafo local de análise de código; origem `/root/.local/bin/code-review-graph`; versão `2.3.8` observada em `--version` | `/root/.codex/config.toml:29-37`; comando local `serve --repo /root/jaaz`, `cwd=/root/jaaz`; transporte não declarado explicitamente (processo local, stdio apenas inferido) | interno | `semantic_search_nodes_tool`, `query_graph_tool`, `list_repos_tool`, `get_architecture_overview_tool`, `get_minimal_context_tool`, `get_review_context_tool` (`config.toml:39-55`) | Projeto registrado `/root/jaaz`; consultas de nós, arquitetura, contexto e impacto conforme nomes configurados; nenhuma ferramenta de escrita declarada | `CRG_SERIAL_PARSE=1`; mecanismo de autenticação não declarado; nenhum segredo lido | **Configurado**; conexão operacional comprovada por `list_repos_tool`; funcionamento do servidor respondeu; execução histórica de `get_review_context` permanece registrada; consulta de `/root/agent-team` não forneceu dados por `stale_graph`; responsável não identificado |
+| `codex.code-review-graph` | Grafo local de análise de código; origem `/root/.local/bin/code-review-graph`; versão `2.3.8` observada em `--version` | `/root/.codex/config.toml:29-37`; comando local `serve --repo /root/jaaz`, `cwd=/root/jaaz`; transporte não declarado explicitamente (processo local, stdio apenas inferido) | interno | `semantic_search_nodes_tool`, `query_graph_tool`, `list_repos_tool`, `get_architecture_overview_tool`, `get_minimal_context_tool`, `get_review_context_tool` (`config.toml:39-55`) | `/root/jaaz` permanece no comando padrão; `/root/agent-team` foi registrado separadamente e indexado em `df80ebc`; nenhuma ferramenta de escrita declarada | `CRG_SERIAL_PARSE=1`; mecanismo de autenticação não declarado; nenhum segredo lido | **Configurado**; conexão operacional comprovada; índice de `/root/agent-team` preparado e consulta confirmada em `df80ebc`; responsável não identificado |
 | `codex.postman` | MCP remoto Postman; origem `https://mcp.postman.com/mcp`; versão não declarada | `/root/.codex/config.toml:22-27`; HTTPS remoto; transporte remoto HTTPS | externo | Somente `createCollectionRequest` aparece configurado, com aprovação `approve` | Coleções/requisições Postman; a operação configurada pode criar uma requisição, mas não foi executada | Bearer via variável `POSTMAN_API_KEY`; valor não lido | **Configurado**; nenhuma execução comprovada; funcionamento não verificado; responsável não identificado |
 | `claude.code-review-graph` | Mesma origem local do grafo; versão não declarada | `/root/.mcp.json:2-15`, habilitado em `/root/.claude/settings.local.json:29-31`; comando local com `type=stdio`, `cwd=/root/jaaz` | interno | Não enumeradas na configuração Claude; não inferir o conjunto do Codex | Projeto `/root/jaaz`; capacidades não confirmadas para este cliente | `CRG_SERIAL_PARSE=1`; autenticação não declarada | **Configurado**; há registro histórico de `get_review_context`, mas o cliente não é distinguido; funcionamento atual não verificado; responsável não identificado |
 | `claude.caveman` | MCP Caveman executado localmente; origem `/root/.caveman/bin/caveman-mcp`; versão/propriedade não declaradas | `/root/.claude.json:1297-1303`; comando local stdio, `args=[]` | externo (classificação provisória; origem/propriedade externa não comprovada) | Nenhuma ferramenta listada; não inferir capacidades | Projeto/dados não declarados; efeitos não verificáveis | Ambiente declarado vazio; autenticação não declarada | **Configurado**; sem execução comprovada; funcionamento não verificado; responsável não identificado |
@@ -115,3 +115,32 @@ Conclusão operacional: conexão funcionando; enumeração funcionando; consulta
 aceita pelo servidor, porém dados inadequados para analisar `/root/agent-team`
 no HEAD atual. O servidor está registrado para `/root/jaaz`, não para o projeto
 da equipe. Não houve instalação, atualização, download, indexação ou escrita.
+
+## Preparação operacional de `/root/agent-team` (2026-09-17)
+
+O registro foi feito pelo mecanismo suportado do CLI:
+`code-review-graph register /root/agent-team`. A lista MCP passou a conter
+`/root/jaaz` e `/root/agent-team`; o projeto padrão Jaaz não foi substituído.
+
+Atualização do índice via `build_or_update_graph_tool`:
+
+- `repo_root`: `/root/agent-team`
+- `full_rebuild`: `true`
+- `postprocess`: `full`
+- revisão indexada: `df80ebc743a783c270c70f43f097ba2ddd60e5ce`
+- resultado: `status=ok`, 2 arquivos parseados, 39 nós, 193 arestas, 1
+  comunidade, sem erros; FTS e pós-processamento concluídos
+
+Consulta única após a indexação:
+`get_minimal_context_tool(repo_root=/root/agent-team, base=HEAD,
+changed_files=[])` retornou `status=ok`, 39 nós, 192 arestas, comunidade
+`hhmmss-geram`, `head_matches_build=true` e a revisão `df80ebc`.
+
+O repositório contém 29 Markdown, 9 TOML e 2 Python. O índice reportou somente
+2 arquivos parseados, correspondentes ao subconjunto de código suportado; não
+há base para atribuir análise semântica aos Markdown/TOML restantes. Resultado
+vazio ou parcial nesses formatos não é tratado como falha do servidor.
+
+O commit desta documentação ocorre depois de `df80ebc` e não será reindexado
+nesta tarefa; essa diferença fica registrada para evitar ciclo de atualização a
+cada alteração documental.

@@ -37,6 +37,65 @@ integrador: "coordenador"
 
 ---
 
+## Preparação do índice code-review-graph para a equipe (2026-09-17)
+
+```yaml
+id: TASK-20260917-MCP-CODEX-GRAPH-PREP-001
+objetivo: "Registrar e indexar /root/agent-team sem substituir o projeto Jaaz"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "servidor 2.3.8; registro anterior df80ebc; índice preparado em df80ebc743a783c270c70f43f097ba2ddd60e5ce"
+escopo_permitido: "registro do repositório e índice local de /root/agent-team; MCP_CATALOG.md e TASK_REGISTER.md"
+fora_do_escopo: "substituir Jaaz, alterar configuração compartilhada, instalar dependências, editar banco/cache, testar outros MCPs, aplicações, rede, credenciais e permissões"
+dependencias: ["MCP_CATALOG.md", "/root/.codex/config.toml", "code-review-graph 2.3.8"]
+skills_referencias: ["team-gerenciar-mcp", "verify-and-stop"]
+criterios_aceitacao:
+  - "mecanismo suportado de registro usado"
+  - "índice de /root/agent-team criado/atualizado sem substituir /root/jaaz"
+  - "uma consulta de leitura pós-indexação confirma projeto e revisão"
+  - "limitações de Markdown/TOML e revisão indexada separada da documentação"
+entrega_esperada: "catálogo, registro da indexação, consulta confirmatória e commit local"
+checkout_reservado: "liberado após commit"
+modo_escolhido: "econômico"
+justificativa_modo: "Um executor, um registro, uma indexação e uma consulta de leitura; sem revisão adicional."
+estado: concluida
+resultado: "Registro CLI de /root/agent-team concluído. Build completo pelo MCP em df80ebc: 2 arquivos, 39 nós, 193 arestas, 1 comunidade, sem erros. Consulta pós-indexação retornou status ok, 39 nós/192 arestas e head_matches_build=true. Jaaz permaneceu registrado e não substituído."
+evidencias:
+  - "Descrições/parametrização de build_or_update_graph, list_repos e get_minimal_context examinadas."
+  - "code-review-graph register /root/agent-team -> Registered: /root/agent-team."
+  - "list_repos confirmou /root/jaaz e /root/agent-team."
+  - "build_or_update_graph_tool(repo_root=/root/agent-team, full_rebuild=true, postprocess=full) -> status ok."
+  - "get_minimal_context_tool pós-indexação -> status ok, revisão df80ebc, head_matches_build=true."
+  - "Não foram executados instalação, download, dependências, escrita do grafo por comando manual, outros MCPs ou reindexação posterior."
+ferramenta: "MCP do Codex + CLI code-review-graph"
+modelo: "não disponível"
+provedor: "não disponível"
+agentes: 0
+tentativas: 1
+tokens_entrada: "não disponíveis"
+tokens_saida: "não disponíveis"
+tokens_cache: "não disponíveis"
+custo: "não disponível; nenhum preço consultado"
+resultado_retrabalho: "sem retrabalho; uma indexação e uma consulta"
+arquivos_alterados:
+  - "MCP_CATALOG.md"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "git diff --check passou"
+  - "índice e registro de Jaaz preservados"
+  - "11 skills e 9 adaptadores preservados"
+limitacoes:
+  - "o índice parseou 2 arquivos; Markdown/TOML não foram representados semanticamente pelo resultado"
+  - "o índice corresponde a df80ebc; o commit documental posterior não foi reindexado por decisão explícita"
+  - "não há prova de análise semântica dos 29 Markdown e 9 TOML"
+proximo_passo: "Usar consultas sobre /root/agent-team enquanto a revisão indexada permanecer válida; reindexar somente após mudança de código relevante e autorização."
+integrador: "coordenador"
+```
+
+---
+
 ## Verificação operacional do MCP Codex code-review-graph (2026-09-17)
 
 ```yaml
