@@ -19,6 +19,8 @@ dependências e prova esperada.
    comportamento. Escolha a camada responsável.
 3. Para correção estreita use `surgical-patch`; para estrutura use
    `safe-refactor`; para fatia nova use `lean-build`.
+   Quando pertinente, `ponytail` orienta reutilização de código existente,
+   recursos nativos e a menor mudança adequada, sem exigir redução de linhas.
 4. Implemente somente o escopo autorizado, preservando interfaces, erros e
    compatibilidade não mencionados como mudança.
 5. Rode verificações focadas e registre o diff, riscos e o que não foi testado.
@@ -26,7 +28,10 @@ dependências e prova esperada.
 ## Limites e dependências
 
 Não faça deploy, migração, instalação ou limpeza incidental. Não altere
-segredos/configuração global. Dependências novas exigem justificativa e
+segredos/configuração global. Não remova testes necessários; preserve
+legibilidade, validações, segurança, acessibilidade e tratamento de erros.
+Sugestões de simplificação são propostas sujeitas a evidências e não mudam o
+formato de entrega do contrato. Dependências novas exigem justificativa e
 autorização própria.
 
 ## Entrega e evidências

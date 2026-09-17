@@ -116,6 +116,59 @@ integrador: "coordenador"
 
 ---
 
+## Integração local do Ponytail (2026-09-17)
+
+```yaml
+id: TASK-20260917-PONYTAIL-001
+objetivo: "Incorporar duas skills do Ponytail e associá-las somente ao Desenvolvedor e ao Code Reviewer"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "branch master; origem fixada em e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
+escopo_permitido: "third_party/ponytail, definições e skills do Desenvolvedor/Reviewer, dois adaptadores Codex e este registro"
+dependencias: ["TEAM_CONTRACT.md", "team-implementar-tarefa", "team-revisar-alteracao"]
+skills_referencias: ["skill-installer (orientação de aquisição; instalação global não usada)", "Ponytail skills no commit fixado"]
+criterios_aceitacao:
+  - "duas SKILL.md preservadas byte a byte com origem e licença"
+  - "Ponytail ativo somente como auxiliar de desenvolvedor e code-reviewer"
+  - "limites de simplificação documentados sem alterar o contrato"
+  - "referências resolvem e revisão explícita do diff é registrada"
+entrega_esperada: "cópia versionada, associações, evidência de revisão e limitações"
+estado: concluida
+resultado: "Skills incorporadas e associações atualizadas. O subagente Reviewer /root/ponytail_review_final revisou o diff somente por leitura; encontrou e corrigiu uma ambiguidade documental no escopo permitido, sem defeitos funcionais."
+evidencias:
+  - "clone somente leitura em /tmp/ponytail-src.6Y0Zrb"
+  - "HEAD da origem: e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
+  - "hashes locais das duas skills e LICENSE coincidem com git show da origem"
+  - "TOML de desenvolvedor e code-reviewer parseado com tomli"
+  - "Revisão explícita /root/ponytail_review_final: leituras observáveis, comparação byte a byte e git diff --check aprovado"
+arquivos_alterados:
+  - "third_party/ponytail/skills/ponytail/SKILL.md"
+  - "third_party/ponytail/skills/ponytail-review/SKILL.md"
+  - "third_party/ponytail/LICENSE"
+  - "third_party/ponytail/README.md"
+  - "agents/desenvolvedor.md"
+  - "agents/code-reviewer.md"
+  - ".codex/skills/team-implementar-tarefa/SKILL.md"
+  - ".codex/skills/team-revisar-alteracao/SKILL.md"
+  - ".codex/agents/desenvolvedor.toml"
+  - ".codex/agents/code-reviewer.toml"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "git diff --check passou"
+  - "correção posterior de `terceiros/ponytail` para `third_party/ponytail`"
+  - "não executados instaladores, hooks, scripts Ponytail, piloto HH:MM:SS ou benchmarks"
+  - "demais sete papéis, onze skills próprias e adaptadores não foram alterados"
+limitacoes:
+  - "carregamento automático e seleção TOML não são presumidos; a próxima revisão usará caminhos explícitos"
+  - "não há evidência de ganho de produtividade nesta integração"
+proximo_passo: "usar as associações somente nos dois papéis; carregamento automático continua não comprovado"
+integrador: "coordenador"
+```
+
+---
+
 ## Verificação de carregamento efetivo de skill (2026-09-17)
 
 ```yaml

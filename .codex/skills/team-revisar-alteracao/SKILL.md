@@ -24,6 +24,9 @@ escopo.
    estiver ausente ou indisponível, registre o impedimento e continue com o
    procedimento próprio. Priorize defeitos reproduzíveis, regressões,
    segurança e lacunas de teste; ignore estilo sem consequência.
+   `ponytail-review` pode propor cortes de complexidade, mas é complementar e
+   não substitui a revisão completa nem autoriza remover requisitos, testes,
+   validações, segurança, acessibilidade ou tratamento de erros.
 4. Para cada achado informe localização, condição, impacto, severidade e
    correção sugerida. Separe risco não verificável de defeito confirmado.
 

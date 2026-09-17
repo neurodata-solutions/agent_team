@@ -18,6 +18,11 @@ declaradas quando houver evidência operacional.
 
 Resolva as skills auxiliares pelo arquivo antes de usá-las. Se uma auxiliar
 estiver ausente ou indisponível, registre o impedimento e prossiga sem ela.
+`ponytail-review` é complementar: avalia somente complexidade desnecessária;
+o Reviewer continua responsável pela revisão completa. Sugestões de remoção
+ou redução dependem de evidências e não substituem requisitos, validações,
+segurança, acessibilidade, tratamento de erros ou o formato de entrega do
+contrato.
 
 Skill principal: `/root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md`.
-Auxiliares: `caveman-review`, `verify-and-stop`.
+Auxiliares: `caveman-review`, `verify-and-stop`, `ponytail-review`.
