@@ -20,6 +20,8 @@
   `dependências`, `skills/referências` e `entrega_esperada`.
 - A lista acima contém onze campos; `skills/referências` é um campo único.
 - Não executar trabalho duplicado; registrar bloqueios e divergências.
+- O coordenador registra o modo operacional escolhido e uma justificativa curta;
+  pode ampliá-lo diante de risco concreto autorizado pela tarefa.
 - Não permitir alterações concorrentes no mesmo checkout: o coordenador deve
   reservar o checkout por tarefa e liberar a reserva no retorno.
 - Subagentes só devem ser usados quando a tarefa pedir delegação ou quando o

@@ -37,6 +37,65 @@ integrador: "coordenador"
 
 ---
 
+## Política de execução econômica (2026-09-17)
+
+```yaml
+id: TASK-20260917-EXECUTION-POLICY-001
+objetivo: "Reduzir trabalho redundante e contexto desnecessário sem reduzir critérios ou verificações pertinentes"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "branch master; base 9da0e2f; integração Ponytail preservada"
+escopo_permitido: "agents/coordenador.md, .codex/skills/team-coordenar-entrega/SKILL.md, TEAM_CONTRACT.md e este registro"
+fora_do_escopo: "aplicações, serviços, MCPs, telemetria, modelos, provedores, planos, roteamento, pilotos, benchmarks e demais papéis"
+dependencias: ["TEAM_CONTRACT.md", "team-coordenar-entrega", "lean-build"]
+skills_referencias: ["lean-build", "verify-and-stop"]
+criterios_aceitacao:
+  - "três modos operacionais com seleção e justificativa curta"
+  - "política de contexto, encerramento, tentativas e custos documentada"
+  - "modelos/provedores/roteamento e telemetria não alterados"
+  - "revisão independente curta e validação das referências"
+entrega_esperada: "política documental, evidências, revisão e commit local"
+checkout_reservado: "liberado após commit"
+modo_escolhido: "padrão"
+justificativa_modo: "Mudança documental moderada em quatro arquivos, com uma revisão independente; não exige especialistas paralelos."
+estado: concluida
+resultado: "Modos econômico, padrão e ampliado documentados; resumo de contexto, encerramento e observabilidade de custos adicionados sem metas artificiais. A revisão independente encontrou a ausência de fora_do_escopo e skills_referencias no registro, corrigida antes do commit."
+evidencias:
+  - "Leitura de TEAM_CONTRACT.md, agents/coordenador.md e .codex/skills/team-coordenar-entrega/SKILL.md."
+  - "Revisão independente curta pelo subagente /root/execution_policy_reviewer."
+  - "Achado médio da revisão: campos obrigatórios ausentes no registro; corrigido com fora_do_escopo e skills_referencias."
+  - "git diff --check passou."
+  - "Nenhum piloto, benchmark, telemetria ou configuração de modelo executado/alterado."
+ferramenta: "não disponível"
+modelo: "não disponível"
+provedor: "não disponível"
+agentes: 1
+tentativas: 1
+tokens_entrada: "não disponíveis"
+tokens_saida: "não disponíveis"
+tokens_cache: "não disponíveis"
+custo: "não disponível; nenhum preço consultado"
+resultado_retrabalho: "uma revisão independente; sem retrabalho após a revisão"
+arquivos_alterados:
+  - "agents/coordenador.md"
+  - ".codex/skills/team-coordenar-entrega/SKILL.md"
+  - "TEAM_CONTRACT.md"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "referências e estrutura revisadas"
+  - "git diff --check passou"
+  - "Ponytail, onze skills e demais adaptadores preservados"
+limitacoes:
+  - "não há medição comparável de custo por tarefa aceita nesta etapa"
+  - "tokens, cache, preço e provedor não foram expostos pela superfície usada"
+proximo_passo: "Aplicar o modo proporcional em tarefas futuras e coletar custos somente quando a ferramenta os disponibilizar."
+integrador: "coordenador"
+```
+
+---
+
 ## Triagem dos achados da revisão Antigravity (2026-09-17)
 
 ```yaml
