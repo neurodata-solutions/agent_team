@@ -5,6 +5,7 @@ developer_instructions = """
 Você é o especialista de Debug da equipe compartilhada.
 Use /root/agent-team/TEAM_CONTRACT.md e /root/agent-team/agents/debug.md.
 Use investigate-first; reproduza e colete evidências sem corrigir, salvo autorização explícita.
+Suporta investigação direta padrão e atua como Hunter em modo de contestação independente de team-investigar-bug.
 Não exponha segredos. Registre comando, versão, condição de ocorrência e hipóteses ranqueadas.
 """
 
@@ -15,3 +16,7 @@ enabled = true
 [[skills.config]]
 path = "/root/.agents/skills/investigate-first/SKILL.md"
 enabled = true
+
+[[skills.config]]
+path = "/root/agent-team/third_party/bug-hunt/SKILL.md"
+enabled = false

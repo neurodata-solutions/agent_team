@@ -37,6 +37,277 @@ integrador: "coordenador"
 
 ---
 
+## Integração da skill Bug Hunt (2026-09-17)
+
+```yaml
+id: TASK-20260917-BUGHUNT-001
+objetivo: "Avaliar e integrar de forma delimitada a skill Bug Hunt à equipe em /root/agent-team, associando à team-investigar-bug sem criar novos agentes permanentes"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "branch master; origem https://github.com/danpeg/bug-hunt fixada no commit 5614e19e2bb13fd289105af3b45ced9a3a0f7e99"
+escopo_permitido: "third_party/bug-hunt, .codex/skills/team-investigar-bug, agents/ (debug, code-reviewer, qa, coordenador), adapters/antigravity, .codex/agents/debug.toml, README.md, TASK_REGISTER.md"
+fora_do_escopo: "instalação global em ~/.claude/skills, execução automática de scripts da origem, varredura irrestrita de repositórios, caça a bugs em aplicações ou evals, git push, criação de novos agentes permanentes"
+dependencias: ["TEAM_CONTRACT.md", "team-investigar-bug", "investigate-first"]
+skills_referencias: ["team-investigar-bug", "investigate-first", "third_party/bug-hunt/SKILL.md", "verify-and-stop"]
+criterios_aceitacao:
+  - "arquivos necessários da origem preservados em third_party/bug-hunt com licença e atribuição (sha256 idênticos)"
+  - "adaptações mantidas em arquivos próprios da equipe separados do original"
+  - "modo associado à team-investigar-bug sem criar 3 novos agentes permanentes (reutilização de execuções separadas de Debug, Code Reviewer e QA)"
+  - "condução sequencial pelo agente principal/coordenador quando subagentes não puderem delegar"
+  - "critérios de acionamento restritivos e delimitação estrita de escopo (vedada varredura cega)"
+  - "regras de economia: compartilhamento apenas de dados estruturados, poda imediata em 0 achados, debate finito de 1 ciclo"
+  - "classificação rigorosa distinguindo bug reproduzido, defeito demonstrado por análise e hipótese não confirmada"
+  - "ausência de achados não é prova de ausência de bugs; diagnóstico não autoriza correção"
+  - "revisão independente do diff e validação de referências"
+  - "preservação de alterações concorrentes, permissões e configurações globais"
+entrega_esperada: "arquivos versionados, registro no contrato, validação, exemplo curto delimitado e commit local sem push"
+checkout_reservado: "liberado (/root/agent-team/)"
+estado: concluida
+resultado: "Skill Bug Hunt avaliada e integrada de forma delimitada à team-investigar-bug. Preservados byte a byte os 5 arquivos da origem (LICENSE, SKILL.md, prompts/hunter.md, prompts/skeptic.md, prompts/referee.md) no commit 5614e19e2bb13fd289105af3b45ced9a3a0f7e99 sob third_party/bug-hunt/. Criadas adaptações próprias da equipe em .codex/skills/team-investigar-bug/ (modo-contestacao.md e prompts adaptados hunter/skeptic/referee), com regras de economia, poda em 0 achados, debate finito de 1 ciclo e vereditos classificados (reproduzido, análise, hipótese). Atualizadas definições dos papéis existentes (Debug como Hunter, Code Reviewer como Skeptic, QA como Referee, Coordenador como orquestrador sequencial) e adaptadores Codex e Antigravity."
+evidencias:
+  - "clone somente leitura em /tmp/bug-hunt-src, commit HEAD: 5614e19e2bb13fd289105af3b45ced9a3a0f7e99"
+  - "sha256sum dos 5 arquivos em third_party/bug-hunt/ conferem com a origem"
+  - "arquivos adaptados criados em .codex/skills/team-investigar-bug/"
+  - "git diff --check sem erros de formatação ou whitespace"
+  - "alterações concorrentes em TASK_REGISTER.md preservadas integralmente"
+arquivos_alterados:
+  - "third_party/bug-hunt/LICENSE"
+  - "third_party/bug-hunt/README.md"
+  - "third_party/bug-hunt/SKILL.md"
+  - "third_party/bug-hunt/prompts/hunter.md"
+  - "third_party/bug-hunt/prompts/skeptic.md"
+  - "third_party/bug-hunt/prompts/referee.md"
+  - ".codex/skills/team-investigar-bug/SKILL.md"
+  - ".codex/skills/team-investigar-bug/modo-contestacao.md"
+  - ".codex/skills/team-investigar-bug/prompts/hunter.md"
+  - ".codex/skills/team-investigar-bug/prompts/skeptic.md"
+  - ".codex/skills/team-investigar-bug/prompts/referee.md"
+  - "agents/debug.md"
+  - "agents/code-reviewer.md"
+  - "agents/qa.md"
+  - "agents/coordenador.md"
+  - ".codex/agents/debug.toml"
+  - "adapters/antigravity/README.md"
+  - "README.md"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "10/10 critérios de aceitação: passou"
+  - "validação de referências de arquivos: passou (todos os caminhos resolvem)"
+  - "sha256 de third_party vs origem: passou (5/5 idênticos)"
+  - "git diff --check: passou"
+  - "não executada caça a bugs em aplicações ou campanha de evals (comportamento registrado como ainda não avaliado)"
+limitacoes:
+  - "comportamento dinâmico em execuções reais com LLMs permanece ainda não avaliado (nenhuma campanha de eval foi executada nesta integração)"
+  - "subagentes nos ambientes Codex e Antigravity não delegam aninhadamente; a condução sequencial pelo Coordenador é mandatória"
+  - "carregamento automático por convenção de pastas não é presumido; referências devem ser passadas explicitamente na delegação"
+proximo_passo: "manter a investigação simples como padrão para problemas do dia a dia; acionar o modo de contestação independente apenas sob as 3 condições restritivas autorizadas"
+integrador: "coordenador"
+```
+
+---
+
+## Avaliação de encaixe do browser-use/video-use (2026-09-17)
+
+```yaml
+id: TASK-20260917-VIDEOUSE-EVAL-001
+objetivo: "Determinar onde, se em algum lugar, o repositório browser-use/video-use se encaixa como capacidade do nosso app de criação/edição/postagem de vídeo"
+responsavel: "coordenador"
+projeto: "avaliação video-use / jaaz + opensuite"
+maquina: "host srv (Debian 11.6, pve-manager/7.4-3); CT100 (LXC docker, Debian 11.7); CT102 fora do escopo"
+caminho: "/root/jaaz, /root/opensuite, /root/video-platform-audit/openmontage, clone em /tmp/claude-0/-root/689f7cca-0c88-4c3d-b340-9a7861cdc32d/scratchpad/video-use"
+versao_estado: "video-use HEAD 9575612f066aa517354790a645fd90f9f95a743b; jaaz remote 11cafe/jaaz branch main HEAD e07e5e98c63f8648d1947f09230773533e388e88 com 17 entradas não commitadas; agent-team master a36b7e2"
+escopo_permitido: "diagnóstico somente leitura; clone somente-leitura no scratchpad; inspeção read-only de host e CT100; TASK_REGISTER.md"
+fora_do_escopo: "alteração de código do produto, instalação de pacotes, uv sync, apt install, criação/alteração de containers ou serviços, leitura de valores de secrets, deploy, commit/push em jaaz ou opensuite"
+dependencias: []
+skills_referencias: ["team-coordenar-entrega", "team-operar-ambiente", "team-revisar-alteracao", "verify-and-stop"]
+criterios_aceitacao:
+  - "veredito claro: encaixa / não encaixa / encaixa parcialmente"
+  - "justificativa técnica com evidência de fonte"
+  - "localização proposta na arquitetura atual ou motivo da recusa"
+  - "lista de riscos e custos"
+entrega_esperada: "veredito, matriz de sobreposição, análise do modelo de integração, riscos/custos e próximo passo reversível"
+checkout_reservado: "nenhum (diagnóstico somente leitura); apenas TASK_REGISTER.md foi escrito"
+modo_escolhido: "ampliado"
+justificativa_modo: "Decisão de roadmap com impacto relevante e dois eixos de investigação genuinamente independentes (repositório+ambiente vs. capacidades já existentes na nossa fonte); paralelizados sem sobreposição de arquivos, com síntese pelo coordenador."
+estado: concluida
+resultado: >-
+  Veredito: ENCAIXA PARCIALMENTE, e apenas como fonte de duas primitivas e de
+  decisões de design — NÃO como componente instalado ou dependência de runtime.
+  Cinco das sete capacidades anunciadas já existem na nossa fonte (legendas
+  burn-in word-level e overlays Remotion/PIL no Jaaz; silence_cutter,
+  color_grade e fades de áudio no OpenMontage). Apenas duas são genuinamente
+  novas: remoção de filler words (inexistente em toda a nossa fonte) e
+  autoverificação de qualidade de cortes. O bloqueio decisivo é o modelo de
+  execução: o video-use não tem entrypoint headless que orquestre o fluxo
+  completo — o valor editorial mora no SKILL.md lido por um agente, com
+  dependência explícita da ferramenta Agent do Claude Code (Hard Rule 10).
+  Os helpers individuais são chamáveis via CLI, mas a decisão/orquestração não
+  é código. Somado à exigência de chave paga ElevenLabs Scribe sem fallback
+  (com whisper local declarado anti-pattern pelo próprio projeto), enquanto já
+  rodamos faster-whisper com word_timestamps=True de graça em produção, a
+  adoção como dependência é rejeitada.
+evidencias:
+  - "video-use: MIT, requires-python >=3.10, deps diretas requests/librosa/matplotlib/pillow/numpy, extra opcional manim; sem [project.scripts]"
+  - "video-use SKILL.md:1-4 declara-se skill para Claude Code; SKILL.md:31 (Hard Rule 10) exige a ferramenta Agent para sub-agentes paralelos; README.md:25-40 exige agente com shell access"
+  - "video-use helpers são CLI standalone (argparse + __main__): helpers/transcribe.py:240, helpers/render.py:770, helpers/pack_transcripts.py:205, helpers/grade.py:374, helpers/transcribe_batch.py:125, helpers/timeline_view.py:391"
+  - "video-use helpers/transcribe.py:33 SCRIBE_URL ElevenLabs; :36-49 load_api_key; :48 sys.exit sem fallback; SKILL.md:312-313 declara whisper local anti-pattern"
+  - "jaaz server/tools/local_video_worker.py:264-289 faster_whisper word_timestamps=True; :68-233 write_caption_files burn-in ASS por palavra; :393,398 filtro ass=; :394-399 corte vertical por scale/crop/gblur"
+  - "jaaz local_video_worker.py: ausência verificada de remoção de silêncio, filler words, color grading e fade de áudio; o único \\fad (:190-203) é fade visual de texto"
+  - "jaaz server/tools/video_generation/video_canvas_utils.py:158-200 process_video_result(video_url,...); :207-219 exige URL buscável por HTTP GET, sem fallback para path local; video_router.py:549-563 constrói URL local antes de registrar no canvas"
+  - "jaaz server/services/tool_service.py:201-209 registra provider=system incondicionalmente, fora do gate de api_key de :220-233 — capacidade local não precisa ser serviço HTTP"
+  - "openmontage tools/video/silence_cutter.py:1-51 (modos remove/speed_up/mark, silencedetect, stability EXPERIMENTAL) ligado a pipeline_defs/talking-head.yaml:94,98,146,149,182,197"
+  - "openmontage tools/enhancement/color_grade.py:1-60+ (5 perfis + LUT .cube) ligado a cinematic.yaml:109,245,253, clip-factory.yaml:171,177, documentary-montage.yaml:153,159,167, hybrid.yaml:186,194, talking-head.yaml:178,193"
+  - "openmontage tools/audio/audio_mixer.py:43,86-87,235-251,672-771 fades de áudio, com tests/tools/test_audio_mixer_track_fades.py"
+  - "openmontage pipeline_defs/screen-demo.yaml: zero ocorrências de silêncio/filler/color-grade/fade; :226 valida apenas ffprobe; :84-247 depende de checkpoint/human_approval"
+  - "filler words: busca ampla (filler.?word|\\bumm\\b|disfluenc) em jaaz/, openmontage/, moneyprinter/, openshorts/ sem nenhuma ocorrência"
+  - "moneyprinter/app/services/subtitle.py:58-60 e openshorts/subtitles.py:31-33 têm word_timestamps=True + VAD, mas VAD serve à transcrição, não a corte de vídeo"
+  - "ambiente: ffmpeg ausente do PATH no host e na base do CT100 (só binário estático bundlado em /root/youtube-automation-agent/node_modules/ffmpeg-static/ffmpeg 7.0.2 no CT100); python3 3.9.2 em ambos; uv 0.12.6 só no host com toolchains 3.10/3.11/3.13/3.14 já baixados; CT100 sem uv"
+  - "ambiente: host 60G livres (34% uso); CT100 23G livres (86% uso); GPU GT 610 sem driver carregado no host, sem passthrough para o CT100"
+  - "faster-whisper já em produção dentro dos containers opensuite-jaaz (1.2.1) e opensuite-moneyprinter/-worker (1.1.0); ausente do host e da base do CT100"
+ferramenta: "Claude Code (Agent tool) + code-review-graph MCP (leitura) + git/pct/docker em modo leitura"
+modelo: "coordenador em Opus 5; dois subagentes em Sonnet"
+provedor: "não disponível"
+agentes: 2
+tentativas: 1
+tokens_entrada: "não disponíveis"
+tokens_saida: "não disponíveis"
+tokens_cache: "não disponíveis"
+custo: "não disponível; nenhum preço consultado"
+resultado_retrabalho: "sem retrabalho; dois eixos independentes, nenhuma análise repetida"
+arquivos_alterados:
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "inspeção do pyproject/licença/deps do video-use: passou"
+  - "modelo de execução comprovado por arquivo:linha: passou"
+  - "matriz de sobreposição com arquivo:linha por célula: passou"
+  - "contrato de integração do Jaaz (process_video_result e TOOL_MAPPING): passou"
+  - "inventário de pré-requisitos no host e CT100: passou"
+  - "execução de pipeline, render ou instalação: não executada (fora do escopo)"
+limitacoes:
+  - "/root/opensuite NÃO contém o OpenMontage; a fonte real inspecionada foi /root/video-platform-audit/openmontage, que não é repositório git — pode ser cópia de auditoria e não o checkout de produção"
+  - "nenhum caminho *dubbing* ou opensuite-moneyprinter existe neste host; o pipeline de dublagem da memória não foi localizado na fonte (não confirmado nem negado)"
+  - "os achados do Jaaz refletem o working tree com 17 alterações não commitadas, incluindo os três arquivos centrais da análise (video_router.py, enhance_canvas_video.py, local_video_worker.py), não o HEAD"
+  - "grafo code-review-graph de /root/jaaz está stale (build a6e465b5 vs HEAD e07e5e98); build/update não executado; todas as conclusões vêm de leitura direta da fonte"
+  - "ffmpeg foi verificado no host e na base do CT100, não dentro de cada container Docker; o Jaaz claramente usa ffmpeg, logo ele existe em nível de container — a verificação por container não foi feita"
+  - "desempenho/compatibilidade real da GPU GT 610 não testado (sem driver carregado; testar exigiria instalação)"
+proximo_passo: >-
+  Escrever uma spec somente-documental de um tool `filler_cutter` para o
+  OpenMontage, portando apenas a lógica de detecção de disfluência do video-use
+  (MIT, compatível com AGPL-3.0) adaptada ao output word-level do
+  faster-whisper que já produzimos, mais a decisão de ligar os
+  silence_cutter/color_grade/audio_mixer existentes ao screen-demo.yaml.
+  Nenhuma instalação do video-use, nenhuma chave ElevenLabs. Antes disso,
+  resolver a lacuna de árvore de produção (TASK-20260917-VIDEOUSE-TREE-001,
+  proposta e não disparada).
+integrador: "coordenador"
+```
+
+### Subtarefas delegadas
+
+```yaml
+id: TASK-20260917-VIDEOUSE-ENV-001
+objetivo: "Determinar o que o video-use é (deps/licença/modelo de execução) e se host e CT100 satisfazem seus pré-requisitos, sem instalar nada"
+responsavel: "ambiente-linux-devops (subagente team-ambiente-linux-devops)"
+projeto: "avaliação video-use / opensuite"
+maquina: "host srv e CT100"
+caminho: "/tmp/claude-0/-root/689f7cca-0c88-4c3d-b340-9a7861cdc32d/scratchpad/video-use; inspeção via pct exec 100"
+versao_estado: "video-use HEAD 9575612f066aa517354790a645fd90f9f95a743b (clone 2026-09-17); uv 0.12.6; docker 29.7.2 no CT100"
+escopo_permitido: "clone somente-leitura, leitura de arquivos, comandos de inspeção no host e CT100"
+fora_do_escopo: "instalar/remover pacotes, uv sync, pip install, apt install, alterar containers/serviços/rede, iniciar serviços, ler valores de secrets, escrever em /root/jaaz ou /root/opensuite"
+dependencias: []
+skills_referencias: ["team-operar-ambiente", "verify-and-stop"]
+criterios_aceitacao:
+  - "pyproject/licença/deps/serviços pagos inventariados"
+  - "modelo de execução comprovado por arquivo:linha"
+  - "pré-requisitos no host e CT100 separados"
+  - "exigência da chave ElevenLabs e fallback verificados na fonte"
+  - "presença de faster-whisper confirmada"
+entrega_esperada: "formato do contrato; Alterações = nenhuma"
+checkout_reservado: "nenhum (somente leitura; clone isolado no scratchpad)"
+estado: concluida
+resultado: "Os cinco critérios verificados com evidência. video-use é MIT/Python>=3.10 com deps open-source; orquestração depende de agente lendo SKILL.md (Hard Rule 10 exige a ferramenta Agent), embora os helpers sejam CLI standalone; ElevenLabs Scribe obrigatória sem fallback e whisper local declarado anti-pattern; ffmpeg ausente em host e base do CT100; host já tem toolchains uv >=3.10; CT100 sem uv e com 86% de disco usado."
+arquivos_alterados: []
+verificacoes: ["5/5 critérios: passou", "instalação: não executada", "desempenho de GPU: indisponível"]
+limitacoes: ["GPU não testada (sem driver carregado)", "ffmpeg não verificado dentro de cada container Docker"]
+proximo_passo: "nenhum sem autorização explícita; instalar ffmpeg e popular .env com chave ElevenLabs foram identificados como ações fora do escopo e não executados"
+integrador: "coordenador"
+```
+
+```yaml
+id: TASK-20260917-VIDEOUSE-FIT-001
+objetivo: "Mapear na fonte real quais capacidades de edição de vídeo já existem e qual é o contrato de integração das tools do Jaaz"
+responsavel: "code-reviewer (subagente team-code-reviewer)"
+projeto: "jaaz + opensuite"
+maquina: "host srv"
+caminho: "/root/jaaz; /root/video-platform-audit/openmontage (caminho real, divergente do esperado /root/opensuite)"
+versao_estado: "jaaz remote 11cafe/jaaz branch main HEAD e07e5e98c63f8648d1947f09230773533e388e88, 17 entradas não commitadas; openmontage/moneyprinter/openshorts/facefusion não são repositórios git"
+escopo_permitido: "somente leitura: Read, Grep, Glob, git log/status/rev-parse, leituras do MCP code-review-graph"
+fora_do_escopo: "qualquer escrita, commit, stage, instalação, execução da aplicação ou de pipeline, chamada de API externa, leitura de valores de secrets"
+dependencias: []
+skills_referencias: ["team-revisar-alteracao", "verify-and-stop"]
+criterios_aceitacao:
+  - "inventário do /video_studio com arquivo:linha"
+  - "contrato de process_video_result e tratamento de provider=system"
+  - "pipelines OpenMontage e primitivas do screen-demo.yaml"
+  - "transcrição word-level e corte por silêncio em MoneyPrinter/OpenShorts/dublagem"
+  - "tabela de sobreposição das sete capacidades do video-use"
+entrega_esperada: "formato do contrato; tabela de sobreposição como entregável central; Alterações = nenhuma"
+checkout_reservado: "nenhum (somente leitura)"
+estado: concluida
+resultado: "Os cinco critérios verificados. Tabela de sobreposição: JÁ EXISTE para legendas burn-in word-level e overlays Remotion/PIL; EXISTE PARCIALMENTE para remoção de silêncio, color grading e fades de áudio (presentes no OpenMontage mas não ligados ao screen-demo.yaml nem ao Jaaz); NÃO EXISTE para remoção de filler words; NÃO ENCONTRADO NA FONTE para autoverificação de qualidade de cortes. Contrato confirmado: provider=system registra sem gate de api_key e não exige serviço HTTP, mas o resultado precisa ser URL buscável por HTTP para entrar no canvas."
+arquivos_alterados: []
+verificacoes: ["5/5 critérios: passou", "execução de pipeline/teste: não executada (fora do escopo)"]
+limitacoes:
+  - "/root/opensuite não contém o OpenMontage; fonte real em /root/video-platform-audit/openmontage, sem git"
+  - "pipeline de dublagem não localizado no host"
+  - "achados refletem working tree não commitado do Jaaz"
+  - "grafo stale; build/update não executado"
+proximo_passo: "tarefa somente-leitura dedicada para decidir qual árvore é a de produção e localizar o pipeline de dublagem"
+integrador: "coordenador"
+```
+
+```yaml
+id: TASK-20260917-VIDEOUSE-TREE-001
+objetivo: "Decidir qual árvore OpenMontage/MoneyPrinter é a de produção (host vs CT100 vs /root/video-platform-audit) e localizar o pipeline de dublagem"
+responsavel: "ambiente-linux-devops (subagente team-ambiente-linux-devops)"
+projeto: "opensuite"
+maquina: "host srv (Debian 11.6, pve-manager/7.4-3) e CT100 (docker); CT102 (omniroute) verificado e descartado"
+caminho: "produção = CT100 /root/opensuite (repo git local) — services/openmontage, services/moneyprinter; dublagem em CT100 /root/opensuite/dub_pipeline.py e recreate_pipeline.py; host /root/video-platform-audit/openmontage = cópia de auditoria (subconjunto, sem git)"
+versao_estado: "CT100 /root/opensuite: branch feature/marco2-openshorts, HEAD eccec4b69ebb9e73e551d1650f44691e2c247502 (opensuite-dev, 2026-09-12), sem remote configurado, 21 arquivos modificados; compose project=opensuite config=/root/opensuite/docker-compose.yml; imagem opensuite-openmontage sha256:4775e6b8e03b; imagem opensuite-moneyprinter sha256:079b71272fbc"
+escopo_permitido: "somente leitura; comparação de hashes/tamanhos/mtimes; inspeção de containers em modo leitura"
+fora_do_escopo: "qualquer escrita, instalação, alteração de containers ou serviços"
+dependencias: ["TASK-20260917-VIDEOUSE-FIT-001"]
+skills_referencias: ["team-operar-ambiente", "verify-and-stop"]
+criterios_aceitacao:
+  - "árvore de produção identificada por evidência"
+  - "pipeline de dublagem localizado ou declarado inexistente neste host com evidência"
+entrega_esperada: "formato do contrato; Alterações = nenhuma"
+checkout_reservado: "nenhum (somente leitura)"
+estado: concluida
+resultado: "Os dois critérios verificados com evidência. (1) Árvore de produção do OpenMontage = CT100 /root/opensuite/services/openmontage, rastreada no git local do CT100 (4232 arquivos sob services/openmontage) e confirmada pelos labels do compose (project=opensuite, config=/root/opensuite/docker-compose.yml). Comparação recursiva md5+path: os 453 arquivos de /root/video-platform-audit/openmontage batem exatamente com a árvore do CT100 (2117 arquivos), zero divergência e zero arquivo exclusivo — a cópia do host é subconjunto byte-idêntico (21,4%), sem git, portanto snapshot de auditoria e não checkout de produção. O /app do container opensuite-openmontage é idêntico à árvore do CT100 (única divergência: 6 .pyc gerados em runtime e .dockerignore excluído da imagem). O host /root/opensuite existe mas é pasta solta de 12 arquivos .tsx/.py sem git e sem services/ — a conclusão anterior de que 'não contém OpenMontage' valia só para o host. (2) Pipeline de dublagem LOCALIZADO, em duas variantes que correspondem à memória do usuário: Bloco 1 literal = CT100 /root/opensuite/dub_pipeline.py (11955 B, md5 0b1558e1f6a5, faster-whisper -> Argos Translate -> edge-tts pt-BR-AntonioNeural -> ajuste de tempo -> .srt -> ffmpeg) e Bloco 2 adaptação criativa via LLM = CT100 /root/opensuite/recreate_pipeline.py (19480 B, md5 b913595426b9, LLM_PROVIDER openrouter/openai/anthropic, prompt exige PT-BR explícito, linha 3 'adaptação criativa (não é tradução literal)'). Ambos estão presentes e executáveis dentro do container opensuite-moneyprinter em /MoneyPrinterTurbo/ com md5 idêntico ao do disco do CT100, e as dependências estão instaladas (argostranslate 1.11.0, faster-whisper 1.1.0, edge-tts 7.2.7, openai 2.24.0, ffmpeg/ffprobe em /usr/bin). Insumos do teste NASA presentes: nasa_epps_full.mp4 (19,2 MB), video_teste_pt.mp4 + .srt. Achado de risco: docker diff mostra os dois pipelines como 'A' (adicionados na camada mutável do container), não na imagem nem em bind mount, e ambos são UNTRACKED no git do CT100 — sobrevivem só enquanto o container não for recriado. Achado adicional: existem DUAS stacks MoneyPrinter vivas no CT100 com bases de código diferentes — a de produção opensuite-moneyprinter/-worker/-webui (código na imagem, fonte em /root/opensuite/services/moneyprinter, cli.py 54832 B) e uma paralela legada moneyprinterturbo-api/-webui que bind-monta /root/pessoal/ai-lab/MoneyPrinterTurbo (cli.py 29058 B, compose próprio); /root/apps/estudio-visual/MoneyPrinterTurbo é terceira cópia inerte (mtimes achatados em Aug 26, sem config.toml nem storage). CT102 não contém nenhuma dessas árvores nem os pipelines."
+arquivos_alterados: []
+verificacoes:
+  - "2/2 critérios: passou"
+  - "comparação recursiva md5+path openmontage (audit vs CT100): executada, passou (453/453 idênticos, 0 divergentes)"
+  - "comparação /app do container vs árvore CT100: executada, passou (só .pyc de runtime divergem)"
+  - "rastreio git de services/openmontage no CT100: executada, passou"
+  - "presença e md5 dos dois pipelines no container opensuite-moneyprinter: executada, passou"
+  - "dependências argostranslate/faster-whisper/edge-tts/openai/ffmpeg no container: executada, passou"
+  - "busca de árvores e pipelines no CT102: executada, resultado vazio"
+  - "execução dos pipelines de dublagem: não executada (fora do escopo)"
+  - "conteúdo de secrets (.env, config.toml): não lido (proibido pelo contrato)"
+limitacoes:
+  - "repo git do CT100 não tem remote: não há origem remota para confirmar linhagem além do histórico local"
+  - "os dois pipelines de dublagem são untracked no git e vivem na camada mutável do container: não há artefato versionado da versão em execução"
+  - "diferença entre as duas stacks MoneyPrinter não foi diffada arquivo a arquivo (só metadados e amostras)"
+proximo_passo: "propor ao usuário uma ação reversível e autorizável para persistir os dois pipelines de dublagem (git add + commit em CT100 /root/opensuite, ou COPY no Dockerfile do moneyprinter) antes de qualquer recreate do container; e decidir qual das duas stacks MoneyPrinter é a alvo de integração. Nenhuma dessas ações foi executada."
+integrador: "coordenador"
+```
+
+---
+
 ## Verificação de pesquisa web na sessão Codex (2026-09-17)
 
 ```yaml

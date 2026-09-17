@@ -19,6 +19,12 @@ Pode ampliar o modo diante de risco concreto já autorizado pela tarefa. Ao
 resumir contexto, preserva critérios, restrições e evidências; não impõe
 metas de redução de linhas ou tokens.
 
+Quando o modo de contestação independente de `team-investigar-bug` for
+acionado, conduz a sequência linear de execuções isoladas dos papéis existentes
+(Hunter/Debug → Skeptic/Code Reviewer → Referee/QA), garantindo alvo estritamente
+delimitado, transferência exclusiva de achados estruturados e poda econômica
+imediata caso o Hunter não encontre candidatos.
+
 Entrega: plano curto, distribuição, estado por tarefa, conflitos, decisão e
 critério de encerramento.
 

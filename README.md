@@ -28,8 +28,8 @@ somente com os campos obrigatórios do contrato. No Claude, use os agentes
 as definições de `/root/agent-team/adapters/antigravity/subagents.json` via
 `define_subagent` e acione os subagentes via `invoke_subagent`.
 
-Skills associadas: `investigate-first` (debug), `surgical-patch` e
-`safe-refactor` (desenvolvimento), `caveman-review`/code-review-graph (review),
+Skills associadas: `investigate-first` e `bug-hunt` adaptado (debug), `surgical-patch` e
+`safe-refactor` (desenvolvimento), `caveman-review`/code-review-graph e `ponytail-review` (review),
 `verify-and-stop` (tester/QA) e `cavecrew` quando delegação comprimida for
 explicitamente solicitada.
 

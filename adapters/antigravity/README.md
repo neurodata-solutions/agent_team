@@ -39,6 +39,15 @@ Em uma nova sessão de chat no Antigravity CLI:
 3. **Execução direta:**
    O agente chama `invoke_subagent(TypeName="team-code-reviewer", Prompt="...", Workspace="inherit")`. A execução corre em segundo plano e notifica automaticamente ao terminar.
 
+## Orquestração do Modo de Contestação Independente (Bug Hunt)
+
+Como os subagentes especialistas (`team-debug`, `team-code-reviewer`, `team-qa`) possuem `enable_subagent_tools: false`, a orquestração sequencial do modo de contestação de `team-investigar-bug` é conduzida pelo agente principal (ou `team-coordenador`):
+1. **Etapa 1 (Hunter)**: `invoke_subagent(TypeName="team-debug", Prompt="... [instruções de hunter.md + escopo delimitado] ...")`.
+2. **Gate de corte**: Se a resposta do Hunter indicar `TOTAL DE CANDIDATOS: 0`, encerra imediatamente sem disparar subagentes adicionais.
+3. **Etapa 2 (Skeptic)**: `invoke_subagent(TypeName="team-code-reviewer", Prompt="... [instruções de skeptic.md + lista estruturada de candidatos] ...")`.
+4. **Etapa 3 (Referee)**: `invoke_subagent(TypeName="team-qa", Prompt="... [instruções de referee.md + achados estruturados e contestações] ...")`.
+5. **Consolidação**: O agente principal apresenta o relatório final e encaminha achados sustentados ao Desenvolvedor conforme escopo.
+
 ## Limitações e Observações
 - O Antigravity CLI 1.2.4 não carrega automaticamente subagentes customizados a partir de diretórios estáticos na inicialização fria da CLI sem o passo de registro via `define_subagent`.
 - As chamadas são assíncronas; a comunicação bidirecional ocorre via `send_message`.

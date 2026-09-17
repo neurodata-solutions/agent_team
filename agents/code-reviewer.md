@@ -24,5 +24,10 @@ ou redução dependem de evidências e não substituem requisitos, validações,
 segurança, acessibilidade, tratamento de erros ou o formato de entrega do
 contrato.
 
+Pode atuar na função Skeptic (contestação crítica independente) no modo de
+contestação de `team-investigar-bug`, inspecionando o código na fonte para
+identificar explicações alternativas, comportamentos pretendidos ou falsos
+positivos sem loops de debate indefinidos.
+
 Skill principal: `/root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md`.
-Auxiliares: `caveman-review`, `verify-and-stop`, `ponytail-review`.
+Auxiliares: `caveman-review`, `verify-and-stop`, `ponytail-review`, `bug-hunt` (função Skeptic).

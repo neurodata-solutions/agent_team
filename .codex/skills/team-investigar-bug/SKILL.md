@@ -1,6 +1,6 @@
 ---
 name: team-investigar-bug
-description: Investigue falhas ambíguas ou intermitentes antes de propor correções, mantendo hipótese separada de causa confirmada.
+description: Investigue falhas ambíguas ou intermitentes antes de propor correções, mantendo hipótese separada de causa confirmada. Suporta modo comum econômico e modo aprofundado de contestação independente.
 ---
 
 # Team — investigar bug
@@ -10,7 +10,9 @@ description: Investigue falhas ambíguas ou intermitentes antes de propor corre�
 Explicar um sintoma por mecanismo comprovável. Receba relato, versão, caminho,
 condição de ocorrência, logs seguros e limite de reprodução.
 
-## Procedimento e decisões
+## Modo padrão: investigação econômica direta
+
+O fluxo padrão da equipe para problemas simples e diagnóstico inicial:
 
 1. Registre sintoma observável e expectativa, sem assumir causa.
 2. Confirme versão/ambiente e reproduza com o menor caso; preserve um baseline.
@@ -19,6 +21,56 @@ condição de ocorrência, logs seguros e limite de reprodução.
    `investigate-first` e descarte hipóteses com observações reproduzíveis.
 5. Nomeie causa confirmada somente quando uma mudança/condição explicar o
    sintoma e houver prova independente; caso contrário, mantenha hipóteses.
+
+## Modo de contestação independente (Bug Hunt)
+
+Modo aprofundado com contestação adversária entre papéis isolados, baseado no
+insumo de `third_party/bug-hunt/` e detalhado em `./modo-contestacao.md`.
+
+### Critérios de acionamento
+
+Use este modo exclusivamente quando:
+1. A investigação inicial comum não resolver uma falha relevante.
+2. Houver achados controversos entre agentes ou com o usuário.
+3. O usuário solicitar expressamente busca aprofundada ou adversária por bugs.
+
+Problemas simples mantêm a investigação comum direta como padrão econômico.
+
+### Delimitação obrigatória de escopo
+
+Antes de iniciar, delimite formalmente projeto, revisão/commit, arquivos ou
+fluxo crítico específico, além de teto de esforço (número de arquivos inspecionados).
+É expressamente vedada a varredura aberta de todo o repositório por omissão.
+
+### Papéis e orquestração
+
+Não cria novos agentes permanentes na equipe. O Coordenador ou agente principal
+conduz a sequência linear utilizando execuções separadas e com contexto isolado
+dos papéis existentes:
+
+1. **Hunter (Papel Debug)**: Coleta candidatos a bug com evidência literal de código
+   nos arquivos delimitados (`./prompts/hunter.md`).
+   - *Poda econômica*: Se o Hunter reportar 0 candidatos, encerre o ciclo
+     imediatamente sem acionar as fases seguintes.
+2. **Skeptic (Papel Code Reviewer)**: Recebe apenas a lista estruturada de achados
+   do Hunter e examina o código na fonte para contestar com explicações alternativas,
+   comportamentos pretendidos ou falsos positivos (`./prompts/skeptic.md`).
+3. **Referee (Papel QA)**: Recebe os achados estruturados e contestações, realiza
+   leitura independente da fonte e profere os vereditos técnicos (`./prompts/referee.md`).
+
+Subagentes não delegam entre si; o agente principal gerencia a passagem de dados
+estruturados entre as etapas. Não são permitidas rodadas indefinidas de debate (máximo 1 ciclo).
+
+### Qualidade e classificação de achados
+
+- Pontuações dos prompts não determinam sozinhas severidade ou confirmação.
+- Diferencie explicitamente:
+  - `Bug reproduzido`: falha observada com comando ou teste reproduzível.
+  - `Defeito demonstrado por análise`: inconsistência lógica ou falha provada por inspeção estática da fonte.
+  - `Hipótese não confirmada`: comportamento suspeito sem prova conclusiva na fonte.
+- Ausência de achados no escopo não prova ausência de bugs no software.
+- A investigação não autoriza correções de código. Achados sustentados são
+  encaminhados ao Desenvolvedor conforme autorização da tarefa.
 
 ## Limites e dependências
 
