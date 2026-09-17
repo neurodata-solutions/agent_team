@@ -144,3 +144,28 @@ vazio ou parcial nesses formatos não é tratado como falha do servidor.
 O commit desta documentação ocorre depois de `df80ebc` e não será reindexado
 nesta tarefa; essa diferença fica registrada para evitar ciclo de atualização a
 cada alteração documental.
+
+## Capacidade de pesquisa web observada (sessão Codex, 2026-09-17)
+
+Esta verificação vale somente para a sessão e ferramenta avaliadas.
+
+- Recurso nativo observado: `web__run`, com operações `search_query` e `open`.
+  Versão da ferramenta, modelo, provedor e consumo não foram expostos.
+- MCP web: não identificado nas configurações catalogadas; `web__run` não foi
+  classificado como servidor MCP.
+- HTTP por terminal: `exec_command` está disponível como ferramenta de shell,
+  mas não foi usado para pesquisa ou leitura web; sua presença não comprova
+  conectividade HTTP.
+- Consulta: `site:docs.python.org bool subclass of int validation arguments`.
+- Pesquisa: sucesso; resultado oficial `docs.python.org` localizado.
+- Leitura: sucesso; página efetivamente aberta:
+  <https://docs.python.org/3/library/stdtypes.html#boolean-type-bool>.
+- Não foram enviados arquivos internos, código privado ou segredos, e nenhum
+  código obtido da web foi executado.
+
+Resposta comprovada (resumo): Python define `bool` como subclasse de `int` para
+que `True` e `False` funcionem em contextos numéricos como 1 e 0. Assim,
+`isinstance(True, int)` é verdadeiro, e essa validação isolada aceita
+booleanos. Para exigir um inteiro sem booleanos, rejeite `bool` explicitamente
+antes de aceitar `int` (ou use `type(x) is int` se subclasses também forem
+proibidas). Fonte: <https://docs.python.org/3/library/stdtypes.html#boolean-type-bool>.
