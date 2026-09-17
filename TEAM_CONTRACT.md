@@ -18,6 +18,7 @@
 - Cada delegação deve conter: `id`, `objetivo`, `critério_de_aceitação`,
   `projeto`, `máquina`, `caminho`, `versão/estado`, `escopo_permitido`,
   `dependências`, `skills/referências` e `entrega_esperada`.
+- A lista acima contém onze campos; `skills/referências` é um campo único.
 - Não executar trabalho duplicado; registrar bloqueios e divergências.
 - Não permitir alterações concorrentes no mesmo checkout: o coordenador deve
   reservar o checkout por tarefa e liberar a reserva no retorno.

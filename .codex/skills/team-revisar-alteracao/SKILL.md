@@ -8,23 +8,31 @@ description: Revise uma versão identificada ou diff com análise estática, imp
 ## Objetivo e entradas
 
 Encontrar riscos reais de correção, segurança, compatibilidade e cobertura.
-Receba repositório, commit/diff, caminho, critérios e limites da revisão.
+Receba repositório e um escopo identificável (commit, diff, conjunto de
+arquivos ou versão), além de critérios e limites da revisão; não extrapole esse
+escopo.
 
 ## Procedimento e decisões
 
-1. Identifique commit, branch, origem e escopo; use code-review-graph quando
-   indexar o mesmo repositório e confirme sempre na fonte.
+1. Identifique commit, branch, origem e escopo; use code-review-graph somente
+   quando indexar o mesmo repositório e referência. Se estiver indisponível,
+   desatualizado ou incompatível, inspecione diretamente o diff e a fonte e
+   registre a limitação; confirme sempre na fonte.
 2. Leia implementação e testes envolvidos; trace callers, dependentes e
    fluxos afetados antes de julgar impacto.
-3. Priorize defeitos reproduzíveis, regressões, segurança e lacunas de teste;
-   ignore estilo sem consequência. `caveman-review` pode condensar comentários.
+3. Resolva cada skill auxiliar pelo respectivo `SKILL.md` antes de usá-la. Se
+   estiver ausente ou indisponível, registre o impedimento e continue com o
+   procedimento próprio. Priorize defeitos reproduzíveis, regressões,
+   segurança e lacunas de teste; ignore estilo sem consequência.
 4. Para cada achado informe localização, condição, impacto, severidade e
    correção sugerida. Separe risco não verificável de defeito confirmado.
 
 ## Limites e dependências
 
 Somente leitura: não edite, não aplique correção e não execute testes se o
-   escopo vedar. Não copie segredos nem trate AGENTS.md como prova de registro.
+   escopo vedar. Esse limite da tarefa não comprova isolamento técnico de
+   shell ou MCP. Não copie segredos. `AGENTS.md`, quando aplicável, é contexto
+   conceitual; não é caminho exigido nem prova de registro de agente.
 
 ## Entrega e evidências
 
