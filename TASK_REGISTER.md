@@ -81,6 +81,41 @@ integrador: "coordenador"
 
 ---
 
+## Documentação do modo operacional Codex (2026-09-17)
+
+```yaml
+id: TASK-20260917-SKILLS-LOAD-DOCS
+objetivo: "Documentar o caminho explícito comprovado e preservar o estado parcial do carregamento nativo"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "codex-cli 0.154.0; base 7d688fa"
+escopo_permitido: "somente TEAM_CONTRACT.md, README.md e TASK_REGISTER.md"
+dependencias: ["TASK-20260917-SKILLS-LOAD-001"]
+skills_referencias: ["TEAM_CONTRACT.md", "README.md"]
+criterios_aceitacao:
+  - "distinguir subagente genérico explícito, perfil TOML e carregamento automático"
+  - "documentar procedimento de delegação com caminhos absolutos"
+  - "distinguir limites escritos de controles técnicos"
+  - "preservar estado parcial sem novas tentativas"
+entrega_esperada: "documentação operacional e exemplo code-reviewer"
+checkout_reservado: "liberado após commit local"
+estado: concluida
+resultado: "Documentado o modo explícito comprovado; seleção nativa TOML e carregamento automático permanecem não comprovados. Nenhuma nova delegação foi executada."
+evidencias:
+  - "alterados somente TEAM_CONTRACT.md, README.md e TASK_REGISTER.md"
+  - "exemplo usa apenas task_name, fork_turns e message, argumentos suportados por collaboration.spawn_agent"
+  - "não foram alterados adaptadores TOML, skills, aplicações ou serviços"
+verificacoes: ["diff documental revisado", "git diff --check: passou", "piloto/evals: não executados"]
+arquivos_alterados: ["TEAM_CONTRACT.md", "README.md", "TASK_REGISTER.md"]
+limitacoes: ["documentação alternativa não comprova carregamento nativo; a tarefa SKILLS-LOAD-001 permanece parcial"]
+proximo_passo: "usar uma superfície Codex com seleção nativa observável antes de reavaliar o carregamento"
+integrador: "coordenador"
+```
+
+---
+
 ## Skills específicas da equipe (2026-09-17)
 
 ```yaml

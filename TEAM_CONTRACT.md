@@ -25,6 +25,33 @@
   coordenador registrar explicitamente a necessidade. Este registro é
   documental; não é um scheduler nem mecanismo automático de execução.
 
+### Modo operacional comprovado no Codex
+
+Na superfície Codex avaliada, o caminho comprovado é um subagente genérico com
+papel e skills fornecidos explicitamente no pedido. A seleção nativa de um
+perfil TOML por nome não foi comprovada, e o carregamento automático de
+`SKILL.md` também não foi comprovado. Não trate a existência de
+`.codex/agents/*.toml`, `skills.config`, `AGENTS.md` ou uma declaração do
+subagente como evidência de carregamento.
+
+Para uma delegação explícita, o agente principal deve:
+
+1. identificar objetivo, escopo, versão e critérios de aceitação;
+2. fornecer ao subagente os caminhos absolutos de
+   `/root/agent-team/TEAM_CONTRACT.md`, da definição em
+   `/root/agent-team/agents/<papel>.md` e da skill principal em
+   `/root/agent-team/.codex/skills/<skill>/SKILL.md`;
+3. solicitar a leitura desses arquivos antes de executar o trabalho;
+4. disponibilizar somente as referências auxiliares pertinentes;
+5. registrar o identificador da execução e evidências das leituras; e
+6. consolidar o resultado no formato deste contrato.
+
+Essa associação textual orienta o agente, mas não é um controle técnico.
+Limites escritos em prompts ou skills não provam sandbox, isolamento,
+permissões, modelo, aprovação ou carregamento de configuração. Só declare
+esses controles quando houver evento/metadado ou outra evidência operacional
+da ferramenta.
+
 ## Entrega obrigatória
 
 Cada agente responde com:

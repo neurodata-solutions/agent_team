@@ -40,6 +40,44 @@ por `[[skills.config]]`; Antigravity chega às mesmas referências por
 `/root/.claude/agents/team-*.md` e lê a definição central. A associação de arquivo acessível
 não é, por si só, prova de carregamento em uma sessão nova.
 
+## Modo operacional comprovado no Codex
+
+O modo comprovado é delegar um subagente genérico e fornecer explicitamente o
+papel, o contrato, a definição e a skill principal. A seleção nativa do perfil
+TOML por nome e a descoberta automática das skills permanecem não comprovadas
+na superfície avaliada. Não use uma opção inventada como `--agent` nem trate
+`skills.config` como carregamento observado.
+
+Exemplo pronto, usando apenas os argumentos suportados por
+`collaboration.spawn_agent`:
+
+```javascript
+collaboration.spawn_agent({
+  task_name: "code_reviewer_explicit",
+  fork_turns: "all",
+  message: """
+  Revise somente o commit 5f3e687 em /root/agent-team, sem editar arquivos,
+  instalar dependências ou executar piloto/evals. Antes de trabalhar, leia:
+  - /root/agent-team/TEAM_CONTRACT.md
+  - /root/agent-team/agents/code-reviewer.md
+  - /root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md
+  Use somente, se necessário, as referências auxiliares:
+  - /root/.agents/skills/caveman-review/SKILL.md
+  - /root/.agents/skills/verify-and-stop/SKILL.md
+  Informe o identificador real, os arquivos lidos, achados por severidade,
+  evidências e limitações no formato do TEAM_CONTRACT.md.
+  """
+})
+```
+
+O agente principal deve registrar quais arquivos foram realmente lidos. Esse
+procedimento é uma alternativa operacional comprovada; não resolve nem prova o
+carregamento nativo do perfil TOML ou das skills.
+
+Limites escritos nas instruções são orientações. Não são, sem evidência
+adicional, controles técnicos de sandbox, isolamento, permissões, modelo ou
+aprovação.
+
 ## Limitações conhecidas
 
 - Não há coordenação automática entre ferramentas.
