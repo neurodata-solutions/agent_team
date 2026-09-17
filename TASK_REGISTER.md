@@ -35,6 +35,57 @@ proximo_passo: ""
 integrador: "coordenador"
 ```
 
+---
+
+## Integração dos adaptadores nativos Codex (2026-09-17)
+
+```yaml
+id: TASK-20260917-CODEX-001
+objetivo: "Adaptar os nove papéis compartilhados ao formato de agentes personalizados do Codex e validar delegação real de Reviewer e Tester"
+responsavel: "coordenador"
+projeto: "agent-team"
+maquina: "host /root"
+caminho: "/root/agent-team"
+versao_estado: "codex-cli 0.154.0; branch master; commit-base f114d48357f7316ce2b234568b658b6f1057a026"
+escopo_permitido: "somente .codex/agents/*.toml e este registro; sem alterações globais, Claude, Antigravity, piloto, serviços ou permissões"
+dependencias: ["TASK-20260916-001", "TASK-20260916-002"]
+skills_referencias: ["OpenAI Docs: Codex Subagents", "agents/*.md", "TEAM_CONTRACT.md", "investigate-first", "surgical-patch", "safe-refactor", "lean-build"]
+criterios_aceitacao:
+  - "nove adaptadores TOML com name, description e developer_instructions"
+  - "referências compartilhadas e skills pertinentes resolvem"
+  - "delegação nativa real de code-reviewer e tester, somente leitura"
+  - "30 testes existentes executados sem instalação e sem repetir avaliação de 200 mil amostras"
+entrega_esperada: "adaptadores, prova de reconhecimento/delegação, resultados e limitações"
+checkout_reservado: "liberado após commit local"
+estado: concluida
+resultado: "Criados nove adaptadores em .codex/agents/. A sessão nova 01a0ae92-c2be-7760-a438-961e206a418b carregou o projeto sem erro; a CLI não oferece listagem de definições. Reconhecimento nativo comprovado por delegação real para code-reviewer e tester nesta sessão: /root/code_reviewer_codex e /root/tester_codex. Os outros sete arquivos estão válidos e referenciados, mas não foram declarados reconhecidos sem uma execução nativa correspondente."
+evidencias:
+  - "documentação oficial: https://developers.openai.com/codex/subagents (TOML em .codex/agents; campos obrigatórios; resolução por name)"
+  - "codex --version -> codex-cli 0.154.0"
+  - "tomli validou os nove TOMLs; TEAM_CONTRACT.md, nove agents/*.md e skills pertinentes existem"
+  - "execução nativa code-reviewer: /root/code_reviewer_codex; revisão estática sem alterações, zero defeitos"
+  - "execução nativa tester: /root/tester_codex; python3 -m unittest test_hhmmss.py -v -> 30/30 OK, exit 0"
+arquivos_alterados:
+  - ".codex/agents/ambiente-linux-devops.toml"
+  - ".codex/agents/code-reviewer.toml"
+  - ".codex/agents/coordenador.toml"
+  - ".codex/agents/debug.toml"
+  - ".codex/agents/desenvolvedor.toml"
+  - ".codex/agents/engenheiro-mcp.toml"
+  - ".codex/agents/gestor-mcp.toml"
+  - ".codex/agents/qa.toml"
+  - ".codex/agents/tester.toml"
+  - "TASK_REGISTER.md"
+verificacoes:
+  - "piloto permaneceu sem alterações"
+  - "não houve instalação, execução da avaliação de 200 mil amostras, push, deploy ou mudança global"
+limitacoes:
+  - "Codex CLI 0.154.0 não expõe comando de listagem de agentes personalizados; reconhecimento dos sete papéis não foi inferido de AGENTS.md nem declarado antecipadamente"
+  - "revisão não executou testes por escopo; resultado histórico 30/30 foi confirmado separadamente pelo Tester"
+proximo_passo: "abrir uma nova sessão em /root/agent-team e pedir explicitamente Spawn coordenador para uma tarefa; a sessão deve carregar .codex/agents/ antes de qualquer reconhecimento"
+integrador: "coordenador"
+```
+
 Uma reserva de checkout é convenção documental para evitar concorrência; não é
 um lock automático.
 
