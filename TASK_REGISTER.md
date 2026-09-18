@@ -1050,3 +1050,20 @@ proximo_passo: "manter o utilitário gitvideo-push como padrão para commits da 
 integrador: "coordenador"
 ```
 
+```yaml
+id: TASK-20260917-002
+objetivo: "Corrigir erro falso de timeout de 10 minutos e travamento de extração de frames Remotion no Estúdio Visual Multi-Painel"
+responsavel: "desenvolvedor / debug"
+checkout_reservado: "liberado (/root/jaaz)"
+dependencias: [TASK-20260917-001]
+estado: concluida
+resultado: "Identificadas e corrigidas as duas causas raiz: 1) updatedAt ausente no _set_status do multipanel_video_worker causava disparo imediato da checagem de timeout no video_router.py (now_ts - 0 > 600); corrigido com adição de updatedAt e trava up_ts > 0. 2) Vídeos em painéis com duração menor que a composição (ex: webm de 4s em composição de 10s) causavam travamento no Chromium headless do Remotion ao tentar buscar frames além do fim do arquivo; implementado auto-looping ultrarrápido com ffmpeg (stream_loop -1) no worker e corrigido aviso de objectFit no MultiPanelScene.tsx. Teste de renderização executado e validado com sucesso gerando vídeo MP4 1080x1920 em 35s."
+evidencias: ["job mp-18206656 concluído com 100% em 35s", "ffprobe confirmou MP4 h264 1080x1920 30fps válido", "commit d8eccbe enviado para origin/jaaz"]
+arquivos_alterados: ["server/routers/video_router.py", "server/tools/multipanel_video_worker.py", "MultiPanelScene.tsx"]
+verificacoes: ["passou"]
+limitacoes: ["nenhuma"]
+proximo_passo: "pronto para uso em produção no Estúdio Visual Multi-Painel"
+integrador: "coordenador"
+```
+
+
