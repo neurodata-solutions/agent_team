@@ -1066,4 +1066,35 @@ proximo_passo: "pronto para uso em produção no Estúdio Visual Multi-Painel"
 integrador: "coordenador"
 ```
 
+---
+
+## Estúdio Visual Multi-Painel & Player In-Canvas (2026-09-17)
+
+```yaml
+id: TASK-20260917-003
+objetivo: "Implementar player de vídeo no canvas multi-painel, download direto via blob/fallback, suporte a requisições HEAD (erro 405) e correção de [Errno 21] Is a directory"
+responsavel: "desenvolvedor / debug"
+checkout_reservado: "liberado (/root/jaaz)"
+dependencias: [TASK-20260917-002]
+estado: concluida
+resultado: "1) Corrigido erro 405 Method Not Allowed ao fazer download nos navegadores: rotas /jobs/{job_id}/download e /file/{file_id} agora aceitam HEAD e GET com Accept-Ranges: bytes. Criada rota /jobs/{job_id}/stream para streaming inline. 2) Adicionado player de vídeo HTML5 9:16 e alternador 'Simulador' vs 'Vídeo Final' no MultiPanelStudioTab.tsx com download direto via Blob e fallback automático. 3) Corrigido erro [Errno 21] Is a directory no character_animation_worker.py e multipanel_video_worker.py substituindo .exists() por .is_file() e validando strings vazias/barras. Frontend compilado com sucesso e container opensuite-jaaz atualizado."
+evidencias:
+  - "curl -I HEAD no endpoint download retornou 200 OK com Accept-Ranges: bytes e Content-Disposition: attachment"
+  - "curl -I HEAD no endpoint stream retornou 200 OK com Content-Disposition: inline"
+  - "teste test_resolve.py passou com 100% de sucesso"
+  - "commit a8f115d enviado para origin/jaaz"
+arquivos_alterados:
+  - "server/routers/video_router.py"
+  - "server/routers/image_router.py"
+  - "server/tools/character_animation_worker.py"
+  - "server/tools/multipanel_video_worker.py"
+  - "react/src/components/video_studio/MultiPanelStudioTab.tsx"
+  - "react/src/components/video_studio/CharacterAnimationTab.tsx"
+verificacoes: ["passou"]
+limitacoes: ["nenhuma"]
+proximo_passo: "pronto para continuidade da esteira com novos épicos ou papéis da equipe"
+integrador: "coordenador"
+```
+
+
 
