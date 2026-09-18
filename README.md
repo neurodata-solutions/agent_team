@@ -12,6 +12,8 @@ instruções específicas de cada ferramenta.
 2. Selecionar um papel em `agents/`.
 3. Delimitar escopo, evidências e critério de aceitação.
 4. Entregar resultado com o formato do contrato.
+5. Para versionamento e commits rápidos e seguros no Video Studio e outros produtos, consulte [VCS_PLAYBOOK.md](file:///root/agent-team/VCS_PLAYBOOK.md).
+
 
 O adaptador Claude confirmado está em `/root/.claude/agents/team-*.md`.
 O adaptador Gemini/Antigravity está em `/root/agent-team/adapters/antigravity/`

@@ -1033,3 +1033,20 @@ limitacoes: ["somente leitura estática, sem execução dinâmica de comandos pe
 proximo_passo: "versionar artefatos no repositório dedicado /root/agent-team"
 integrador: "coordenador"
 ```
+
+```yaml
+id: TASK-20260917-001
+objetivo: "Padronizar e acelerar fluxo de commit/push do Video Studio (gitvideo), sincronizar segredos no Infisical e blindar repositório contra arquivos pesados"
+responsavel: "ambiente-linux-devops / coordenador"
+checkout_reservado: "liberado (/root/jaaz e /root/agent-team)"
+dependencias: [TASK-20260916-002]
+estado: concluida
+resultado: "Credenciais gitvideo (PAT neurodata-solutions, branch jaaz, repositório estudio-visual e chave SSH) sincronizadas em dev, staging e prod no Infisical. Repositório /root/jaaz configurado com branch jaaz rastreando origin/jaaz. Criado utilitário gitvideo-push (/usr/bin/gitvideo-push e /root/jaaz/push.sh) no Host e no CT100 para commit e push automático em menos de 5 segundos. Ignorado diretório server/data/ (878MB) no .gitignore para evitar travamento em commits. Criado VCS_PLAYBOOK.md."
+evidencias: ["infisical secrets list dev/staging/prod confirmando presença de gitvideo e variáveis GITVIDEO_*", "execução com sucesso de gitvideo-push no host e no CT100", "git status limpo em ambos os nós na branch jaaz"]
+arquivos_alterados: ["VCS_PLAYBOOK.md", "README.md", "TASK_REGISTER.md", "/root/AGENTS.md", "/root/gitvideo-infisical-handoff.md", "/root/jaaz/.gitignore", "/usr/bin/gitvideo-push", "/root/jaaz/push.sh"]
+verificacoes: ["passou"]
+limitacoes: ["nenhuma"]
+proximo_passo: "manter o utilitário gitvideo-push como padrão para commits da equipe"
+integrador: "coordenador"
+```
+
