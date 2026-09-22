@@ -54,3 +54,30 @@ web__run pesquisou e abriu com sucesso a documentação oficial Python sobre boo
 ## Próximo passo
 
 Usar web__run quando uma tarefa autorizada exigir pesquisa com fontes; não instalar MCP web por esta evidência.
+
+## Outros campos
+
+- **agentes:** 0
+- **caminho:** /root/agent-team
+- **checkout_reservado:** liberado após commit
+- **criterios_aceitacao:**   - pesquisa web oficial executada
+  - página pública efetivamente aberta
+  - resposta curta com explicação e link direto
+  - recurso nativo diferenciado de MCP e shell HTTP
+- **custo:** não disponível; nenhum preço consultado
+- **entrega_esperada:** registro de capacidade, evidência da consulta, resposta fundamentada e commit local
+- **ferramenta:** web__run
+- **fora_do_escopo:** instalação de MCP, teste de outros clientes, envio de arquivos/segredos, execução de código remoto e inventário geral
+- **integrador:** coordenador
+- **justificativa_modo:** Uma ferramenta nativa, uma busca e uma abertura de página; sem delegação ou inventário adicional.
+- **maquina:** host /root
+- **modelo:** não disponível
+- **modo_escolhido:** econômico
+- **provedor:** não disponível
+- **resultado_retrabalho:** sem retrabalho
+- **skills_referencias:**   - verify-and-stop
+- **tentativas:** 1
+- **tokens_cache:** não disponíveis
+- **tokens_entrada:** não disponíveis
+- **tokens_saida:** não disponíveis
+- **versao_estado:** branch master; base 6a3643d; sessão Codex atual

@@ -53,3 +53,18 @@ A revisão estática foi executada por /root/code_reviewer_skill_load, mas não 
 ## Próximo passo
 
 usar uma superfície Codex que exponha seleção nativa de custom agent antes de repetir esta verificação
+
+## Outros campos
+
+- **caminho:** /root/agent-team
+- **checkout_reservado:** nenhum (somente leitura)
+- **criterios_aceitacao:**   - delegação nativa code-reviewer executada ou bloqueio comprovado
+  - adaptador, conteúdo e mecanismo de acesso distinguidos por evidência
+  - uma única nova tentativa após falha inicial, sem declarar carregamento não observado
+- **entrega_esperada:** id real, parecer, eventos/metadados de carregamento, ajustes e limitações
+- **integrador:** coordenador
+- **maquina:** host /root
+- **skills_referencias:**   - team-revisar-alteracao
+  - caveman-review
+  - verify-and-stop
+- **versao_estado:** codex-cli 0.154.0; commit 5f3e687ff4c461528d22372ca3011295fe29961d

@@ -76,3 +76,19 @@ autônomo; chrome-devtools MCP registrado em /root/.mcp.json em modo --isolated.
 ## Próximo passo
 
 na próxima tarefa real de debug, confirmar que o passo 0 (log real) e o mapeamento de skills estão sendo seguidos na prática, não só documentados
+
+## Outros campos
+
+- **caminho:** /root/agent-team, /root/.claude/agents, /root/.mcp.json
+- **checkout_reservado:** liberado
+- **criterios_aceitacao:**   - team-investigar-bug/SKILL.md exige leitura de log real como passo 0
+  - README.md exige leitura de STATUS.md/TASK_REGISTER.md antes de delimitar escopo
+  - TEAM_CONTRACT.md torna obrigatória a conversão de causa recorrente/bloqueio em checklist ou eval-case
+  - subagents.json não reafirma regras do contrato por paráfrase — aponta pros arquivos canônicos
+  - mentalidade de skills (superpowers na superfície Claude + skills da equipe em toda superfície) documentada com mapeamento por papel
+  - bug-hunter, debug-mode e 2 skills de agent-skills (Addy Osmani) incorporados com commit fixado, licença preservada, sem instalador automático de terceiro e sem modo de correção autônoma
+- **entrega_esperada:** arquivos editados + third_party/ novos + chrome-devtools MCP registrado
+- **integrador:** coordenador
+- **maquina:** host /root
+- **skills_referencias:**   - investigate-first (usado para o próprio diagnóstico)
+- **versao_estado:** CORRIGIDO em 2026-09-22: esta afirmação estava errada. agent-team já era repositório git desde 2026-09-16 (16 commits, HEAD f114d48..2a32f2b), só sem remote e sem commits desde 17/09 — não checado antes de escrever este registro. Achado ao rodar `git init` durante a Task 1 do plano do vault Obsidian.

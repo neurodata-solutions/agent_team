@@ -69,3 +69,33 @@ Veredito: ENCAIXA PARCIALMENTE, e apenas como fonte de duas primitivas e de deci
 ## Próximo passo
 
 Escrever uma spec somente-documental de um tool `filler_cutter` para o OpenMontage, portando apenas a lógica de detecção de disfluência do video-use (MIT, compatível com AGPL-3.0) adaptada ao output word-level do faster-whisper que já produzimos, mais a decisão de ligar os silence_cutter/color_grade/audio_mixer existentes ao screen-demo.yaml. Nenhuma instalação do video-use, nenhuma chave ElevenLabs. Antes disso, resolver a lacuna de árvore de produção (TASK-20260917-VIDEOUSE-TREE-001, proposta e não disparada).
+
+## Outros campos
+
+- **agentes:** 2
+- **caminho:** /root/jaaz, /root/opensuite, /root/video-platform-audit/openmontage, clone em /tmp/claude-0/-root/689f7cca-0c88-4c3d-b340-9a7861cdc32d/scratchpad/video-use
+- **checkout_reservado:** nenhum (diagnóstico somente leitura); apenas TASK_REGISTER.md foi escrito
+- **criterios_aceitacao:**   - veredito claro: encaixa / não encaixa / encaixa parcialmente
+  - justificativa técnica com evidência de fonte
+  - localização proposta na arquitetura atual ou motivo da recusa
+  - lista de riscos e custos
+- **custo:** não disponível; nenhum preço consultado
+- **entrega_esperada:** veredito, matriz de sobreposição, análise do modelo de integração, riscos/custos e próximo passo reversível
+- **ferramenta:** Claude Code (Agent tool) + code-review-graph MCP (leitura) + git/pct/docker em modo leitura
+- **fora_do_escopo:** alteração de código do produto, instalação de pacotes, uv sync, apt install, criação/alteração de containers ou serviços, leitura de valores de secrets, deploy, commit/push em jaaz ou opensuite
+- **integrador:** coordenador
+- **justificativa_modo:** Decisão de roadmap com impacto relevante e dois eixos de investigação genuinamente independentes (repositório+ambiente vs. capacidades já existentes na nossa fonte); paralelizados sem sobreposição de arquivos, com síntese pelo coordenador.
+- **maquina:** host srv (Debian 11.6, pve-manager/7.4-3); CT100 (LXC docker, Debian 11.7); CT102 fora do escopo
+- **modelo:** coordenador em Opus 5; dois subagentes em Sonnet
+- **modo_escolhido:** ampliado
+- **provedor:** não disponível
+- **resultado_retrabalho:** sem retrabalho; dois eixos independentes, nenhuma análise repetida
+- **skills_referencias:**   - team-coordenar-entrega
+  - team-operar-ambiente
+  - team-revisar-alteracao
+  - verify-and-stop
+- **tentativas:** 1
+- **tokens_cache:** não disponíveis
+- **tokens_entrada:** não disponíveis
+- **tokens_saida:** não disponíveis
+- **versao_estado:** video-use HEAD 9575612f066aa517354790a645fd90f9f95a743b; jaaz remote 11cafe/jaaz branch main HEAD e07e5e98c63f8648d1947f09230773533e388e88 com 17 entradas não commitadas; agent-team master a36b7e2

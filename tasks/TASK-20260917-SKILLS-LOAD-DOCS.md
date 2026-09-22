@@ -49,3 +49,18 @@ Documentado o modo explícito comprovado; seleção nativa TOML e carregamento a
 ## Próximo passo
 
 usar uma superfície Codex com seleção nativa observável antes de reavaliar o carregamento
+
+## Outros campos
+
+- **caminho:** /root/agent-team
+- **checkout_reservado:** liberado após commit local
+- **criterios_aceitacao:**   - distinguir subagente genérico explícito, perfil TOML e carregamento automático
+  - documentar procedimento de delegação com caminhos absolutos
+  - distinguir limites escritos de controles técnicos
+  - preservar estado parcial sem novas tentativas
+- **entrega_esperada:** documentação operacional e exemplo code-reviewer
+- **integrador:** coordenador
+- **maquina:** host /root
+- **skills_referencias:**   - TEAM_CONTRACT.md
+  - README.md
+- **versao_estado:** codex-cli 0.154.0; base 7d688fa

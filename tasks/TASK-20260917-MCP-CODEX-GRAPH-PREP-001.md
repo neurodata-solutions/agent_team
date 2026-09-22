@@ -55,3 +55,31 @@ Registro CLI de /root/agent-team concluído. Build completo pelo MCP em df80ebc:
 ## Próximo passo
 
 Usar consultas sobre /root/agent-team enquanto a revisão indexada permanecer válida; reindexar somente após mudança de código relevante e autorização.
+
+## Outros campos
+
+- **agentes:** 0
+- **caminho:** /root/agent-team
+- **checkout_reservado:** liberado após commit
+- **criterios_aceitacao:**   - mecanismo suportado de registro usado
+  - índice de /root/agent-team criado/atualizado sem substituir /root/jaaz
+  - uma consulta de leitura pós-indexação confirma projeto e revisão
+  - limitações de Markdown/TOML e revisão indexada separada da documentação
+- **custo:** não disponível; nenhum preço consultado
+- **entrega_esperada:** catálogo, registro da indexação, consulta confirmatória e commit local
+- **ferramenta:** MCP do Codex + CLI code-review-graph
+- **fora_do_escopo:** substituir Jaaz, alterar configuração compartilhada, instalar dependências, editar banco/cache, testar outros MCPs, aplicações, rede, credenciais e permissões
+- **integrador:** coordenador
+- **justificativa_modo:** Um executor, um registro, uma indexação e uma consulta de leitura; sem revisão adicional.
+- **maquina:** host /root
+- **modelo:** não disponível
+- **modo_escolhido:** econômico
+- **provedor:** não disponível
+- **resultado_retrabalho:** sem retrabalho; uma indexação e uma consulta
+- **skills_referencias:**   - team-gerenciar-mcp
+  - verify-and-stop
+- **tentativas:** 1
+- **tokens_cache:** não disponíveis
+- **tokens_entrada:** não disponíveis
+- **tokens_saida:** não disponíveis
+- **versao_estado:** servidor 2.3.8; registro anterior df80ebc; índice preparado em df80ebc743a783c270c70f43f097ba2ddd60e5ce

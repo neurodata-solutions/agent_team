@@ -205,3 +205,65 @@ def test_migrate_idempotency_skips_existing_files(tmp_path):
     # Verify file was NOT overwritten
     final_content = out_file.read_text()
     assert final_content == original_content
+
+
+def test_catch_all_renders_ad_hoc_fields():
+    """Important: any unconsumed fields must be rendered in 'Outros campos' section."""
+    task = {
+        "id": "TASK-20260101-002",
+        "objetivo": "Test with ad-hoc fields",
+        "custo": "R$50",
+        "tokens_entrada": 1000,
+        "tokens_saida": 500,
+        "modelo": "claude-3-sonnet",
+    }
+    note = render_task_note(task)
+
+    # Should have "Outros campos" section
+    assert "## Outros campos" in note
+
+    # Ad-hoc fields should appear in the output
+    assert "**custo:**" in note
+    assert "R$50" in note
+    assert "**tokens_entrada:**" in note
+    assert "1000" in note
+    assert "**tokens_saida:**" in note
+    assert "500" in note
+    assert "**modelo:**" in note
+    assert "claude-3-sonnet" in note
+
+
+def test_catch_all_renders_template_standard_fields():
+    """Important: template-standard fields like maquina, caminho, etc. must be rendered if present."""
+    task = {
+        "id": "TASK-20260101-003",
+        "objetivo": "Test with template standard fields",
+        "maquina": "host /root/jaaz",
+        "caminho": "/root/jaaz",
+        "versao_estado": "branch main",
+        "integrador": "coordenador",
+    }
+    note = render_task_note(task)
+
+    # Should have "Outros campos" section
+    assert "## Outros campos" in note
+
+    # Fields should appear
+    assert "**maquina:**" in note
+    assert "host /root/jaaz" in note
+    assert "**caminho:**" in note
+    assert "/root/jaaz" in note
+
+
+def test_catch_all_omitted_when_no_leftover_fields():
+    """Important: 'Outros campos' section should NOT appear if all fields are consumed."""
+    task = {
+        "id": "TASK-20260101-004",
+        "objetivo": "Standard task",
+        "resultado": "Done",
+        "estado": "concluida",
+    }
+    note = render_task_note(task)
+
+    # Should NOT have "Outros campos" section
+    assert "## Outros campos" not in note

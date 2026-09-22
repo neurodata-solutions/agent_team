@@ -47,3 +47,18 @@ TEAM_CONTRACT.md, agents/code-reviewer.md, .codex/skills/team-revisar-alteracao/
 ## Próximo passo
 
 Usar o escopo e o fallback documentados em futuras revisões; não declarar carregamento nativo de skills sem evento observável.
+
+## Outros campos
+
+- **achados:**   - {'id': 'AG-01', 'tema': 'escopo da revisão', 'classificacao': 'melhoria de clareza ou portabilidade', 'severidade': 'baixa', 'justificativa': 'As instruções já exigiam versão identificada, mas não enumeravam commit, diff, arquivos ou versão como formas equivalentes.', 'correcao': 'Skill e papel agora exigem escopo identificável e inspeção direta quando o grafo não corresponder.'}
+  - {'id': 'AG-02', 'tema': 'skills auxiliares e indisponibilidade', 'classificacao': 'melhoria de clareza ou portabilidade', 'severidade': 'baixa', 'justificativa': 'As referências caveman-review e verify-and-stop estavam nomeadas, sem procedimento explícito de resolução por arquivo ou fallback.', 'correcao': 'Resolução prévia por SKILL.md e registro do impedimento foram acrescentados.'}
+  - {'id': 'AG-03', 'tema': 'formato de retorno', 'classificacao': 'não sustentado pelas evidências', 'severidade': 'informativa', 'justificativa': 'A skill referencia o formato do contrato; não há duplicação do esquema que justifique defeito.', 'correcao': 'Nenhuma; a referência ao contrato foi preservada.'}
+  - {'id': 'AG-04', 'tema': 'grafo e alternativa por inspeção direta', 'classificacao': 'melhoria de clareza ou portabilidade', 'severidade': 'média', 'justificativa': 'A regra usava o grafo quando disponível, mas não explicitava mesma referência, desatualização ou fallback.', 'correcao': 'Uso condicionado ao mesmo repositório/referência, com fallback direto e limitação registrada.'}
+  - {'id': 'AG-05', 'tema': 'menção a AGENTS.md', 'classificacao': 'não sustentado pelas evidências', 'severidade': 'informativa', 'justificativa': 'O texto apenas impede tratá-lo como prova de registro; não exige esse caminho para executar a revisão.', 'correcao': 'Esclarecido como contexto conceitual quando aplicável, não como caminho exigido.'}
+  - {'id': 'AG-06', 'tema': 'afirmação de somente leitura', 'classificacao': 'melhoria de clareza ou portabilidade', 'severidade': 'média', 'justificativa': 'Somente leitura é limite documental da tarefa; não prova isolamento integral de shell ou MCP.', 'correcao': 'Papel e skill agora separam limite escrito de controles técnicos observados.'}
+  - {'id': 'AG-07', 'tema': 'contagem dos campos do contrato', 'classificacao': 'melhoria de clareza ou portabilidade', 'severidade': 'baixa', 'justificativa': 'A alegação de oito ou nove não é sustentada: a lista real contém onze campos, com skills/referências como um campo.', 'correcao': 'Contrato agora declara explicitamente a contagem de onze.'}
+- **caminho:** /root/agent-team
+- **fonte_dos_achados:** Os sete temas foram delimitados pelo pedido; não há relatório Antigravity versionado no checkout. A classificação não inventa evidência ausente.
+- **integrador:** coordenador
+- **maquina:** host /root
+- **versao_estado:** branch master; base a450b8f; sem alteração de adaptadores TOML

@@ -55,3 +55,32 @@ Catálogo criado. Gestor /root/gestor_mcp_catalog levantou cinco configurações
 ## Próximo passo
 
 Se houver necessidade concreta, autorizar uma verificação pontual de conexão de um cliente específico; não habilitar ou instalar MCP por este catálogo.
+
+## Outros campos
+
+- **agentes:** 2
+- **caminho:** /root/agent-team
+- **checkout_reservado:** liberado após commit
+- **criterios_aceitacao:**   - catálogo com estados, evidências, origem, transporte, capacidades e autenticação sem segredos
+  - matriz de acesso separando propostas de controles verificados
+  - levantamento e conferência por papéis nativos explicitamente delegados
+  - nenhuma configuração externa alterada ou servidor conectado
+- **custo:** não disponível; nenhum preço consultado
+- **entrega_esperada:** MCP_CATALOG.md, conferência independente, lacunas e commit local
+- **ferramenta:** não disponível
+- **fora_do_escopo:** inventário geral de infraestrutura, conexões, handshakes, inicialização, instalação, testes remotos, mudanças em configurações, credenciais, rede, serviços ou permissões
+- **integrador:** coordenador
+- **justificativa_modo:** Levantamento delimitado com conferência técnica independente; não requer paralelismo adicional.
+- **maquina:** host /root
+- **modelo:** não disponível
+- **modo_escolhido:** padrão
+- **provedor:** não disponível
+- **resultado_retrabalho:** uma conferência independente; cinco correções documentais concretas; sem repetição de inventário
+- **skills_referencias:**   - team-gerenciar-mcp
+  - team-construir-mcp
+  - verify-and-stop
+- **tentativas:** 2
+- **tokens_cache:** não disponíveis
+- **tokens_entrada:** não disponíveis
+- **tokens_saida:** não disponíveis
+- **versao_estado:** branch master; base 248b3d6; modo padrão

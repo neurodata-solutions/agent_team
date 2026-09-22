@@ -55,3 +55,31 @@ Modos econômico, padrão e ampliado documentados; resumo de contexto, encerrame
 ## Próximo passo
 
 Aplicar o modo proporcional em tarefas futuras e coletar custos somente quando a ferramenta os disponibilizar.
+
+## Outros campos
+
+- **agentes:** 1
+- **caminho:** /root/agent-team
+- **checkout_reservado:** liberado após commit
+- **criterios_aceitacao:**   - três modos operacionais com seleção e justificativa curta
+  - política de contexto, encerramento, tentativas e custos documentada
+  - modelos/provedores/roteamento e telemetria não alterados
+  - revisão independente curta e validação das referências
+- **custo:** não disponível; nenhum preço consultado
+- **entrega_esperada:** política documental, evidências, revisão e commit local
+- **ferramenta:** não disponível
+- **fora_do_escopo:** aplicações, serviços, MCPs, telemetria, modelos, provedores, planos, roteamento, pilotos, benchmarks e demais papéis
+- **integrador:** coordenador
+- **justificativa_modo:** Mudança documental moderada em quatro arquivos, com uma revisão independente; não exige especialistas paralelos.
+- **maquina:** host /root
+- **modelo:** não disponível
+- **modo_escolhido:** padrão
+- **provedor:** não disponível
+- **resultado_retrabalho:** uma revisão independente; sem retrabalho após a revisão
+- **skills_referencias:**   - lean-build
+  - verify-and-stop
+- **tentativas:** 1
+- **tokens_cache:** não disponíveis
+- **tokens_entrada:** não disponíveis
+- **tokens_saida:** não disponíveis
+- **versao_estado:** branch master; base 9da0e2f; integração Ponytail preservada

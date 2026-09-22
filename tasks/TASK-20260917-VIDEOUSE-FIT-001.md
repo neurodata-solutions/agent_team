@@ -39,3 +39,20 @@ Os cinco critérios verificados. Tabela de sobreposição: JÁ EXISTE para legen
 ## Próximo passo
 
 tarefa somente-leitura dedicada para decidir qual árvore é a de produção e localizar o pipeline de dublagem
+
+## Outros campos
+
+- **caminho:** /root/jaaz; /root/video-platform-audit/openmontage (caminho real, divergente do esperado /root/opensuite)
+- **checkout_reservado:** nenhum (somente leitura)
+- **criterios_aceitacao:**   - inventário do /video_studio com arquivo:linha
+  - contrato de process_video_result e tratamento de provider=system
+  - pipelines OpenMontage e primitivas do screen-demo.yaml
+  - transcrição word-level e corte por silêncio em MoneyPrinter/OpenShorts/dublagem
+  - tabela de sobreposição das sete capacidades do video-use
+- **entrega_esperada:** formato do contrato; tabela de sobreposição como entregável central; Alterações = nenhuma
+- **fora_do_escopo:** qualquer escrita, commit, stage, instalação, execução da aplicação ou de pipeline, chamada de API externa, leitura de valores de secrets
+- **integrador:** coordenador
+- **maquina:** host srv
+- **skills_referencias:**   - team-revisar-alteracao
+  - verify-and-stop
+- **versao_estado:** jaaz remote 11cafe/jaaz branch main HEAD e07e5e98c63f8648d1947f09230773533e388e88, 17 entradas não commitadas; openmontage/moneyprinter/openshorts/facefusion não são repositórios git

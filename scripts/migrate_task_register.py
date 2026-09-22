@@ -119,6 +119,14 @@ def render_task_note(task: dict) -> str:
 
     sections: list[str] = []
 
+    # Track which keys have been consumed so we can catch-all the rest
+    consumed_keys = {
+        "id", "objetivo", "escopo_permitido", "resultado", "evidencias",
+        "arquivos_alterados", "verificacoes", "limitacoes", "proximo_passo",
+        "estado", "projeto", "responsavel", "dependencias", "tags",
+        "tipo"  # type is derived, not in source
+    }
+
     def add_section(title: str, key: str, is_list: bool = False) -> None:
         val = task.get(key)
         if not val:
@@ -138,6 +146,26 @@ def render_task_note(task: dict) -> str:
     add_section("Verificações", "verificacoes", is_list=True)
     add_section("Limitações", "limitacoes", is_list=True)
     add_section("Próximo passo", "proximo_passo")
+
+    # Catch-all for any unconsumed fields
+    leftover_keys = {k: v for k, v in task.items() if k not in consumed_keys}
+    if leftover_keys:
+        def format_value(val):
+            if isinstance(val, list):
+                return "\n".join(f"  - {item}" for item in val)
+            elif isinstance(val, dict):
+                return "```yaml\n" + yaml.safe_dump(val, allow_unicode=True) + "```"
+            else:
+                return str(val)
+
+        items = []
+        for key in sorted(leftover_keys.keys()):
+            val = leftover_keys[key]
+            formatted = format_value(val)
+            items.append(f"- **{key}:** {formatted}")
+
+        body = "\n".join(items)
+        sections.append(f"## Outros campos\n\n{body}\n")
 
     body = "\n".join(sections)
     return f"---\n{fm_yaml}\n---\n\n# {task_id}\n\n{body}"

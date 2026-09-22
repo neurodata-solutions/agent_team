@@ -55,3 +55,31 @@ Conexão do code-review-graph funcionou. list_repos_tool retornou somente /root/
 ## Próximo passo
 
 Autorizar separadamente registro/build do grafo de /root/agent-team, se houver necessidade concreta; não executar por este catálogo.
+
+## Outros campos
+
+- **agentes:** 0
+- **caminho:** /root/agent-team
+- **checkout_reservado:** liberado após commit
+- **criterios_aceitacao:**   - servidor, cliente, versão e ferramentas enumerados sem segredos
+  - uma consulta de leitura executada sobre /root/agent-team
+  - projeto/versão indexada e desatualização diferenciados
+  - nenhuma atualização ou escrita acionada
+- **custo:** não disponível; nenhum preço consultado
+- **entrega_esperada:** catálogo e registro atualizados com resultado operacional e limitações
+- **ferramenta:** MCP do Codex (identificador de cliente não exposto além da superfície MCP)
+- **fora_do_escopo:** Postman, Caveman, outros clientes, build/update/indexação, escrita, conexão remota, instalação, rede, credenciais e permissões
+- **integrador:** coordenador
+- **justificativa_modo:** Um MCP, uma enumeração e uma consulta de leitura; sem revisão documental adicional.
+- **maquina:** host /root
+- **modelo:** não disponível
+- **modo_escolhido:** econômico
+- **provedor:** não disponível
+- **resultado_retrabalho:** sem retrabalho; nenhuma revisão adicional delegada
+- **skills_referencias:**   - team-gerenciar-mcp
+  - verify-and-stop
+- **tentativas:** 1
+- **tokens_cache:** não disponíveis
+- **tokens_entrada:** não disponíveis
+- **tokens_saida:** não disponíveis
+- **versao_estado:** branch master; catálogo ef7179f; HEAD ef7179fd6a6f28e13fbfb9e669a875e7a648b370

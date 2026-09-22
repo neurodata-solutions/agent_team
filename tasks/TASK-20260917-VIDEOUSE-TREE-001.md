@@ -46,3 +46,17 @@ Os dois critérios verificados com evidência. (1) Árvore de produção do Open
 ## Próximo passo
 
 propor ao usuário uma ação reversível e autorizável para persistir os dois pipelines de dublagem (git add + commit em CT100 /root/opensuite, ou COPY no Dockerfile do moneyprinter) antes de qualquer recreate do container; e decidir qual das duas stacks MoneyPrinter é a alvo de integração. Nenhuma dessas ações foi executada.
+
+## Outros campos
+
+- **caminho:** produção = CT100 /root/opensuite (repo git local) — services/openmontage, services/moneyprinter; dublagem em CT100 /root/opensuite/dub_pipeline.py e recreate_pipeline.py; host /root/video-platform-audit/openmontage = cópia de auditoria (subconjunto, sem git)
+- **checkout_reservado:** nenhum (somente leitura)
+- **criterios_aceitacao:**   - árvore de produção identificada por evidência
+  - pipeline de dublagem localizado ou declarado inexistente neste host com evidência
+- **entrega_esperada:** formato do contrato; Alterações = nenhuma
+- **fora_do_escopo:** qualquer escrita, instalação, alteração de containers ou serviços
+- **integrador:** coordenador
+- **maquina:** host srv (Debian 11.6, pve-manager/7.4-3) e CT100 (docker); CT102 (omniroute) verificado e descartado
+- **skills_referencias:**   - team-operar-ambiente
+  - verify-and-stop
+- **versao_estado:** CT100 /root/opensuite: branch feature/marco2-openshorts, HEAD eccec4b69ebb9e73e551d1650f44691e2c247502 (opensuite-dev, 2026-09-12), sem remote configurado, 21 arquivos modificados; compose project=opensuite config=/root/opensuite/docker-compose.yml; imagem opensuite-openmontage sha256:4775e6b8e03b; imagem opensuite-moneyprinter sha256:079b71272fbc

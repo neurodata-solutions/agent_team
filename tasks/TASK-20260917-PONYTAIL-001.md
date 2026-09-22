@@ -63,3 +63,17 @@ Skills incorporadas e associações atualizadas. O subagente Reviewer /root/pony
 ## Próximo passo
 
 usar as associações somente nos dois papéis; carregamento automático continua não comprovado
+
+## Outros campos
+
+- **caminho:** /root/agent-team
+- **criterios_aceitacao:**   - duas SKILL.md preservadas byte a byte com origem e licença
+  - Ponytail ativo somente como auxiliar de desenvolvedor e code-reviewer
+  - limites de simplificação documentados sem alterar o contrato
+  - referências resolvem e revisão explícita do diff é registrada
+- **entrega_esperada:** cópia versionada, associações, evidência de revisão e limitações
+- **integrador:** coordenador
+- **maquina:** host /root
+- **skills_referencias:**   - skill-installer (orientação de aquisição; instalação global não usada)
+  - Ponytail skills no commit fixado
+- **versao_estado:** branch master; origem fixada em e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156
