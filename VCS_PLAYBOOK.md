@@ -20,23 +20,14 @@
 
 ## 2. Segredos e Credenciais no Infisical
 
-* **URL Web do Infisical:** [Painel de Secrets Overview](https://192.168.0.200:8620/organizations/d36ac3d6-a0cd-4a15-bee6-cd91e3d679c8/projects/secret-management/e88ec536-c83a-4b68-a826-172e1e534b02/overview?environments=%5B%22dev%22%2C%22staging%22%2C%22prod%22%5D)
-* **Projeto:** `opensuite` (`e88ec536-c83a-4b68-a826-172e1e534b02`)
-* **Ambientes Sincronizados:** `dev`, `staging` e `prod`
-* **Backend Interno:** `http://infisical-backend:8080` (Docker) / `http://127.0.0.1:18080` (CT100)
+**Movido para fora deste repositório em 2026-09-22** — este arquivo faz
+parte do vault Obsidian sincronizado (repo `agent-team` tem remote git e é
+clonado em múltiplos dispositivos). URLs internas, inventário de onde
+ficam PAT/chave SSH e outros detalhes de infraestrutura de segredos nunca
+devem entrar em git, mesmo em repositório privado.
 
-### Chaves Registradas:
-- **No Root (`/`):**
-  - `gitvideo`: GitHub Personal Access Token (`github_pat_...`) da conta `neurodata-solutions`.
-  - `GITVIDEO_REPO_URL`: `https://github.com/neurodata-solutions/estudio-visual.git`
-  - `GITVIDEO_BRANCH`: `jaaz`
-- **Na Pasta `/jaaz`:**
-  - `GITVIDEO_PAT`: PAT para clones/pushes via HTTPS.
-  - `GITVIDEO_REPO_URL`: `https://github.com/neurodata-solutions/estudio-visual.git`
-  - `GITVIDEO_SSH_URL`: `git@github.com:neurodata-solutions/estudio-visual.git`
-  - `GITVIDEO_BRANCH`: `jaaz`
-  - `GITVIDEO_UPSTREAM_URL`: `https://github.com/11cafe/jaaz.git`
-  - `GITVIDEO_SSH_KEY`: Chave privada OpenSSH (`id_ed25519`) para deploy automatizado.
+Conteúdo completo agora fica em `/root/.secrets-notes/vcs-playbook-infisical.md`
+(local a este host, fora de qualquer repositório git).
 
 ---
 
