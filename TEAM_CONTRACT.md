@@ -9,9 +9,10 @@
 - Nunca ler, copiar ou expor valores de secrets, tokens ou credenciais.
 - Host, CT, container, checkout, imagem e serviço devem ser identificados
   antes de qualquer alteração.
-- Antes de iniciar, ler `STATUS.md` e as entradas pertinentes de
-  `TASK_REGISTER.md` para o projeto/serviço da tarefa. `STATUS.md` e
-  `TASK_REGISTER.md` são a memória oficial e compartilhável do time — não um
+- Antes de iniciar, ler `STATUS.md` e as notas pertinentes em `tasks/`
+  (filtrando por `projeto:` no frontmatter) para o projeto/serviço da
+  tarefa. `STATUS.md` e `tasks/` são a memória oficial e compartilhável do
+  time — não um
   banco interno de memória de ferramenta (claude-mem ou equivalente), que é
   local a uma única superfície, pode ficar indisponível sem aviso e não é
   lido por Codex/Antigravity. Decisão relevante sem entrada correspondente
@@ -231,7 +232,7 @@ melhorias verificáveis do harness dos agentes. O material operacional fica em
 `improvement-loop/`.
 
 **Obrigatório, não opcional:** toda tarefa que fechar como `bloqueada`, ou
-cuja causa confirmada já apareça em outra entrada de `TASK_REGISTER.md`
+cuja causa confirmada já apareça em outra entrada de `tasks/`
 (erro recorrente), só pode ser dada por encerrada depois de virar uma
 entrada permanente — checklist do domínio correspondente (seguindo o
 modelo do "Checklist de deploy de container" acima) quando o domínio já

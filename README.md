@@ -10,7 +10,7 @@ instruções específicas de cada ferramenta.
 
 1. Ler `TEAM_CONTRACT.md`.
 2. Ler `STATUS.md` (orientação rápida) e as entradas relevantes do projeto/
-   serviço em `TASK_REGISTER.md` — sem isso a tarefa é delimitada sem saber
+   serviço em `tasks/` — sem isso a tarefa é delimitada sem saber
    o que já foi feito, o que está em aberto ou se a causa já é conhecida.
    Registrar essa leitura como evidência da tarefa.
 3. Selecionar um papel em `agents/`.
