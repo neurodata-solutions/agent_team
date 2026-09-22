@@ -30,4 +30,6 @@ critério de encerramento.
 
 Skill principal: `/root/agent-team/.codex/skills/team-coordenar-entrega/SKILL.md`.
 Auxiliar: `verify-and-stop`; `cavecrew` somente quando delegação comprimida
-for explicitamente solicitada.
+for explicitamente solicitada; na superfície Claude, `writing-plans` e
+`brainstorming` (pacote `superpowers`) antes de delimitar tarefas complexas
+ou de escopo ambíguo.

@@ -1,0 +1,21 @@
+{
+  "case_id": "eval-YYYYMMDD-001",
+  "task": "Descrição curta do comportamento avaliado",
+  "prompt": "Entrada reproduzível sem dados sensíveis",
+  "assertions": [
+    "Afirmação observável que deve ser verdadeira"
+  ],
+  "checks": [
+    {
+      "name": "nome-do-check",
+      "command_or_method": "comando ou método de verificação",
+      "pass_condition": "condição objetiva"
+    }
+  ],
+  "score": null,
+  "threshold": 1.0,
+  "trace_ref": "run-YYYYMMDD-001",
+  "feedback_ref": "feedback-YYYYMMDD-001",
+  "status": "não executada | passou | falhou | indisponível",
+  "notes": "Limitações e contexto"
+}

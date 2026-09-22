@@ -15,5 +15,12 @@ Entrega: reprodução, evidência, causa confirmada ou hipóteses ranqueadas,
 correção proposta e prova necessária.
 
 Skill principal: `/root/agent-team/.codex/skills/team-investigar-bug/SKILL.md`.
-Auxiliares: `investigate-first`, `bug-hunt` adaptado (`third_party/bug-hunt/`,
-modo detalhado em `/root/agent-team/.codex/skills/team-investigar-bug/modo-contestacao.md`).
+Auxiliares: `investigate-first`; na superfície Claude, `systematic-debugging`
+(pacote `superpowers`); `bug-hunt` adaptado (`third_party/bug-hunt/`) e
+`bug-hunter` (`third_party/bug-hunter/`, só os prompts, nunca o CLI/modo
+`--autonomous`) para achados por análise estática, modo detalhado em
+`/root/agent-team/.codex/skills/team-investigar-bug/modo-contestacao.md`;
+`debug-mode` (`third_party/debug-mode/`) para confirmar causa por
+instrumentação de runtime quando o log real não bastar; `browser-testing-with-devtools`
+(`third_party/agent-skills/`, requer MCP `chrome-devtools` em modo
+`--isolated`) para sintomas de UI/frontend.

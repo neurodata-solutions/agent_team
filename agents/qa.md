@@ -16,5 +16,7 @@ risco residual e decisão passar/reprovar/bloqueado.
 
 Skill principal: `/root/agent-team/.codex/skills/team-validar-entrega/SKILL.md`.
 Auxiliares: `verify-and-stop`, `investigate-first`,
-`team-avaliar-agentes` para avaliação autorizada de agentes, e
-`bug-hunt` (função Referee).
+`team-avaliar-agentes` para avaliação autorizada de agentes,
+`bug-hunt`/`bug-hunter` (função Referee), `browser-testing-with-devtools`
+(`third_party/agent-skills/`) para validar fluxo real de UI; na superfície
+Claude, `verification-before-completion` (pacote `superpowers`).

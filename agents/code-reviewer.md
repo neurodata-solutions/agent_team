@@ -30,4 +30,7 @@ identificar explicações alternativas, comportamentos pretendidos ou falsos
 positivos sem loops de debate indefinidos.
 
 Skill principal: `/root/agent-team/.codex/skills/team-revisar-alteracao/SKILL.md`.
-Auxiliares: `caveman-review`, `verify-and-stop`, `ponytail-review`, `bug-hunt` (função Skeptic).
+Auxiliares: `caveman-review`, `verify-and-stop`, `ponytail-review`, `bug-hunt`
+e `bug-hunter` (`third_party/bug-hunter/`, prompts de recon/threat-model,
+função Skeptic); na superfície Claude, `requesting-code-review` /
+`receiving-code-review` (pacote `superpowers`).

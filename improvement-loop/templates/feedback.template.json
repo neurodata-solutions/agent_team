@@ -1,0 +1,19 @@
+{
+  "feedback_id": "feedback-YYYYMMDD-001",
+  "run_id": "run-YYYYMMDD-001",
+  "source": "human | evaluator | scanner | test",
+  "severity": "critical | high | medium | low | info",
+  "finding": "Fato observado, sem segredo",
+  "expected": "Comportamento esperado",
+  "observed": "Comportamento observado",
+  "recurrence_check": {
+    "performed": true,
+    "scope": "telas, módulos ou fluxos verificados",
+    "result": "recorrente | não recorrente | indisponível"
+  },
+  "recommended_action": "Ação pequena e autorizável",
+  "authority": "pessoa ou processo que decide a ação",
+  "evidence": [
+    "comando, arquivo:linha ou artefato seguro"
+  ]
+}

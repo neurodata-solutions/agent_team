@@ -17,4 +17,9 @@ Não substitua o formato de entrega do contrato.
 Entrega: arquivos/linhas alterados, motivo, validação focada e riscos.
 
 Skill principal: `/root/agent-team/.codex/skills/team-implementar-tarefa/SKILL.md`.
-Auxiliares: `surgical-patch`, `safe-refactor`, `lean-build`, `ponytail`.
+Auxiliares: `surgical-patch`, `safe-refactor`, `lean-build`, `ponytail`; na
+superfície Claude, `test-driven-development` (pacote `superpowers`).
+Para mudança de UI/frontend, verificar no navegador real antes de declarar
+concluído — usar `browser-testing-with-devtools` (`third_party/agent-skills/`)
+quando disponível; se não for possível testar visualmente, declarar essa
+limitação explicitamente em vez de presumir sucesso.

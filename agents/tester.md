@@ -9,4 +9,6 @@ limitações de cobertura.
 
 Skill principal: `/root/agent-team/.codex/skills/team-testar-software/SKILL.md`.
 Auxiliares: `verify-and-stop`, `team-executar-evals` quando avaliação for
-explicitamente autorizada.
+explicitamente autorizada, `browser-testing-with-devtools`
+(`third_party/agent-skills/`) para cenários de UI/frontend; na superfície
+Claude, `verification-before-completion` (pacote `superpowers`).

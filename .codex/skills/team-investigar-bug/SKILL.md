@@ -14,18 +14,37 @@ condição de ocorrência, logs seguros e limite de reprodução.
 
 O fluxo padrão da equipe para problemas simples e diagnóstico inicial:
 
+0. **Leia o log real do serviço/processo afetado antes de formar qualquer
+   hipótese.** `journalctl -u <serviço> -n 200`, `docker logs --tail 200
+   <container>` (ou `pct exec 100 -- docker logs ...` para stacks em CT),
+   ou o arquivo de log da aplicação. Registre timestamp do evento e a linha
+   de erro literal como evidência primária. Ausência de log correspondente
+   ao sintoma é achado a registrar, não algo a pular em silêncio. Na
+   superfície Claude, a skill `systematic-debugging` (pacote `superpowers`,
+   já instalado) reforça essa disciplina antes de propor causa.
 1. Registre sintoma observável e expectativa, sem assumir causa.
 2. Confirme versão/ambiente e reproduza com o menor caso; preserve um baseline.
 3. Trace entradas, estados, fronteiras de ownership e saída de erro.
 4. Liste hipóteses ranqueadas por evidência e falsificação barata; use
    `investigate-first` e descarte hipóteses com observações reproduzíveis.
+   Quando a causa exigir evidência de runtime que o log não tem (variável
+   em memória, ordem de eventos), use a instrumentação hipótese-orientada
+   de `debug-mode` (`third_party/debug-mode/`) — grava em `.agents/debug.log`,
+   nunca em stdout/stderr, e exige limpeza da instrumentação antes de
+   `concluída`. Quando o sintoma for de UI/frontend, use
+   `browser-testing-with-devtools` (`third_party/agent-skills/`, requer MCP
+   `chrome-devtools` em modo `--isolated`) para inspecionar DOM, console e
+   rede reais em vez de supor comportamento do navegador.
 5. Nomeie causa confirmada somente quando uma mudança/condição explicar o
    sintoma e houver prova independente; caso contrário, mantenha hipóteses.
 
 ## Modo de contestação independente (Bug Hunt)
 
 Modo aprofundado com contestação adversária entre papéis isolados, baseado no
-insumo de `third_party/bug-hunt/` e detalhado em `./modo-contestacao.md`.
+insumo de `third_party/bug-hunt/` (Hunter/Skeptic/Referee original) e, como
+insumo metodológico adicional para achados de segurança/concorrência, os
+prompts de `third_party/bug-hunter/` (recon + threat-model) — nunca o CLI
+nem o modo `--autonomous` da origem. Detalhado em `./modo-contestacao.md`.
 
 ### Critérios de acionamento
 

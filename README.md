@@ -9,10 +9,14 @@ instruções específicas de cada ferramenta.
 ## Uso
 
 1. Ler `TEAM_CONTRACT.md`.
-2. Selecionar um papel em `agents/`.
-3. Delimitar escopo, evidências e critério de aceitação.
-4. Entregar resultado com o formato do contrato.
-5. Para versionamento e commits rápidos e seguros no Video Studio e outros produtos, consulte [VCS_PLAYBOOK.md](file:///root/agent-team/VCS_PLAYBOOK.md).
+2. Ler `STATUS.md` (orientação rápida) e as entradas relevantes do projeto/
+   serviço em `TASK_REGISTER.md` — sem isso a tarefa é delimitada sem saber
+   o que já foi feito, o que está em aberto ou se a causa já é conhecida.
+   Registrar essa leitura como evidência da tarefa.
+3. Selecionar um papel em `agents/`.
+4. Delimitar escopo, evidências e critério de aceitação.
+5. Entregar resultado com o formato do contrato.
+6. Para versionamento e commits rápidos e seguros no Video Studio e outros produtos, consulte [VCS_PLAYBOOK.md](file:///root/agent-team/VCS_PLAYBOOK.md).
 
 
 O adaptador Claude confirmado está em `/root/.claude/agents/team-*.md`.

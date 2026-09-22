@@ -1,0 +1,28 @@
+{
+  "run_id": "run-YYYYMMDD-001",
+  "task_id": "TASK-000",
+  "started_at": "2026-09-19T00:00:00Z",
+  "finished_at": "2026-09-19T00:00:00Z",
+  "agent": "agent-name-or-model",
+  "repo": "absolute/path-or-repository-url",
+  "remote": "origin-or-not-applicable",
+  "branch": "branch-name",
+  "commit": "full-commit-sha-or-not-applicable",
+  "machine": "host-or-ct",
+  "container": "container-or-not-applicable",
+  "prompt_summary": "Resumo sem dados sensíveis",
+  "outcome": "concluída | parcial | bloqueada",
+  "artifacts": [
+    "path/to/artifact-or-safe-reference"
+  ],
+  "evidence": [
+    {
+      "kind": "command | file | observation",
+      "reference": "comando, caminho:linha ou observação segura",
+      "result": "resultado resumido"
+    }
+  ],
+  "limitations": [
+    "limitação ou vazio"
+  ]
+}
