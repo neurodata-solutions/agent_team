@@ -15,8 +15,8 @@
   time — não um
   banco interno de memória de ferramenta (claude-mem ou equivalente), que é
   local a uma única superfície, pode ficar indisponível sem aviso e não é
-  lido por Codex/Antigravity. Decisão relevante sem entrada correspondente
-  em `TASK_REGISTER.md` não está registrada para efeito deste contrato.
+  lido por Codex/Antigravity. Decisão relevante sem nota correspondente
+  em `tasks/` não está registrada para efeito deste contrato.
 - Resultados são evidências, não autorização para a próxima ação.
 - Um relato de tarefa que afirme commit, push ou implantação não é prova por
   si só: confirmar no histórico local (`git log`/`rev-parse`) e no checkout
@@ -237,7 +237,7 @@ cuja causa confirmada já apareça em outra entrada de `tasks/`
 entrada permanente — checklist do domínio correspondente (seguindo o
 modelo do "Checklist de deploy de container" acima) quando o domínio já
 tiver um, ou um registro em `improvement-loop/` (`eval-case`/`feedback`)
-quando não tiver. Registrar a causa em `TASK_REGISTER.md` sem convertê-la
+quando não tiver. Registrar a causa em `tasks/` sem convertê-la
 em checagem reutilizável não conta como ciclo concluído — é assim que o
 mesmo erro se repete em sessões futuras sem que ninguém perceba o padrão.
 
