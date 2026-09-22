@@ -91,6 +91,18 @@ def test_normalize_project(projeto, caminho, expected):
     assert normalize_project(task) == expected
 
 
+def test_normalize_project_checks_checkout_reservado():
+    """Important: checkout_reservado is a stronger signal than projeto/caminho/
+    maquina (present in 32/34 source entries) and must be inspected too."""
+    task = {
+        "projeto": "",
+        "caminho": "",
+        "maquina": "",
+        "checkout_reservado": "liberado (/root/jaaz)",
+    }
+    assert normalize_project(task) == "jaaz"
+
+
 def test_classify_tipo_detects_debug_by_keyword():
     assert classify_tipo({"id": "TASK-20260101-001", "objetivo": "Investigar causa raiz do crash"}) == "debug"
     assert classify_tipo({"id": "TASK-20260101-002", "objetivo": "Adicionar botão de logout"}) == "task"

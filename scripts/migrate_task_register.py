@@ -80,9 +80,21 @@ def parse_task_register(text: str) -> list[dict]:
 
 
 def normalize_project(task: dict) -> str:
-    haystack = " ".join(
-        str(task.get(k, "")) for k in ("projeto", "caminho", "maquina")
-    ).lower()
+    parts: list[str] = []
+    for key in (
+        "projeto",
+        "caminho",
+        "maquina",
+        "checkout_reservado",
+        "escopo_permitido",
+        "arquivos_alterados",
+    ):
+        val = task.get(key, "")
+        if isinstance(val, list):
+            parts.append(" ".join(str(item) for item in val))
+        else:
+            parts.append(str(val))
+    haystack = " ".join(parts).lower()
     for keyword, project in PROJECT_KEYWORDS:
         if keyword in haystack:
             return project
