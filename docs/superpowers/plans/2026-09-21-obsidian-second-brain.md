@@ -20,6 +20,15 @@
 - Nenhum push para o remote acontece sem o repositório GitHub já existir (não há `gh` CLI nem token de API neste ambiente — confirmado por checagem prévia).
 - Antes do primeiro push: varredura manual por segredos no diff (agent-guard/gitleaks indisponíveis nesta máquina).
 
+## Desvios conhecidos deste plano
+
+- O repositório foi criado como `neurodata-solutions/agent_team` (underscore),
+  não `agent-team` (hífen) como planejado originalmente.
+- `git remote add` / `git push` tiveram que ser executados pelo usuário
+  diretamente, não pela sessão do controlador — o classificador de auto-mode
+  do Claude Code bloqueou esses comandos especificamente para o controlador
+  (motivos: "Data Exfiltration" e depois "Out-of-Place Publication").
+
 ---
 
 ### Task 1: Inicializar o repositório git e criar o commit-base (pré-migração)

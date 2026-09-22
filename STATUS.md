@@ -1,13 +1,14 @@
 # Status do projeto agent-team
 
-Resumo executivo. Não substitui `TASK_REGISTER.md` (histórico completo,
-evidências e critérios por tarefa) — este documento é um preview de leitura
-rápida para qualquer sessão (Codex, Claude, Gemini/Antigravity) que retome o
-projeto. Atualizado por: coordenador (sessão Claude Code). Data: 2026-09-21.
+Resumo executivo. Não substitui as notas individuais em `tasks/` (histórico
+completo, evidências e critérios por tarefa) — este documento é um preview de
+leitura rápida para qualquer sessão (Codex, Claude, Gemini/Antigravity) que
+retome o projeto. Atualizado por: coordenador (sessão Claude Code). Data:
+2026-09-21.
 
 ## Sessão 21/09 — Governança do contrato de agentes
 
-Ver `TASK_REGISTER.md` ID `TASK-20260921-GOVERNANCE-001` pra detalhes completos.
+Ver `tasks/TASK-20260921-GOVERNANCE-001.md` pra detalhes completos.
 
 Três falhas recorrentes relatadas pelo usuário (agente não lê log real antes de
 hipótese; agente trabalha sem saber escopo/estado do projeto; mesmo erro se
@@ -18,8 +19,8 @@ evidência de arquivo (não suposição) e corrigidas:
   ler log real do serviço (`journalctl`/`docker logs`/arquivo de log) antes de
   formar hipótese.
 - **Escopo/estado**: `README.md` (onboarding) agora exige ler `STATUS.md` (este
-  arquivo) + `TASK_REGISTER.md` relevante antes de delimitar qualquer tarefa —
-  antes disso não estava referenciado em lugar nenhum do onboarding.
+  arquivo) + a entrada relevante em `tasks/` antes de delimitar qualquer
+  tarefa — antes disso não estava referenciado em lugar nenhum do onboarding.
 - **Não repetir erro**: `TEAM_CONTRACT.md` § Ciclo de melhoria agora exige que
   tarefa `bloqueada` ou com causa recorrente vire checklist/eval-case antes de
   poder ser dada por encerrada — antes disso `improvement-loop/` só tinha
@@ -44,8 +45,8 @@ passo 0 e o mapeamento de skills estão sendo seguidos na prática.
 
 ## 0. Sessão 20/09 — Estúdio Visual Multi-Painel, TTS, título de repo, comentários
 
-Ver `TASK_REGISTER.md` IDs `TASK-20260920-001` a `004` pra detalhes completos.
-Resumo do que mudou e por quê:
+Ver `tasks/TASK-20260920-001.md` a `tasks/TASK-20260920-004.md` pra detalhes
+completos. Resumo do que mudou e por quê:
 
 - **Editor multi-painel**: arrastar painel/texto, duplo-clique editar texto,
   Del apagar, seleção exclusiva, fundo de imagem real (não só gradiente),
@@ -147,6 +148,7 @@ do container CT100 foi resolvido nesse meio-tempo.
 ## Como usar este documento
 
 Leia isto primeiro para orientação rápida; para evidência, critérios de
-aceitação e detalhes por tarefa, vá a `TASK_REGISTER.md` pelo `id` citado
-acima. Este arquivo é atualizado por convenção quando o coordenador considerar
-o preview desatualizado — não há sincronização automática.
+aceitação e detalhes por tarefa, vá à nota correspondente em `tasks/` pelo
+`id` citado acima. Este arquivo é atualizado por convenção quando o
+coordenador considerar o preview desatualizado — não há sincronização
+automática.
