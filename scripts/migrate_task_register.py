@@ -33,11 +33,16 @@ def parse_task_register(text: str) -> list[dict]:
 
     Um bloco YAML fenced que tenha um `id` no formato TASK-YYYYMMDD-... abre
     (ou reabre, se repetido -> erro) uma task. Qualquer bloco seguinte sem
-    `id` reconhecível é mesclado na task atualmente aberta (é assim que os
-    pares Entrada/Retorno do template se juntam). O bloco de template
-    (`id: TASK-YYYYMMDD-###`) não bate no regex de 8 dígitos e é ignorado,
-    e o bloco "Retorno" do template (sem id nenhum) fica órfão -- também
-    ignorado, porque nenhuma task válida foi aberta ainda nesse ponto.
+    `id` key nenhuma é mesclado na task atualmente aberta (é assim que os
+    pares Entrada/Retorno do template se juntam).
+
+    Blocos com um `id` key:
+    - Se matches TASK-YYYYMMDD-... : abre/reabre (ou erro se duplicado)
+    - Se é exatamente o template placeholder TASK-YYYYMMDD-### : pulado
+    - Se é outro string não-vazio que falha o regex : ValueError (malformado)
+
+    Blocos SEM um `id` key, antes de qualquer task válida, são órfãos -> ignorado.
+    Blocos SEM um `id` key, depois que uma task foi aberta : merged.
     """
     tasks: dict[str, dict] = {}
     order: list[str] = []
@@ -48,14 +53,29 @@ def parse_task_register(text: str) -> list[dict]:
             continue
         block_id = data.get("id")
         if isinstance(block_id, str) and TASK_ID_RE.match(block_id):
+            # Valid task ID format
             if block_id in tasks:
                 raise ValueError(f"id duplicado em TASK_REGISTER.md: {block_id}")
             tasks[block_id] = dict(data)
             order.append(block_id)
             current_id = block_id
+        elif "id" in data:
+            # Has an id key, but it doesn't match the regex
+            if block_id == "TASK-YYYYMMDD-###":
+                # Known template placeholder - skip silently
+                continue
+            # Malformed id - raise error
+            raise ValueError(
+                f"id malformado em bloco YAML: '{block_id}' "
+                f"não corresponde ao padrão TASK-YYYYMMDD-..."
+            )
         elif current_id is not None:
-            tasks[current_id].update(data)
-        # bloco órfão (sem id, antes de qualquer task válida) -> ignorado
+            # No id key at all - this is a continuation block (Retorno)
+            # Merge it, but protect id field from being overwritten
+            merged = dict(data)
+            merged.pop("id", None)
+            tasks[current_id].update(merged)
+        # else: orphaned block (no id key, before any valid task) -> ignored
     return [tasks[i] for i in order]
 
 

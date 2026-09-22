@@ -1,11 +1,14 @@
 import textwrap
 import pytest
+from pathlib import Path
 from migrate_task_register import (
     parse_task_register,
     render_task_note,
     normalize_project,
     classify_tipo,
     extract_date,
+    migrate,
+    MigrationReport,
 )
 
 SAMPLE = textwrap.dedent('''
@@ -121,3 +124,84 @@ def test_render_task_note_has_valid_frontmatter_and_sections():
     assert "- log X" in note
     # seção sem dado correspondente não aparece
     assert "## Próximo passo" not in note
+
+
+def test_malformed_id_raises_error():
+    """Critical: blocks with non-matching id strings must raise, not silently merge."""
+    malformed_sample = textwrap.dedent('''
+        ```yaml
+        id: TASK-20260101-001
+        objetivo: "Task válida"
+        ```
+
+        ```yaml
+        id: MALFORMED-ID
+        resultado: "Não deve ser mesclado"
+        ```
+    ''')
+    with pytest.raises(ValueError, match="malformado"):
+        parse_task_register(malformed_sample)
+
+
+def test_migrate_fresh_run_writes_files(tmp_path):
+    """Important: migrate() should write task files on fresh run."""
+    task_register = tmp_path / "TASK_REGISTER.md"
+    tasks_dir = tmp_path / "tasks"
+
+    # Create a simple task register
+    task_register.write_text(textwrap.dedent('''
+        ```yaml
+        id: TASK-20260101-001
+        objetivo: "Test task"
+        projeto: "jaaz"
+        ```
+    '''))
+
+    # Run migration
+    report = migrate(task_register, tasks_dir)
+
+    # Verify files were written
+    assert len(report.written) == 1
+    assert "TASK-20260101-001" in report.written
+    assert len(report.skipped) == 0
+
+    # Verify the output file exists and has correct content
+    out_file = tasks_dir / "TASK-20260101-001.md"
+    assert out_file.exists()
+    content = out_file.read_text()
+    assert "id: TASK-20260101-001" in content
+    assert "## Objetivo" in content
+
+
+def test_migrate_idempotency_skips_existing_files(tmp_path):
+    """Important: running migrate() twice should skip already-written files."""
+    task_register = tmp_path / "TASK_REGISTER.md"
+    tasks_dir = tmp_path / "tasks"
+
+    # Create a simple task register
+    task_register.write_text(textwrap.dedent('''
+        ```yaml
+        id: TASK-20260101-001
+        objetivo: "Test task"
+        projeto: "jaaz"
+        ```
+    '''))
+
+    # Run migration first time
+    report1 = migrate(task_register, tasks_dir)
+    assert len(report1.written) == 1
+    assert len(report1.skipped) == 0
+
+    # Get the original content
+    out_file = tasks_dir / "TASK-20260101-001.md"
+    original_content = out_file.read_text()
+
+    # Run migration second time
+    report2 = migrate(task_register, tasks_dir)
+    assert len(report2.written) == 0
+    assert len(report2.skipped) == 1
+    assert "TASK-20260101-001" in report2.skipped
+
+    # Verify file was NOT overwritten
+    final_content = out_file.read_text()
+    assert final_content == original_content
