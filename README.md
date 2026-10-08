@@ -18,8 +18,8 @@ instruções específicas de cada ferramenta.
 5. Entregar resultado com o formato do contrato.
 6. Para versionamento e commits rápidos e seguros no Video Studio e outros produtos, consulte [VCS_PLAYBOOK.md](file:///root/agent-team/VCS_PLAYBOOK.md).
 7. Notas de entrada por produto (visão geral, onde vive o código real, links)
-   ficam em `projects/`: [jaaz](projects/jaaz.md), [opensuite](projects/opensuite.md)
-   e [neuro-studio-mvp](projects/neuro-studio-mvp.md).
+   ficam em `projects/`: [jaaz](projects/jaaz.md), [opensuite](projects/opensuite.md),
+   [neuro-studio-mvp](projects/neuro-studio-mvp.md) e [flow-studio](projects/flow-studio.md).
 8. Este repositório também é um vault Obsidian ("segundo cérebro") — para
    conectar um cliente Obsidian a ele, veja [docs/obsidian-setup.md](docs/obsidian-setup.md).
 
