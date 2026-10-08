@@ -51,3 +51,29 @@ Reproduzir um "Lamplighter" equivalente:
 
 - Os dois motores do Flow exigem Chrome com tela e login manual. É preciso escolher uma máquina com display ou um CT com Xvfb e noVNC (P1).
 - Risco de bloqueio da conta Google Pro pessoal por automação. Usar só em desenvolvimento, nunca para clientes.
+
+## Atualização 2026-10-08 (Claude): decisão e backend
+
+- **Decisão do Paolo:** fidelidade ao vídeo primeiro ("deixamos o simples funcional e vamos aplicando melhorias").
+- **P1 decidido:** o motor do Flow é o **flow-mcp**. O adaptador gflow-cli foi removido de `/root/flow-studio-api`.
+- **Backend `/root/flow-studio-api` @ `80d8a39`:** fluxo `/api/projects` cobrindo P2, P3, P4, P5, P6 e P7, com a parte de backend de P9 (campo `technique` por cena). Rotas no README.
+  - Chama o flow-mcp via `POST http://127.0.0.1:$FLOW_MCP_PORT/api/<tool>` com o token, e busca os arquivos por `/media`.
+  - Testes: 13 passam, incluindo o "Lamplighter" ponta a ponta contra um flow-mcp falso e FFmpeg real.
+  - Esses testes provam a ordem das etapas, o personagem em todas as imagens, os shots encadeados (imagem N → N+1), o teto de 15 créditos por shot, a recusa acima do teto e a narração de 32 s sem corte.
+- **P8:** só a emenda exata (`chain_previous`), que é o padrão recomendado no vídeo. "Travar personagem" fica para a fase de melhorias.
+- **Não verificado ao vivo:** nenhuma chamada real ao Flow, porque não há tela nem login.
+
+### Coordenação com o Codex (importante)
+
+- O flow-mcp precisa ser iniciado com `FLOW_MCP_PORT=8792`. A porta 8787 é do gateway Caveman: com ela ocupada, o flow-mcp não sobe a API HTTP, e o backend fica sem acesso a ele.
+- Só um processo pode ser dono do Chrome e da fila. Em vez de o `server/provider-api.mjs` iniciar a própria instância por stdio, o login e o status devem usar o mesmo processo `npm run studio` na 8792.
+- **P13 (frontend):** trocar o wizard simulado pelo fluxo `/api/projects`:
+  1. Perguntas → Plano (editável).
+  2. Personagem (retrato e "editar").
+  3. Imagens (grade com "refazer" e feedback por cena).
+  4. Narração (player).
+  5. Orçamento → aprovar.
+  6. Vídeos.
+  7. Corte → download.
+  - Acompanhar `GET /api/projects/{id}` até `busy` virar `null`, mostrando `error` quando houver.
+  - Apontar o proxy do Vite para a porta 8791.
