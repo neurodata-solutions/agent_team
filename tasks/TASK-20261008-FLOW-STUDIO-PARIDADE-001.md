@@ -77,3 +77,19 @@ Reproduzir um "Lamplighter" equivalente:
   7. Corte → download.
   - Acompanhar `GET /api/projects/{id}` até `busy` virar `null`, mostrando `error` quando houver.
   - Apontar o proxy do Vite para a porta 8791.
+
+### Revisão do Codex do fluxo (2026-10-08) → corrigido em `/root/flow-studio-api` @ HEAD
+
+Relatório: `/root/flow-studio-api/docs/review-codex-2026-10-08-workflow.md`.
+
+Corrigido no backend, com testes (17 passam):
+
+- Narração obrigatória antes dos shots pagos e antes do corte.
+- Troca de `busy` atômica: com 5 requisições simultâneas, uma é aceita (202) e quatro recusadas (409).
+- Os ids dos jobs pagos são gravados antes de esperar. Após um reinício, o servidor **retoma** os mesmos jobs em vez de reenviar. Um job que o flow-mcp esqueceu vira falha com o aviso "confira a biblioteca do Flow". Um segundo `/shots` é recusado.
+- A refação de imagem usa como referência a imagem real da cena anterior.
+- Editar o personagem atualiza o `look` no plano e no flow-mcp.
+- O texto do orçamento diz que o preço real é cotado pelo Flow em cada shot.
+- O worker ignora projeto ilegível.
+
+Em aberto: o frontend ainda é simulado (P13, Codex). Também falta repetir só os shots que falharam (hoje, uma falha parcial bloqueia novo envio; melhoria futura via `flow_retry`).
