@@ -127,6 +127,11 @@ necessária.
 
 ## Ações operacionais
 
+**Mapa de acessos (obrigatório):** antes de planejar qualquer ação em infra, container, rede, segredo ou serviço, ler [`docs/ACESSOS-E-PERMISSOES.md`](docs/ACESSOS-E-PERMISSOES.md). Ele registra o que passa, o que é bloqueado (e por quê), o caminho certo para cada caso e as pegadinhas do host.
+
+- Ação bloqueada não é contornada: vira um script versionado e um único comando completo para o usuário rodar, sem marcadores como `<pasta>`.
+- Todo bloqueio ou liberação nova é registrado nesse arquivo na mesma sessão.
+
 Antes de uma ação operacional, confirmar máquina, serviço e efeito esperado.
 Editar código não equivale a implantar. Grafos devem corresponder ao projeto e
 à versão; informações relevantes devem ser confirmadas na fonte.
