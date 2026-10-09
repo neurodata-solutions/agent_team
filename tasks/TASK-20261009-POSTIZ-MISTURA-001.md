@@ -72,3 +72,26 @@ O mesmo post do piloto automático vai para 4 contas: `myrepos | Open Source e A
 Pendente:
 - **Deploy da branch:** OK do Paolo.
 - **Remoção manual** dos reels já publicados no Historiador (t3code em 05/10 e OpenShell em 08/10).
+
+## Deploy (09/10 14:35 UTC, aprovado: "pode seguir")
+
+- **Achado antes do deploy:**
+  - A produção rodava `opensuite-jaaz:v0.3.10-n1-direct-video`, e não a v0.3.8.
+  - Essa imagem = worktree `N1-OMNIROUTE-001` **com 5 alterações não commitadas** (verificado: 139/139 `.py` idênticos).
+  - O overlay usado (`/tmp/jaaz-compose-v0310-n1-direct-video.yml`) tinha sumido.
+- **Branch `fix/POSTIZ-MISTURA-001` @ `4834192`:** essas 5 alterações foram copiadas sem mudança (commit próprio), mais os 2 commits da correção. Diferença para a produção anterior: só `postiz_client.py`, `autonomy_service.py` e `video_router.py`.
+- **Suíte:**
+  - produção anterior: 261 testes, 4 falhas e 2 erros;
+  - combinado: 269 testes, as mesmas 4 falhas e 2 erros.
+  - A falha `test_forced_media_call::test_forced_video_call_reads_duration_from_request` **já existia na v0.3.10** (vem das alterações não commitadas do N1), e não da correção.
+- **Script** `CT100:/root/deploy/deploy-jaaz-v0311.sh`: build `opensuite-jaaz:v0.3.11-n1-postiz-ids` (contexto `/root/deploy/jaaz-v0311`, overlay `jaaz-compose-v0311.yml`), checagem de `/health`, da trava de canais e da configuração do piloto automático, com rollback automático.
+- **Resultado:** no ar. Conferido depois:
+  - 139/139 arquivos iguais à branch;
+  - piloto automático parado, com as contas do MyRepos;
+  - `/api/video/social/channels` responde (Postiz ok);
+  - fila das 18:00 intacta: MyRepos ativo e Historiador removido.
+- **Rollback:**
+  ```
+  cd /root/opensuite && docker compose -f docker-compose.yml -f /root/deploy/jaaz-compose-v0310.yml up -d --no-deps jaaz
+  ```
+  A imagem v0.3.10 foi mantida.
