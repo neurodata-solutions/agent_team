@@ -51,3 +51,24 @@ O mesmo post do piloto automático vai para 4 contas: `myrepos | Open Source e A
 2. **Configuração do piloto automático:** `postiz_channels = ["cmu86xrbr0001mk8cqt3xn1v1", "cmultrpgv0005mkmg73x0u6dz"]`, aplicado via `update_config`, com backup do JSON antes.
 3. **Código (branch, sem deploy imediato):** o piloto automático recusa nomes de rede genéricos e exige IDs de integração. Assim, conta nova nunca entra sozinha. Teste de regressão incluído.
 4. **Já publicados** (t3code em 05/10 e OpenShell em 08/10) nas contas do Historiador: remover manualmente no Instagram e no Facebook, decisão do Paolo.
+
+## Execução (09/10, aprovada pelo Paolo: "sim, temos que separar bem as coisas")
+
+1. **Feito.** Os 4 posts errados na fila do Historiador (raddebugger e laya, IG e FB) foram marcados com `deletedAt`, que é o mesmo mecanismo do delete do Postiz.
+   - Confirmado em `post.activity.js:84`: o agendador não publica post com `deletedAt`.
+   - Os do MyRepos seguem em `QUEUE` para 18:00. Os 5 rascunhos do Historiador não foram tocados.
+   - Backup em `/root/backup-postiz-historiador-fila-20261009.csv`.
+2. **Feito.** O piloto automático passou a usar `postiz_channels = [cmu86xrbr…, cmultrpgv…]`, aplicado via `POST /api/video/autonomy/config` e conferido no arquivo. Backup em `autonomy_state.json.bak-20261009-mistura`, no container.
+3. **Branch `fix/POSTIZ-MISTURA-001`** (worktree `/root/work/claude/POSTIZ-MISTURA-001`, base `003dbf1` = produção), commits `284b831` e `416d53e`, **sem deploy**:
+   - `postiz_client` só aceita IDs explícitos. Nome de rede, lista vazia, ID desconhecido ou conta desativada geram `ValueError`, e a rota manual devolve 400.
+   - Saíram os padrões `["instagram","facebook"]` do piloto automático, da rota e do esquema `PublishToSocialRequest`.
+   - Modal: jobs que não são do Git abrem sem conta marcada; o modo Git nunca cai para "todas"; os botões genéricos instagram/facebook do fallback foram removidos.
+   - Testes:
+     - 8 novos, e 6 deles falham no código antigo;
+     - suíte em container: base 259 testes contra fix 267, com as mesmas 3 falhas e 2 erros de coleta pré-existentes;
+     - `tsc`: nenhum erro novo (o único erro no modal, `onOpenChange` sem tipo, já existia).
+   - Revisão do Codex: `docs/reviews/codex-POSTIZ-MISTURA-001.md` na branch. Os 3 achados (1 🔴 e 2 🟡) foram corrigidos em `416d53e`.
+
+Pendente:
+- **Deploy da branch:** OK do Paolo.
+- **Remoção manual** dos reels já publicados no Historiador (t3code em 05/10 e OpenShell em 08/10).

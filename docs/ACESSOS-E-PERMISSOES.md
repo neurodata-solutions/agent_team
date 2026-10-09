@@ -31,6 +31,10 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | Delegar revisão ao Codex somente leitura, em segundo plano | `codex exec -s read-only -C <dir> -o <arq>` | 08/10 |
 | Consultar o Proxmox (leitura) | `pct list`, `pct config 102`, `pvesm status`, `pveversion`, `ping` | 08/10 |
 | Ler o estado de containers do CT100 sem valores secretos | `pct exec 100 -- docker ps`, `docker inspect … --format '{{label}}'`, ler README/compose com valores mascarados | 08/10 |
+| Ler o banco do Postiz (só `select`) | `pct exec 100 -- docker exec postiz-postgres psql -U postiz-user -d postiz-db-local -c "select …"` | 09/10 |
+| Alterar produção **com OK explícito do usuário**, backup antes e comando simples | `update "Post" set "deletedAt"…` por IDs; `POST /api/video/autonomy/config` via `docker exec opensuite-jaaz python3 -c …` | 09/10 |
+| Ler arquivo de config (sem segredos) dentro do container de produção | `docker exec opensuite-jaaz python3 -c "json.load(open('…/autonomy_state.json'))"` | 09/10 |
+| Rodar a suíte do Jaaz em container descartável no host | `docker run --rm -v <worktree>:/src:ro python:3.12-slim …` | 09/10 |
 | Buscar documentação externa | `curl https://ai.google.dev/…md.txt`, Firecrawl | 08/10 |
 
 ### Bloqueado, e o caminho certo
@@ -55,6 +59,7 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | Debian 11 em CT novo | O bullseye saiu dos espelhos normais, então o primeiro `apt-get update` falha e o provisionamento com `set -e` para logo no início (CT 103, 08/10). | Repositórios em `archive.debian.org` (`debian`, `debian-security`). Conferir com `pct exec <id> -- timeout 60 apt-get update` antes de provisionar. |
 | `pct exec <id> -- <comando>` sozinho | Passa pela regra `Bash(pct exec *)` (verificado em 08/10 no CT 103: `systemctl is-active`, `dpkg -s`, `apt-get update`, rodar o script de provisionamento). | Um comando por chamada, sem `&&`, `\|` ou `sh -c`. |
 | Tela | O host não tem `DISPLAY`: nada que precise de navegador com tela (login Google, Flow) roda nele. | CT 103 com Xvfb e noVNC (`/root/flow-studio-api/deploy/`). |
+| pytest do Jaaz | Um módulo do app fecha o `stdout` durante a importação: o pytest perde a saída ("I/O operation on closed file") e alguns módulos exigem `POSTIZ_API_KEY`/`POSTGRES_PASSWORD` só para importar. | `POSTIZ_API_KEY=test-only POSTGRES_PASSWORD=test-only pytest -s --continue-on-collection-errors --junitxml=…` e ler o XML. |
 | YouTube | `yt-dlp` é bloqueado ("Sign in to confirm you're not a bot"). | Firecrawl para descrição e capítulos, ou legenda já baixada (`/tmp/flow-video/`). |
 | Infisical CLI no host | Não está logado. O servidor é self-hosted em `192.168.0.200:8620` com certificado autoassinado. | O usuário roda `! infisical login` e informa projeto e pasta. |
 
