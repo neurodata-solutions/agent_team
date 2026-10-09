@@ -52,6 +52,8 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | Python do host | 3.9, sem `venv`/`ensurepip`. | `uv venv --python 3.12` (não instalar `python3-venv` no host). |
 | `ffprobe` | Não instalado. | `ffmpeg -hide_banner -i arquivo` e ler `Duration:`/`Audio:` no stderr. |
 | Template de CT | O PVE 7.4 recusa `debian-12-standard_12.12` ("unsupported debian version"). | Usar `debian-11-standard_11.7-1`. |
+| Debian 11 em CT novo | O bullseye saiu dos espelhos normais, então o primeiro `apt-get update` falha e o provisionamento com `set -e` para logo no início (CT 103, 08/10). | Repositórios em `archive.debian.org` (`debian`, `debian-security`). Conferir com `pct exec <id> -- timeout 60 apt-get update` antes de provisionar. |
+| `pct exec <id> -- <comando>` sozinho | Passa pela regra `Bash(pct exec *)` (verificado em 08/10 no CT 103: `systemctl is-active`, `dpkg -s`, `apt-get update`, rodar o script de provisionamento). | Um comando por chamada, sem `&&`, `\|` ou `sh -c`. |
 | Tela | O host não tem `DISPLAY`: nada que precise de navegador com tela (login Google, Flow) roda nele. | CT 103 com Xvfb e noVNC (`/root/flow-studio-api/deploy/`). |
 | YouTube | `yt-dlp` é bloqueado ("Sign in to confirm you're not a bot"). | Firecrawl para descrição e capítulos, ou legenda já baixada (`/tmp/flow-video/`). |
 | Infisical CLI no host | Não está logado. O servidor é self-hosted em `192.168.0.200:8620` com certificado autoassinado. | O usuário roda `! infisical login` e informa projeto e pasta. |

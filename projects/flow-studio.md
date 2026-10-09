@@ -40,3 +40,12 @@ clonado em `/root/flow-mcp-source`. O nicho Achadinhos entra depois, pelo mesmo 
 Custo do filme de 30 s: 45 créditos Flow. O plano grátis dá 50 créditos por dia.
 
 Backlog de paridade: [TASK-20261008-FLOW-STUDIO-PARIDADE-001](../tasks/TASK-20261008-FLOW-STUDIO-PARIDADE-001.md).
+
+## Ideia futura (Paolo, 2026-10-08)
+
+Reaproveitar o CT 103 "flow-browser" (Chrome logado, Xvfb e noVNC) como **navegador de serviço** para outros modelos e ferramentas que só existem como site, no mesmo padrão MCP do flow-mcp.
+
+- Um perfil de Chrome por conta ou ferramenta.
+- Uma fila por perfil.
+- Ritmo humano, para reduzir o risco de bloqueio.
+- Preferir a API oficial sempre que existir.
