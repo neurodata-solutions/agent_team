@@ -17,7 +17,7 @@ tags:
 
 ## Fontes
 
-- Vídeo `JEla_mdlfxs`: descrição, capítulos e legenda en-US, lidos em 08/10. A legenda veio do download que o Codex fez em `/tmp/flow-video/`. A cópia integral não foi versionada por ser conteúdo de terceiros.
+- Vídeo `JEla_mdlfxs`: descrição, capítulos e legenda en-US, lidos em 08/10. A legenda veio do download que o Codex fez em `/tmp/flow-video/`. A cópia integral não foi versionada por ser conteúdo de terceiros. Essa cópia se perdeu; em 13/10 a legenda foi baixada de novo para `/root/incoming/flow-video/` (`JEla_mdlfxs.en-US.vtt` e versão em texto `.txt`), fora do git.
 - Documentação da ferramenta do vídeo: `/root/flow-mcp-source/OVERVIEW.md` e `src/index.ts`, com 18 ferramentas MCP (`flow_status`, `flow_generate`, `flow_continue`, `flow_character`, `flow_character_edit`, `flow_agent_images`, `flow_narrate`, `flow_assemble`, `flow_edit`, `flow_techniques` etc.).
 - Estado atual: `/root/flow-studio-api` @ `9dde77b`, `/root/flow-studio-mvp` (wizard com 4 etapas) e `/root/relatorios/TASK-20261008-FLOWROOM-PROVIDERS-001.md`.
 
