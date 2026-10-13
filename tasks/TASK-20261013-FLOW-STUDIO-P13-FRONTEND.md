@@ -1,6 +1,6 @@
 ---
 id: TASK-20261013-FLOW-STUDIO-P13-FRONTEND
-estado: enviada ao Codex
+estado: entregue — falta teste real no CT103
 dono: Codex
 pedido_por: Paolo (13/10: "envie ao codex")
 checkout_reservado: /root/flow-studio-mvp
@@ -43,4 +43,44 @@ achados 1 a 3 de `/root/flow-studio-api/docs/review-codex-2026-10-08.md`.
 
 ## Relatório do Codex
 
-(pendente)
+Tarefa: TASK-20261013-FLOW-STUDIO-P13-FRONTEND  
+Estado: parcial — implementação e gates de código concluídos; gate visual/end-to-end bloqueado pelo sandbox desta sessão.  
+Escopo verificado: `/root/flow-studio-mvp`, frontend Vite/React e bridge local `server/provider-api.mjs`; backend apenas lido em `/root/flow-studio-api`. Nenhuma alteração no backend, CT103 ou produção.
+
+### Alterações
+
+- `vite.config.ts`: proxy `/api` para `process.env.FLOW_API_TARGET ?? 'http://127.0.0.1:8791'`.
+- `src/App.tsx`: substituição do storyboard/render simulado pelo fluxo real de `/api/projects`: briefing com teto/voz, plano editável, personagem e edição, grade de frames com refação/feedback, narração com player, quote, aprovação explícita dos shots, polling até `busy == null`, exibição de `error`/409 e corte/download.
+- `src/providers.ts`: Google Flow inicia como `offline`/desconhecido; somente resposta real `connected: true` muda para `ready`.
+- `src/App.css`: estados de erro, processamento, assets, frames, quote e player.
+- `server/provider-api.mjs`: remoção do `FlowMcpClient` e das chamadas stdio duplicadas; o processo não inicia outra instância do flow-mcp. O arquivo de cliente obsoleto `server/flow-mcp-client.mjs` foi removido.
+
+### Validação
+
+- `npm run build`: passou.
+- `npm run lint`: passou; permanece apenas warning não bloqueante `react(set-state-in-effect)` em `src/App.tsx:37`.
+- `node --check server/provider-api.mjs`: passou.
+- Busca estática: não há timer simulando etapa; o único `setTimeout` é o intervalo de polling de `GET /api/projects/{id}`. Não há `google-flow` inicializado como `ready`.
+- Nenhuma chamada paga ao Flow/Gemini foi feita.
+- Tentativa de backend mock local e Vite: bloqueada por `listen EPERM` ao abrir sockets no sandbox.
+- Tentativa de Playwright com Chromium local: bloqueada por `setsockopt EPERM`/falha do crashpad; não foi possível exercitar o fluxo real nem gravar `/root/qa/ui-evidence/.../evidence.json` porque essa raiz não é gravável nesta sessão.
+
+### O que ficou de fora / riscos
+
+- Gate Playwright e evidência QA-UI-001 continuam pendentes e são obrigatórios antes de declarar concluída.
+- O warning de `useEffect` é de lint não bloqueante e não altera o fluxo.
+- O bridge legado ainda pode ser iniciado pelo script local na porta 8788, mas não possui mais cliente stdio nem rota de provider; o backend real em 8791 é a fonte do `/api`.
+
+
+## Verificação independente (Claude, 13/10)
+
+- `npm run build` passa; `npm run lint` passa, com 1 aviso (`set-state-in-effect`, `App.tsx:37`).
+- **Ponta a ponta no navegador** (Chromium headless; o gate que o sandbox do Codex bloqueou):
+  - backend real `flow-studio-api` na 8791 com o flow-mcp, o OmniRoute e o Gemini falsos da suíte (`tests/test_studio.py`), sem nenhuma chamada paga; Vite na 5199 com o proxy novo;
+  - Briefing → Plano → Personagem → Imagens → Narração → Orçamento → aprovar → Vídeos → Corte → "Baixar vídeo": todas as etapas concluídas, 0 erro no console, 45/45 créditos no fake, `final.mp4` servido por `/files/final.mp4`;
+  - cada etapa bateu na rota certa (`POST /api/projects`, `PUT /plan`, `/character`, `/frames`, `/narration`, `GET /quote`, `/shots`, `/cut`).
+- **Observações (não bloqueiam):**
+  - a tela de entrega mostra um cartão "final.mp4" com ▶, mas não há `<video>` tocando o arquivo;
+  - "Minha conta / Google AI Pro" na barra lateral é texto fixo;
+  - `App.tsx` tem 71 linhas, sendo 19 com mais de 300 caracteres (JSX em linha única), o que dificulta revisar e manter.
+- **Falta:** o teste real no CT103 (login do Google no Chrome via noVNC + as chaves do OmniRoute e do Gemini).
