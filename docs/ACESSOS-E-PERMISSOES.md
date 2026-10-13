@@ -45,6 +45,7 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | Procurar tokens e chaves em arquivos, logs ou configs (`grep CLOUDFLARE_API_TOKEN …`, config do Codex) | Credential Exploration | O segredo é usado via `infisical run --env=… --path=… -- <script>`, executado pelo usuário com `!`. O agente nunca vê o valor. |
 | Criar container (`pct create`) | Modify Shared Resources | Script versionado em `deploy/`, testado com `bash -n`, entregue como **um** comando `!` completo. |
 | Reiniciar serviço de produção (OmniRoute CT102, set/2026) | bloqueado no auto mode | Script no scratchpad e o usuário roda com `!` |
+| Mover arquivo de segredo e reiniciar serviço no CT103 numa linha só (`pct exec 103 -- sh -c 'mv … && systemctl restart flow-studio-api'`) | Remote Shell Writes (13/10) | Script no scratchpad e o usuário roda com `!`. Validar a chave antes, só com chamadas que não custam (listar modelos). |
 | Ler `package.json`, `git diff` e `src/platform.ts` em `/root/flow-mcp-source` (pasta onde o Codex está trabalhando) | Modify Shared Resources (falso positivo) | Não insistir. Escrever código que não dependa desse detalhe, ou pedir ao usuário. |
 
 ## Pegadinhas do ambiente (não são permissão, mas causam erro)
