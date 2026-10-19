@@ -1,7 +1,7 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: v0.3.14 no ar (19/10 23:42 UTC); v0.3.16 (candidatos + reels) aguardando deploy
+estado: v0.3.16 no ar (19/10 23:52 UTC); v0.3.17 (narração) aguardando deploy; gancho no renderizador aguardando decisão
 projeto: jaaz / myrepos
 responsavel: Claude Opus 5.5
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
@@ -94,6 +94,17 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
 - Testes: 47 ligados; suíte 306, mesmas 3 falhas antigas.
 - Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0316.sh`. Depois: vídeo de teste via `POST /api/video/repo-reels`
   (não publica) com um repo já postado, e conferir quadros antes do ciclo de 06:42 UTC.
+
+## Teste de vídeo na v0.3.16 (job repo-455f16c9, diagram-design, não publicado)
+
+- Abertura pela imagem de demonstração funciona (0–3,5 s), depois GitHub e terminal.
+- **O gancho nunca apareceu em nenhum reel:** `RepoExplainerVideo.tsx` (renderizador) ignora a prop `hook`;
+  `HookOverlay.tsx` existe e é usado só pela `ShortVideo`. Fonte: CT100 `/root/opensuite/services/openshorts/remotion`,
+  com mudanças sem commit de outro agente (Root, BrowserScrollScene, Subtitles, captions, types, 3 componentes novos).
+  Rebuild do renderizador levaria esse trabalho junto: decisão do Paolo.
+- Imagem de demonstração com `objectFit: contain` fica pequena com faixas pretas (renderizador também).
+- Duração: alvo 22 s saiu 34,2 s (60 palavras, comando lido em voz alta) → v0.3.17 (@ 80cad7e): 1,8 palavra/s e
+  proibido ler comandos/URLs. Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0317.sh`.
 
 ## Próximas fases
 
