@@ -1,7 +1,7 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: v0.3.14 no ar (19/10 23:42 UTC); v0.3.15 (candidatos) aguardando deploy
+estado: v0.3.14 no ar (19/10 23:42 UTC); v0.3.16 (candidatos + reels) aguardando deploy
 projeto: jaaz / myrepos
 responsavel: Claude Opus 5.5
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
@@ -84,6 +84,16 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
 - Ciclo agendado que falha tenta de novo em 1 h.
 - Testes: 41 ligados; suíte 304, mesmas 3 falhas antigas.
 - Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0315.sh` (rollback automático para v0.3.14).
+
+## v0.3.16 (@ 820c23e) substitui a v0.3.15 (script removido do CT100)
+
+- Inclui a v0.3.15 (candidatos dia/mês, retry 1 h).
+- Vídeo: quando o README tem imagem de demonstração, ela abre os primeiros 3,5 s (screenshot_zoom, com o gancho);
+  depois página do GitHub e terminal. Narração mira 22 s (antes 28 s; saía ~36 s). Roteiro para o público geral,
+  1ª frase = benefício em até 10 palavras.
+- Testes: 47 ligados; suíte 306, mesmas 3 falhas antigas.
+- Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0316.sh`. Depois: vídeo de teste via `POST /api/video/repo-reels`
+  (não publica) com um repo já postado, e conferir quadros antes do ciclo de 06:42 UTC.
 
 ## Próximas fases
 
