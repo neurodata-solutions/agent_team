@@ -1,7 +1,7 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: aguardando deploy (usuário roda)
+estado: v0.3.13 no ar (19/10 23:36 UTC); v0.3.14 (relatório) aguardando deploy
 projeto: jaaz / myrepos
 responsavel: Claude Opus 5.5
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
@@ -54,9 +54,25 @@ Dados brutos (fora do git): scratchpad da sessão 2ab77fa3 (`gt_all.json`, `ba_a
 → imagem `opensuite-jaaz:v0.3.13-n1-myrepos-crescimento`, rollback automático para v0.3.12. Não mexe em banco.
 Rollback manual: `cd /root/opensuite && docker compose -f docker-compose.yml -f /root/deploy/jaaz-compose-v0312.yml up -d --no-deps jaaz`.
 
+## Deploy v0.3.13: feito (19/10, 23:36 UTC)
+
+Usuário rodou `deploy-jaaz-v0313.sh`: build ok, /health 200, piloto com `postiz_schedule_slots` 12:00/19:00 America/Sao_Paulo.
+Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10. Conferir `history[0].editorial.source`.
+
+## Fase 1: relatório (@ 0a9a7ff, aguardando deploy)
+
+- Medido em 19/10 (Graph API): reel da MyRepos com **5,5 s de tempo médio assistido em 36 s**; o gancho é o gargalo.
+- Meta não dá `follows` por reel e devolve vazio para `follower_count`/`follows_and_unfollows` abaixo de 100 seguidores
+  (MyRepos: 91). Por isso o piloto tira uma foto diária de `followers_count` (`user_data/files/myrepos_followers.json`).
+- `GET /api/video/autonomy/report?days=7`: por reel (alcance, views, assistido, compart., salvos, coment.) e por série; JSON + `markdown`.
+- `OpenReplyService._find_account` extraído de `create_automation` (mesma busca), usado por `instagram_id_for_postiz_channel`.
+- Testes: 40 dos arquivos ligados passam; suíte completa 303, mesmas 3 falhas antigas.
+- Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0314.sh` (rollback automático para v0.3.13).
+- Verificar depois: `curl -s 127.0.0.1:57988/api/video/autonomy/report` no CT100 e o arquivo de fotos no dia seguinte.
+
 ## Próximas fases
 
-1. Relatório semanal: seguidores ganhos e alcance por post e por série (Graph API insights).
+1. Entrega semanal do relatório (onde: e-mail, Telegram, Notion? decidir com Paolo).
 2. Post em colaboração / aviso ao autor do repo.
 3. Carrossel "Top 5 da semana"; reels de teste; YouTube Shorts/TikTok.
 4. Vídeo abrindo no resultado (não na página do GitHub) — exige captura do projeto rodando ("Testei pra você").
