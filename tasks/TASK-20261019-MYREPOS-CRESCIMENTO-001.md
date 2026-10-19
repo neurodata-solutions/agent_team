@@ -1,7 +1,7 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: v0.3.13 no ar (19/10 23:36 UTC); v0.3.14 (relatório) aguardando deploy
+estado: v0.3.14 no ar (19/10 23:42 UTC); v0.3.15 (candidatos) aguardando deploy
 projeto: jaaz / myrepos
 responsavel: Claude Opus 5.5
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
@@ -69,6 +69,21 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
 - Testes: 40 dos arquivos ligados passam; suíte completa 303, mesmas 3 falhas antigas.
 - Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0314.sh` (rollback automático para v0.3.13).
 - Verificar depois: `curl -s 127.0.0.1:57988/api/video/autonomy/report` no CT100 e o arquivo de fotos no dia seguinte.
+
+## v0.3.14 no ar e primeiro relatório real (19/10)
+
+- Endpoint ok; foto de seguidores gravada (91 em 2026-10-19).
+- 16 reels em 7 dias, todos formato antigo: alcance mediano 147,5, **assistido médio 6,0 s**, 46 comentários.
+  Melhores: tester-army/e2e (1.449), ghidra (1.076), diagram-design (1.026).
+- **morluto/rea publicado 5 vezes e AnyPS5 2 vezes**: os 25 do trending semanal já tinham sido usados e o código antigo
+  repostava o 1º. A v0.3.13 pula o ciclo; mas então o scheduler tentaria de novo a cada 30 s.
+
+## v0.3.15 (@ 9d717b1, aguardando deploy, de preferência antes de 20/10 06:42 UTC)
+
+- Candidatos: categoria configurada → trending semana → dia → mês, URLs normalizadas, até 8.
+- Ciclo agendado que falha tenta de novo em 1 h.
+- Testes: 41 ligados; suíte 304, mesmas 3 falhas antigas.
+- Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0315.sh` (rollback automático para v0.3.14).
 
 ## Próximas fases
 
