@@ -1,7 +1,7 @@
 ---
 id: TASK-20261008-FLOW-STUDIO-PARIDADE-001
 tipo: task
-estado: aberta
+estado: adiada
 projeto: flow-studio
 responsavel: coordenador (Claude Opus 5.5); execução dividida entre Claude (backend) e Codex (frontend)
 data: '2026-10-08'
@@ -93,3 +93,9 @@ Corrigido no backend, com testes (17 passam):
 - O worker ignora projeto ilegível.
 
 Em aberto: o frontend ainda é simulado (P13, Codex). Também falta repetir só os shots que falharam (hoje, uma falha parcial bloqueia novo envio; melhoria futura via `flow_retry`).
+
+## Atualização 2026-10-19 (Paolo): projeto adiado
+
+- Paolo: "esse projeto vai ficar pra frente, pois instalamos local". O Flow Studio do vídeo já está instalado localmente e em uso; a versão própria (`flow-studio-api` + `flow-studio-mvp`, CT103) fica em espera.
+- Estado congelado: nenhuma geração real feita; `gemini.pending` não ativado no CT103; `OMNIROUTE_API_KEY` ausente no CT103; mudanças sem commit em `/root/flow-studio-api` (status simplificado do provedor e deploy CT103).
+- Ao retomar: começar pelos passos 1–4 da comparação de 19/10 (ativar Gemini, OmniRoute, teste de US$ 0,20, "Lamplighter").
