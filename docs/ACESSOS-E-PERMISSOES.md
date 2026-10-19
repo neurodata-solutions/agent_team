@@ -41,10 +41,11 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 
 | Ação | Motivo dado | Caminho certo |
 |---|---|---|
-| Ler variáveis de ambiente de container de produção (até só os nomes), ex.: `docker exec opensuite-jaaz … /proc/*/environ` | Production Reads | Pedir ao usuário só o **nome** da variável ou da pasta do Infisical. Nunca o valor. |
+| Ler variáveis de ambiente de container de produção (até só os nomes), ex.: `docker exec opensuite-jaaz … /proc/*/environ`. Em 19/10 também bloqueou carregar o ambiente do app num teste do N1 | Production Reads / Credential Exploration | Pedir ao usuário só o **nome** da variável ou da pasta do Infisical. Nunca o valor. |
 | Procurar tokens e chaves em arquivos, logs ou configs (`grep CLOUDFLARE_API_TOKEN …`, config do Codex) | Credential Exploration | O segredo é usado via `infisical run --env=… --path=… -- <script>`, executado pelo usuário com `!`. O agente nunca vê o valor. |
 | Criar container (`pct create`) | Modify Shared Resources | Script versionado em `deploy/`, testado com `bash -n`, entregue como **um** comando `!` completo. |
 | Reiniciar serviço de produção (OmniRoute CT102, set/2026) | bloqueado no auto mode | Script no scratchpad e o usuário roda com `!` |
+| Usar o token de uma integração da Postiz (tabela `Integration`) na Graph API da Meta | Não bloqueia, mas **vazou** em 19/10: a mensagem de erro da Meta ("Malformed access token …") repete o token. | O token é composto `user___page`: usar a parte certa. Nunca imprimir o JSON de erro cru; passar sempre por `re.sub(r'EAA\w+','[token]', …)`. Se vazar, pedir ao usuário para reconectar a conta na Postiz. |
 | Mover arquivo de segredo e reiniciar serviço no CT103 numa linha só (`pct exec 103 -- sh -c 'mv … && systemctl restart flow-studio-api'`) | Remote Shell Writes (13/10) | Script no scratchpad e o usuário roda com `!`. Validar a chave antes, só com chamadas que não custam (listar modelos). |
 | Ler `package.json`, `git diff` e `src/platform.ts` em `/root/flow-mcp-source` (pasta onde o Codex está trabalhando) | Modify Shared Resources (falso positivo) | Não insistir. Escrever código que não dependa desse detalhe, ou pedir ao usuário. |
 
