@@ -254,3 +254,10 @@ O Codex não viu a conversa; tudo o que importa está nesta nota.
 - Pendentes: vigia do OmniRoute (`scratchpad/dbwatch/install.sh`); etapa 2 (mover discos da VM 101 para `hdd-storage`,
   `mp0` de 200 GB no HDD para o CT100 e mover dados grandes) e etapa 3 (alerta de disco), aguardando janela do Paolo.
   Alerta: `local-lvm` com 362 GB alocados num pool de 348 GB (82%).
+
+### 20/10 ~10:45 UTC: por partes
+- Vigia do OmniRoute **instalado** (`omniroute-dbwatch.timer`, 10 min; teste a seco ok).
+- Mover discos da VM 101 para `hdd-storage`: bloqueado no auto mode (Protected-Scope IaC Apply) com autorização genérica;
+  comando para o Paolo: `qm move-disk 101 scsi0 hdd-storage && qm move-disk 101 scsi1 hdd-storage` (sem `--delete`; originais
+  viram `unused` e só saem depois de conferir). VM 101 não tem backup.
+- Alerta de disco: `scratchpad/disco-alerta.sh` (timer 30 min no host, limite 85%, e-mail root + journal `disco-alerta`).
