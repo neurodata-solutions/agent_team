@@ -18,6 +18,10 @@ Status: proposta. Nada além da fase 0 foi executado.
 
 ## Princípios
 
+0. **Desempenho (Paolo, 20/10): o HDD é lento (2,5", 5400 rpm).** Nada que serviços de produção leiam/gravem com frequência vai
+   para ele: bancos, imagens Docker, filas, cache, temporários de render ficam em SSD. HDD só para frio (laboratório parado,
+   arquivo de mídia antiga) e backups, de preferência gravados de madrugada.
+
 1. Backup antes de qualquer mudança de disco, e em disco diferente do original.
 2. SSD bom (Husky) para o que é quente: sistema, discos raiz dos guests, bancos, imagens Docker.
 3. HDD para o que é frio e grande: saídas de mídia, laboratórios parados, backups.
@@ -31,7 +35,7 @@ Status: proposta. Nada além da fase 0 foi executado.
 | Husky 512 SSD | `pve-root` 96 GB | Proxmox, ISOs/templates (`local`) | — |
 | | `local-lvm` 348 GB | CT100 rootfs 160 GB, CT102 32 GB (folga para crescer o CT100 depois) | 192 GB |
 | Kingston 120 SSD | novo `ssd-scratch` (lvmthin ~110 GB) | CT100 `mp1` `/mnt/scratch`: `video_jobs`, temporários de render, cache de build | ~100 GB |
-| WD 500 HDD | `hdd-storage` 442 GB | VM 101 (120 GB), CT103 (20 GB), CT100 `mp0` `/mnt/hdd` 120 GB (saídas de mídia, `/root/pessoal`, backups de deploy) | 260 GB |
+| WD 500 HDD | `hdd-storage` 442 GB | VM 101 (120 GB, laboratório parado), CT103 (20 GB), CT100 `mp0` `/mnt/hdd` 120 GB só para **arquivo frio** (mídia antiga já publicada, `/root/pessoal`, backups de deploy). Saídas em uso continuam no SSD. | 260 GB |
 | | novo `hdd-backup` (dir, LV thin 150 GB, ext4) | `vzdump` de CT100/CT102/CT103 | 150 GB |
 
 Total no HDD: 410 GB de 442 GB.
@@ -39,7 +43,8 @@ Total no HDD: 410 GB de 442 GB.
 ## Executado
 
 - 20/10: VM 101 copiada para `hdd-storage` (`qm move-disk` sem `--delete`); `qm config 101` aponta para o HDD; originais em
-  `local-lvm` como `unused0`/`unused1` (apagar: `qm disk unlink 101 --idlist unused0,unused1 --force`, aguardando OK).
+  `local-lvm` como `unused0`/`unused1`; apagados em 20/10 com OK do Paolo (`qm disk unlink … --force`).
+  `local-lvm`: 81,9% → 49,2% (185 GB livres); alocado 192 GB de 348 GB, fim do excesso de alocação.
 - 20/10: backup da configuração do host em `/root/backups/host-config-20261020-090812/` (288 KB, `chmod 700`):
   `etc.tgz` (`/etc/pve` com configs dos guests, rede, fstab, apt, lvm, systemd, cron, postfix, grub, kernel) e `info/`
   (pveversion, lsblk, blkid, `sfdisk -d` dos 3 discos, `vgcfgbackup` de `pve` e `vg-hdd`, pvesm, configs `qm`/`pct`, pacotes, IPs,
