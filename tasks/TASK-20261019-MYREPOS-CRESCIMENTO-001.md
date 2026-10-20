@@ -122,6 +122,18 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
   `! bash /tmp/claude-0/-root/2ab77fa3-2eb5-4193-9482-ed15764a8807/scratchpad/renderer-hook-host.sh`
   (backup do arquivo e tag `opensuite-renderer:pre-hook-<stamp>`, rollback automático).
 
+## 20/10 00:20–00:40 UTC: disco cheio no CT100 (incidente)
+
+- 1º deploy do renderizador (rebuild do zero) passou do tempo limite do `!`; script restaurou a fonte. Rebuild do zero
+  instalaria Chromium mais novo (cache apagado em 13/10) → trocado por imagem derivada (`FROM opensuite-renderer:latest` + 1 arquivo).
+- 2º deploy subiu, mas todo render deu "Page crashed!"; rollback feito pelo usuário e **continuou falhando** (até render mínimo).
+  Causa real: **disco do CT100 100% (182 MB livres)**; Chromium não grava em /tmp. Contribuíram as 5 imagens do Jaaz desta noite
+  e o build do renderizador. Usuário rodou `docker builder prune -f`: 8,5 GB liberados, 6,5 GB livres (96%). Render mínimo ok.
+- Gancho testado num container isolado (`renderer-hook-test`, porta interna, removido depois): gancho visível e some aos 3,5 s,
+  fundo desfocado, imagem de demonstração com `width: 96%`. Arquivo final sha256 cd2920e8….
+- Pendente: usuário rodar `! bash …/scratchpad/renderer-hook-host.sh` (hash atualizado); depois teste real via `/repo-reels`.
+- A fazer: scripts de deploy do Jaaz removerem versões intermediárias; alerta de disco no CT100 (encheu em 13/10 e 20/10).
+
 ## Próximas fases
 
 1. Entrega semanal do relatório (onde: e-mail, Telegram, Notion? decidir com Paolo).
