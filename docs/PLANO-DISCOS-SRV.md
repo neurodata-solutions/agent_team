@@ -60,7 +60,21 @@ Total no HDD: 410 GB de 442 GB.
 - Depois de conferir `qm config 101`, apagar os discos originais (`unusedN`) no `local-lvm` → libera ~114 GB. Precisa de OK.
 - Decidir se a VM 101 ainda é necessária (se não, pode até ser removida).
 
-### Fase 1: backups (antes de mexer em mais nada)
+### Fase 1: backups — FEITA em 20/10 (autorizada pelo Paolo)
+- LV thin `vg-hdd/backup` 220 GB (criado com 150 e aumentado online), ext4 `hdd-backup`, montado em `/mnt/hdd-backup` com
+  `defaults,nofail,x-systemd.device-timeout=15s` (`findmnt --verify` ok). Originais: `/root/backups/fstab.before-hdd-backup-*`,
+  `/root/backups/storage.cfg.before-hdd-backup-*`.
+- Storage `hdd-backup` (dir, `content backup`, `is_mountpoint yes`). Pastas com 755: o `tar` de CT sem privilégios roda como
+  uid 100000 e falha com 700.
+- Primeiros backups (snapshot, zstd): CT102 1,7 GB (1 min 49 s), CT103 2,8 GB (5 min 46 s, lê e grava no mesmo HDD),
+  CT100 82,6 GB (128 GB lidos, 42 min, 52 MiB/s; serviços no ar, carga ~12/16). `zstd -t` ok e arquivo restaurado de CT100 e CT102.
+- Jobs (`/etc/pve/jobs.cfg`, e-mail para root em falha): `backup-diario-ct102-ct103` 02:30 `keep-daily=7`;
+  `backup-semanal-ct100` domingo 03:30 `keep-last=1` (o novo é gravado antes de apagar o antigo: precisa de ~2×83 GB).
+- Cópia da config do host em `/mnt/hdd-backup/host-config/`.
+- Pool HDD: 410 GB alocados de 442 GB; uso real 46%.
+- Falta: cópia fora do host; backup da VM 101 (não incluída; decidir se ela fica).
+
+### Fase 1 (plano original)
 1. Criar LV thin `vg-hdd/backup` 150 GB, ext4, montado em `/mnt/hdd-backup` (fstab), storage `dir` `hdd-backup` `content backup`.
 2. Job `vzdump` noturno (snapshot, zstd) para CT100, CT102, CT103; retenção `keep-daily=7,keep-weekly=4`.
    CT100: `--exclude-path` para `/var/lib/docker/overlay2` e `/var/lib/docker/buildkit` (imagens são reconstruíveis; volumes e bancos entram).
