@@ -1,7 +1,7 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: v0.3.17 no ar (20/10 00:11 UTC); renderizador com gancho aguardando o usuário rodar
+estado: v0.3.17 + renderizador com gancho no ar (20/10 00:34 UTC); v0.3.18 (CTA curto + limpeza) aguardando deploy
 projeto: jaaz / myrepos
 responsavel: Claude Opus 5.5
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
@@ -133,6 +133,17 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
   fundo desfocado, imagem de demonstração com `width: 96%`. Arquivo final sha256 cd2920e8….
 - Pendente: usuário rodar `! bash …/scratchpad/renderer-hook-host.sh` (hash atualizado); depois teste real via `/repo-reels`.
 - A fazer: scripts de deploy do Jaaz removerem versões intermediárias; alerta de disco no CT100 (encheu em 13/10 e 20/10).
+
+## Renderizador com gancho no ar (20/10 00:34 UTC)
+
+- Imagem derivada `opensuite-renderer:latest` (backup `pre-hook-20261020-003412`). Teste real repo-2f496bd2 (não publicado):
+  gancho na tela sobre a imagem de demonstração grande, depois GitHub e terminal. Duração 29,9 s (CTA fixo de 15 palavras).
+
+## v0.3.18 (@ 98abaa3, aguardando deploy)
+
+- CTA pt: "Comente {KEYWORD} que eu te mando o link no direct!"; piloto com `hook_animation="spring"`.
+- Depois do OK, o script apaga imagens/contextos v0.3.13, v0.3.14, v0.3.16 e o cache de build.
+- Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0318.sh`.
 
 ## Próximas fases
 
