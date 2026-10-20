@@ -1,7 +1,7 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: v0.3.16 no ar (19/10 23:52 UTC); v0.3.17 (narração) aguardando deploy; gancho no renderizador aguardando decisão
+estado: v0.3.17 no ar (20/10 00:11 UTC); renderizador com gancho aguardando o usuário rodar
 projeto: jaaz / myrepos
 responsavel: Claude Opus 5.5
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
@@ -105,6 +105,22 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
 - Imagem de demonstração com `objectFit: contain` fica pequena com faixas pretas (renderizador também).
 - Duração: alvo 22 s saiu 34,2 s (60 palavras, comando lido em voz alta) → v0.3.17 (@ 80cad7e): 1,8 palavra/s e
   proibido ler comandos/URLs. Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0317.sh`.
+
+## v0.3.17 no ar (20/10 00:11 UTC)
+
+- Teste repo-f7611863 (diagram-design, não publicado): 27,7 s (antes 34,2 s); a IA ainda escreveu 59 palavras,
+  15 delas no CTA fixo do `locale_rules` pt. Próximo: CTA curto e `hook_animation` "spring" (o "bounce" do piloto
+  não existe no esquema do renderizador).
+
+## Renderizador: gancho e fundo desfocado (aguardando Paolo)
+
+- Conferido (só leitura): `services/openshorts/remotion/src` e `render-service` (src, package.json, lock) idênticos ao
+  container em produção, apesar de não commitados. Rebuild só acrescenta a mudança.
+- `RepoExplainerVideo.tsx`: `<HookOverlay config={hook}/>` e cópia desfocada da imagem de demonstração ao fundo
+  (imagem maior, sem faixas pretas). `tsc --noEmit` em container descartável: 0 erros.
+- Instalar o script no CT100 foi bloqueado no auto mode (Production Deploy). Script para o usuário:
+  `! bash /tmp/claude-0/-root/2ab77fa3-2eb5-4193-9482-ed15764a8807/scratchpad/renderer-hook-host.sh`
+  (backup do arquivo e tag `opensuite-renderer:pre-hook-<stamp>`, rollback automático).
 
 ## Próximas fases
 
