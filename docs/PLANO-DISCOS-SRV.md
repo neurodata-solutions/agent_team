@@ -36,6 +36,18 @@ Status: proposta. Nada além da fase 0 foi executado.
 
 Total no HDD: 410 GB de 442 GB.
 
+## Executado
+
+- 20/10: VM 101 copiada para `hdd-storage` (`qm move-disk` sem `--delete`); `qm config 101` aponta para o HDD; originais em
+  `local-lvm` como `unused0`/`unused1` (apagar: `qm disk unlink 101 --idlist unused0,unused1 --force`, aguardando OK).
+- 20/10: backup da configuração do host em `/root/backups/host-config-20261020-090812/` (288 KB, `chmod 700`):
+  `etc.tgz` (`/etc/pve` com configs dos guests, rede, fstab, apt, lvm, systemd, cron, postfix, grub, kernel) e `info/`
+  (pveversion, lsblk, blkid, `sfdisk -d` dos 3 discos, `vgcfgbackup` de `pve` e `vg-hdd`, pvesm, configs `qm`/`pct`, pacotes, IPs,
+  rotas, units). `SHA256SUMS` conferido. Fica no SSD (root do host) até existir `hdd-backup` na fase 1; não foi copiado para
+  nenhum guest porque `/etc/pve` tem chaves e segredos.
+- Husky 512 GB confirmado SATA 2,5" (SATA 3.2, 6 Gb/s, controlador Intel 8 Series/C220 AHCI); nenhum controlador NVMe no PCIe.
+  NVMe futuro só com adaptador PCIe → M.2, provavelmente sem boot (vira disco de dados rápido para o CT100).
+
 ## Fases
 
 ### Fase 0: tirar o SSD da zona de risco (em andamento)
