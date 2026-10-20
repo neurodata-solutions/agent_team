@@ -234,3 +234,12 @@ O Codex não viu a conversa; tudo o que importa está nesta nota.
   → backup e restart, máx. 1/h, guarda 7 backups). O que só existia na memória desde 17/10 22:52 (logs de chamadas, edições na UI)
   se perde no restart.
 - A investigar depois: por que o OmniRoute usa sql.js se `better-sqlite3` está instalado; atualizar o OmniRoute.
+
+### 20/10 ~10:30 UTC: resultado
+
+- OmniRoute: `omniroute-recover.sh` rodado; backup `db_backups/storage-20261020-072436.sqlite`; 0 `disk I/O error` depois de 10:25 UTC
+  e `storage.sqlite` voltou a gravar. O passo 4 (vigia) falhou (`sh: 0: -c requires an argument`, script multilinha no `pct exec`):
+  instalar com `! bash /tmp/claude-0/-root/2ab77fa3-2eb5-4193-9482-ed15764a8807/scratchpad/dbwatch/install.sh` (usa `pct push`).
+- Jaaz v0.3.19: 1ª tentativa falhou por **disco cheio no CT100** (build completo sem cache, nova camada pip >3 GB; 1,8 GB livres).
+  Produção intacta (v0.3.17, /health 200). Script reescrito: limpa cache/imagens/contextos intermediários e constrói **imagem
+  derivada** (`FROM v0.3.17` + 3 arquivos), `compose up --no-build`. Padrão a seguir em todo deploy do Jaaz daqui em diante.
