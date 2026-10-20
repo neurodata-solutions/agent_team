@@ -1,9 +1,9 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: v0.3.17 + renderizador com gancho no ar (20/10 00:34 UTC); v0.3.18 (CTA curto + limpeza) aguardando deploy
+estado: repassada ao Codex (20/10) — retomar pela seção "Handoff para o Codex"
 projeto: jaaz / myrepos
-responsavel: Claude Opus 5.5
+responsavel: Codex (a partir de 20/10; antes Claude Opus 5.5)
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
 branch: feat/MYREPOS-CRESCIMENTO-001 @ d3cf562 (worktree /root/work/claude/MYREPOS-CRESCIMENTO-001, base fix/OPENREPLY-LINK-001 @ 94a61d4 = produção v0.3.12)
 ---
@@ -152,3 +152,58 @@ Primeiro ciclo com o código novo: 20/10 06:42 UTC → post às 12h BRT de 20/10
 3. Carrossel "Top 5 da semana"; reels de teste; YouTube Shorts/TikTok.
 4. Vídeo abrindo no resultado (não na página do GitHub) — exige captura do projeto rodando ("Testei pra você").
 5. Segurança: reconectar o Instagram da MyRepos na Postiz (token vazou na sessão de 19/10).
+
+
+## Handoff para o Codex (20/10, ~00:45 UTC)
+
+Pedido do Paolo: "repasse as infos para o codex, continuar depois dessa última verificação".
+O Codex não viu a conversa; tudo o que importa está nesta nota.
+
+### Estado em produção (CT100)
+
+- Jaaz: `opensuite-jaaz:v0.3.17-n1-myrepos-narracao` (rollback: `jaaz-compose-v0316.yml`).
+- Renderizador: `opensuite-renderer:latest` = imagem derivada com o gancho (backup `opensuite-renderer:pre-hook-20261020-003412`;
+  rollback manual no fim de `/root/deploy/renderer-hook/deploy.log`). A fonte em
+  `/root/opensuite/services/openshorts/remotion/src/compositions/RepoExplainerVideo.tsx` acompanha a imagem; o original está em
+  `/root/deploy/renderer-hook/RepoExplainerVideo.orig.tsx`.
+- Código: branch `feat/MYREPOS-CRESCIMENTO-001` (worktree `/root/work/claude/MYREPOS-CRESCIMENTO-001`, sem push), HEAD `98abaa3`.
+  A mudança do renderizador **não está commitada** em nenhum repo (a pasta `services/openshorts` tem trabalho sem commit de outro agente).
+- Disco do CT100: 6,4 GB livres (96%) depois de `docker builder prune -f`.
+
+### "Última verificação" (fazer primeiro)
+
+1. Se o Paolo ainda não rodou: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0318.sh` (CTA curto + `spring`; rollback automático
+   para v0.3.17; no fim apaga imagens/contextos v0.3.13, v0.3.14, v0.3.16 e o cache de build). Conferir saída `OK:` e `df -h /`.
+2. Ciclo do piloto em 20/10 06:42 UTC (03:42 BRT). Conferir via `curl -s 127.0.0.1:57988/api/video/autonomy/status` no CT100:
+   - `history[0].editorial.source == "llm"` (se `fallback`, o N1 falhou: ver logs `[MyReposEditorial]`);
+   - `history[0].caption` sem `github.com`/`http`, com `Open source: dono/repo`, palavra curta e 4 hashtags do assunto;
+   - `postiz_scheduled_date` = `2026-10-20T15:00:00Z` (12h BRT) e `status` do job `completed`;
+   - vídeo do job (`/app/server/user_data/files/video_jobs/<job>/output.mp4`): gancho no topo nos primeiros 3,5 s, ~25 s.
+   - Se o ciclo falhar, o próximo é em 1 h (não a cada 30 s).
+3. Depois das 12h BRT: comentar no reel e conferir que o DM do OpenReply traz o link certo (casamento por `dono/repo` na legenda).
+4. Relatório: `curl -s "127.0.0.1:57988/api/video/autonomy/report?days=7"`; foto diária de seguidores em
+   `/app/server/user_data/files/myrepos_followers.json` (1ª: 91 em 2026-10-19).
+
+### Como trabalhamos aqui (aprendido nesta sessão)
+
+- Testes: `tar` de `server/` → CT100 → `docker run --rm` da imagem atual do Jaaz com `pip install pytest pytest-asyncio` e
+  `POSTIZ_API_KEY=test-only POSTGRES_PASSWORD=test-only`; suíte completa com `--junitxml` (o stdout fecha). Base atual: 306 testes,
+  3 falhas antigas conhecidas (`test_check_ai_policy`, `test_n1_call`, `test_forced_media_call`).
+- Deploy do Jaaz: scripts `CT100:/root/deploy/deploy-jaaz-v03NN.sh` derivados do anterior (contexto copiado, hash dos arquivos,
+  checagens `grep` no container, rollback automático). Conferir antes que os arquivos do contexto anterior batem com a base da branch.
+- Teste de vídeo sem publicar: `POST /api/video/repo-reels` com `auto_open_reply:false` e um repo já postado (cria pasta em
+  `video_jobs`, então o piloto passa a considerar esse repo como usado).
+- Mudança no renderizador: testar antes num container isolado (`docker run` da imagem derivada na rede
+  `opensuite_opensuite-network`, `POST /render` direto) e só então deploy. **Nunca** rebuild do zero (cache apagado; viria Chromium novo).
+- Auto mode bloqueia: ler env de containers de produção, instalar deploy de serviço sem pedido explícito. Ver `docs/ACESSOS-E-PERMISSOES.md`.
+- Token da Meta: nunca imprimir JSON de erro cru (a Meta repete o token). **Pendente de segurança:** o Paolo precisa reconectar o
+  Instagram da MyRepos na Postiz (token vazou nos logs da sessão de 19/10).
+
+### Próximos passos (depois da verificação), em ordem
+
+1. Medir: comparar no relatório o tempo assistido dos posts novos com os 6,0 s de mediana do formato antigo (alcance mediano 147).
+2. Duração: a IA ainda escreve ~59 palavras para alvo de 39; considerar cortar o roteiro no código (limite de palavras) se passar de 25 s.
+3. Deploys do Jaaz devem sempre limpar versões intermediárias; propor alerta de disco no CT100 (encheu em 13/10 e 20/10).
+4. Commitar a mudança do renderizador quando o dono de `services/openshorts` commitar o trabalho pendente (coordenar).
+5. Fases de conteúdo seguintes: legenda com menos palavras por vez; série com vinheta própria; carrossel "Top 5 da semana";
+   post em colaboração com autor do repo; YouTube Shorts/TikTok. Painel/entrega do relatório: depois (Paolo: "depois criaremos um painel").
