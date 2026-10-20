@@ -243,3 +243,14 @@ O Codex não viu a conversa; tudo o que importa está nesta nota.
 - Jaaz v0.3.19: 1ª tentativa falhou por **disco cheio no CT100** (build completo sem cache, nova camada pip >3 GB; 1,8 GB livres).
   Produção intacta (v0.3.17, /health 200). Script reescrito: limpa cache/imagens/contextos intermediários e constrói **imagem
   derivada** (`FROM v0.3.17` + 3 arquivos), `compose up --no-build`. Padrão a seguir em todo deploy do Jaaz daqui em diante.
+
+### 20/10 ~10:50 UTC: espaço e v0.3.19 no ar (autorizado pelo Paolo no chat)
+
+- Limpeza do CT100 (`scratchpad/ct100-limpeza.sh`): removidos a pilha `openshorts` antiga (containers parados desde 29/08 + imagens),
+  o renderizador de staging, imagens Jaaz v0.3.13/14/16/19-parcial, tags `pre-hook-001936`/`-002249`, cache e contextos.
+  Disco: 1,8 GB → 22 GB livres (86%).
+- Jaaz **v0.3.19-n1-myrepos-curadoria no ar** (imagem derivada da v0.3.17; rollback: `jaaz-compose-v0317.yml --no-build`).
+- Postiz: posts `dsh-purge` (12h) apagados pelo Paolo; os de 15h (`scientific-agent-skills`) também ficaram apagados.
+- Pendentes: vigia do OmniRoute (`scratchpad/dbwatch/install.sh`); etapa 2 (mover discos da VM 101 para `hdd-storage`,
+  `mp0` de 200 GB no HDD para o CT100 e mover dados grandes) e etapa 3 (alerta de disco), aguardando janela do Paolo.
+  Alerta: `local-lvm` com 362 GB alocados num pool de 348 GB (82%).
