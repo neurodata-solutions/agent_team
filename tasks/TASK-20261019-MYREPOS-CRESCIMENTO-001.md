@@ -220,3 +220,17 @@ O Codex não viu a conversa; tudo o que importa está nesta nota.
   Trending de hoje: só o dsh-purge bloqueado (13+12+21 candidatos publicáveis). Testes: 58 ligados; suíte 317, mesmas 3 falhas antigas.
 - Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0319.sh` (inclui a limpeza de imagens intermediárias).
 - Em aberto: causa do 500 do OmniRoute (sem registro no journal do CT102 nem no Jaaz). Se o N1 seguir fora, o piloto não publica.
+
+### Causa do 500 do OmniRoute (CT102), 20/10 ~10:30 UTC
+
+- `app.log` (`/var/lib/omniroute/data/logs/application/`): toda leitura do banco dá `disk I/O error` (sql.js, em memória);
+  a requisição do Jaaz de 06:43:10 falhou em `Object.get` → 500. ~1.400 erros/hora.
+- Linha do tempo: erros em 02–03/10, 09/10 até o restart de 13/10 04:37, nenhum em 14–16/10, voltou em 17/10 (último write do
+  `storage.sqlite`: 17/10 22:52) e segue. **N1 fora desde 17/10.** Defeito do OmniRoute v16.3.1; restart resolve por alguns dias.
+- Cópia do `storage.sqlite`: `integrity_check ok`, 130 tabelas. Disco do CT102 com 25 GB livres.
+- Correção (usuário roda; restart no CT102 é bloqueado no auto mode):
+  `! bash /tmp/claude-0/-root/2ab77fa3-2eb5-4193-9482-ed15764a8807/scratchpad/omniroute-recover.sh`
+  backup em `data/db_backups/`, restart, contagem de erros pós-restart, e timer `omniroute-dbwatch` (10 min; ≥20 erros em 5 min
+  → backup e restart, máx. 1/h, guarda 7 backups). O que só existia na memória desde 17/10 22:52 (logs de chamadas, edições na UI)
+  se perde no restart.
+- A investigar depois: por que o OmniRoute usa sql.js se `better-sqlite3` está instalado; atualizar o OmniRoute.
