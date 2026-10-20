@@ -207,3 +207,16 @@ O Codex não viu a conversa; tudo o que importa está nesta nota.
 4. Commitar a mudança do renderizador quando o dono de `services/openshorts` commitar o trabalho pendente (coordenar).
 5. Fases de conteúdo seguintes: legenda com menos palavras por vez; série com vinheta própria; carrossel "Top 5 da semana";
    post em colaboração com autor do repo; YouTube Shorts/TikTok. Painel/entrega do relatório: depois (Paolo: "depois criaremos um painel").
+
+
+## 20/10 ~10:10 UTC: incidente de conteúdo (Claude, a pedido do Paolo)
+
+- Ciclo de 06:43 UTC: N1 respondeu `OmniRoute HTTP 500`; o plano caiu no padrão e agendou `YuJunZhiXue/dsh-purge` (jailbreak de modelos,
+  descrição em chinês) para 20/10 15:00Z no IG e no FB (Postiz `cmvgblw6i000smk85ukd1rpb6`, `cmvgblw6v000tmk854dh9hpr3`).
+- Cancelamento: pela tela da Postiz (o `deletePost` também encerra o workflow no Temporal; só marcar `deletedAt` no banco não basta,
+  e a chave da API só existe no processo do Jaaz).
+- Correção (@ 22f07bb, v0.3.19 substitui a v0.3.18): sem plano da IA o ciclo é adiado (nada publicado); `is_publishable` bloqueia
+  jailbreak/bypass/crack/pirataria/adulto/evasão e descrição majoritariamente não latina antes da IA e do fallback; prompt proíbe os temas.
+  Trending de hoje: só o dsh-purge bloqueado (13+12+21 candidatos publicáveis). Testes: 58 ligados; suíte 317, mesmas 3 falhas antigas.
+- Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0319.sh` (inclui a limpeza de imagens intermediárias).
+- Em aberto: causa do 500 do OmniRoute (sem registro no journal do CT102 nem no Jaaz). Se o N1 seguir fora, o piloto não publica.
