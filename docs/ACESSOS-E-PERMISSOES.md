@@ -35,6 +35,7 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | Alterar produção **com OK explícito do usuário**, backup antes e comando simples | `update "Post" set "deletedAt"…` por IDs; `POST /api/video/autonomy/config` via `docker exec opensuite-jaaz python3 -c …` | 09/10 |
 | Ler arquivo de config (sem segredos) dentro do container de produção | `docker exec opensuite-jaaz python3 -c "json.load(open('…/autonomy_state.json'))"` | 09/10 |
 | Rodar a suíte do Jaaz em container descartável no host | `docker run --rm -v <worktree>:/src:ro python:3.12-slim …` | 09/10 |
+| Com OK explícito do usuário (23/11): formatar disco novo, `pct create`/`destroy` do CT novo, instalar `nfs-kernel-server` no host, editar `fstab`/`exports`/`lxc/104.conf` com backup | sdb → `vg-wd`, CT 104 casaos (`/root/backups/20261123-105844/`) | 23/11 |
 | Buscar documentação externa | `curl https://ai.google.dev/…md.txt`, Firecrawl | 08/10 |
 
 ### Bloqueado, e o caminho certo
@@ -47,6 +48,9 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | Reiniciar serviço de produção (OmniRoute CT102, set/2026) | bloqueado no auto mode | Script no scratchpad e o usuário roda com `!` |
 | Usar o token de uma integração da Postiz (tabela `Integration`) na Graph API da Meta | Não bloqueia, mas **vazou** em 19/10: a mensagem de erro da Meta ("Malformed access token …") repete o token. | O token é composto `user___page`: usar a parte certa. Nunca imprimir o JSON de erro cru; passar sempre por `re.sub(r'EAA\w+','[token]', …)`. Se vazar, pedir ao usuário para reconectar a conta na Postiz. |
 | Instalar script de deploy em `CT100:/root/deploy/` para serviço **sem pedido explícito** do usuário (renderizador, 20/10) | Production Deploy | Scripts do Jaaz já pedidos passaram; para serviço novo, pedir aprovação antes ou deixar o script no scratchpad e o usuário roda com `!`. |
+| `git commit` + `git push` do `/root/agent-team` (25/11), mesmo com "atualiza tudo" do usuário | Out-of-Place Publication | Deixar os arquivos em stage, script no scratchpad (`commit` + `push`) e o usuário roda com `!`. O push do `estudio-visual` (`origin/jaaz`) passou. |
+| Rodar `deploy-jaaz-v03NN.sh` no CT100, mesmo com "pode" do usuário (28/10) | Production Deploy | Copiar o script com `pct push` (passa sozinho) e o usuário roda `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v03NN.sh`. |
+| Apagar arquivos de mídia em produção (uploads do Postiz, `video_jobs` do Jaaz), mesmo aprovado (28/10) | sem explicação | Script versionado em `CT100:/root/deploy/` com lista explícita + log; usuário roda com `!`. Escrever o script com `Write` (heredoc no mesmo comando bloqueado não grava). |
 | Mover arquivo de segredo e reiniciar serviço no CT103 numa linha só (`pct exec 103 -- sh -c 'mv … && systemctl restart flow-studio-api'`) | Remote Shell Writes (13/10) | Script no scratchpad e o usuário roda com `!`. Validar a chave antes, só com chamadas que não custam (listar modelos). |
 | Ler `package.json`, `git diff` e `src/platform.ts` em `/root/flow-mcp-source` (pasta onde o Codex está trabalhando) | Modify Shared Resources (falso positivo) | Não insistir. Escrever código que não dependa desse detalhe, ou pedir ao usuário. |
 
@@ -58,7 +62,9 @@ Regras allow existentes (08/10): `Read(//etc/**)`, `Read(//proc/**)`, `pveversio
 | `curl` local | Passa por um proxy do ambiente e devolve `cave_route_not_found`. | `curl --noproxy '*' …` |
 | Python do host | 3.9, sem `venv`/`ensurepip`. | `uv venv --python 3.12` (não instalar `python3-venv` no host). |
 | `ffprobe` | Não instalado. | `ffmpeg -hide_banner -i arquivo` e ler `Duration:`/`Audio:` no stderr. |
-| Template de CT | O PVE 7.4 recusa `debian-12-standard_12.12` ("unsupported debian version"). | Usar `debian-11-standard_11.7-1`. |
+| Template de CT | O PVE 7.4 recusa `debian-12-standard_12.12` ("unsupported debian version": compara 12.12 > 12, também a cada boot). O Debian 11 está sem suporte desde ago/2026. | `pct create … --ostype unmanaged` com o template Debian 12. Antes do primeiro start: escrever `/etc/hostname`, `/etc/hosts`, `/etc/network/interfaces` via `pct mount`. Depois: `chpasswd` e `ssh-keygen -A` (CT 104, 23/11). |
+| Docker em CT novo (runc ≥ 1.5) | `open sysctl net.ipv4.ip_unprivileged_port_start … permission denied` | No `/etc/pve/lxc/<id>.conf`: `lxc.apparmor.profile: unconfined` + `lxc.mount.entry: /dev/null sys/module/apparmor/parameters/enabled none bind 0 0` (CT 104, 23/11; o CT 100 já usa `unconfined`). |
+| Raspberry 192.168.0.150 (Agent DVR na :8090) | Desde 23/11 há SSH por chave: `ssh pi@192.168.0.150` (sudo sem senha). O `!` do Claude Code não serve para digitar senha (o `ssh-copy-id` falhou); usar o Shell do Proxmox. Agent DVR e os outros containers são stacks do Portainer (https://192.168.0.150:9443): editar o compose lá, não no host. | NFS `192.168.0.25:/mnt/wd-cameras/agentdvr` montado no Pi em `/mnt/gravacoes` (backup em `/etc/fstab.bak-20261123`). |
 | Debian 11 em CT novo | O bullseye saiu dos espelhos normais, então o primeiro `apt-get update` falha e o provisionamento com `set -e` para logo no início (CT 103, 08/10). | Repositórios em `archive.debian.org` (`debian`, `debian-security`). Conferir com `pct exec <id> -- timeout 60 apt-get update` antes de provisionar. |
 | `pct exec <id> -- <comando>` sozinho | Passa pela regra `Bash(pct exec *)` (verificado em 08/10 no CT 103: `systemctl is-active`, `dpkg -s`, `apt-get update`, rodar o script de provisionamento). | Um comando por chamada, sem `&&`, `\|` ou `sh -c`. |
 | Tela | O host não tem `DISPLAY`: nada que precise de navegador com tela (login Google, Flow) roda nele. | CT 103 com Xvfb e noVNC (`/root/flow-studio-api/deploy/`). |

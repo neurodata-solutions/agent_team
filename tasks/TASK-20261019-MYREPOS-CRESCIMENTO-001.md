@@ -1,11 +1,11 @@
 ---
 id: TASK-20261019-MYREPOS-CRESCIMENTO-001
 tipo: task
-estado: repassada ao Codex (20/10) — retomar pela seção "Handoff para o Codex"
+estado: elenco leva 1 no ar (v0.3.25, 25/11); código em origin/jaaz @ dc557de
 projeto: jaaz / myrepos
-responsavel: Codex (a partir de 20/10; antes Claude Opus 5.5)
+responsavel: Claude Opus 5.5 (elenco, 24–25/11); Codex 20/10–23/11
 pedido_por: Paolo (19/10: "temos que conseguir mais seguidores, temos que ser criativos" → "podemos avançar")
-branch: feat/MYREPOS-CRESCIMENTO-001 @ d3cf562 (worktree /root/work/claude/MYREPOS-CRESCIMENTO-001, base fix/OPENREPLY-LINK-001 @ 94a61d4 = produção v0.3.12)
+branch: feat/MYREPOS-CRESCIMENTO-001 @ dc557de (enviada; origin/jaaz = dc557de; worktree /root/work/claude/MYREPOS-CRESCIMENTO-001)
 ---
 
 # MyRepos: crescer seguidores com base em 3 perfis de referência
@@ -261,3 +261,73 @@ O Codex não viu a conversa; tudo o que importa está nesta nota.
   comando para o Paolo: `qm move-disk 101 scsi0 hdd-storage && qm move-disk 101 scsi1 hdd-storage` (sem `--delete`; originais
   viram `unused` e só saem depois de conferir). VM 101 não tem backup.
 - Alerta de disco: `scratchpad/disco-alerta.sh` (timer 30 min no host, limite 85%, e-mail root + journal `disco-alerta`).
+
+## v0.3.21 — limpeza de vídeos publicados (28/10, @ 6444b5b, aguardando deploy)
+- Pedido do Paolo (28/10): "depois de postar os videos nao temos necessidade de manter o video".
+- Uma vez por dia a autonomia consulta `GET /public/v1/posts` do Postiz; reel com todos os posts `PUBLISHED` → `delete_job_files`
+  (pasta do job + `files/<id>.*`). ERROR/QUEUE mantêm o vídeo. Histórico intacto. Primeira execução libera ~810 MB (26 reels).
+- A v0.3.20 (trava de seguidor + abertura com resultado) **nunca foi ao ar**; a v0.3.21 a inclui (FROM v0.3.19 + 5 arquivos + follow-gate.sql).
+- Testes: 91 ok (container descartável da imagem v0.3.19 + pytest).
+- Deploy: `! pct exec 100 -- bash /root/deploy/deploy-jaaz-v0321.sh` (rollback automático para v0.3.19; remove imagem v0.3.17).
+- Levantamento (não executado): Postiz tem 81 vídeos só de posts PUBLISHED (1,7 GB); ~30 jobs antigos fora do histórico.
+- 28/10: Paolo aprovou tudo ("pode"). Auto mode bloqueou deploy e exclusões → scripts no CT100 para rodar com `!`:
+  `deploy-jaaz-v0321.sh`, `postiz-purge-published.sh` (81 vídeos só de posts PUBLISHED, ~1,7 GB),
+  `jaaz-old-purge.sh` (19 reels antigos confirmados PUBLISHED por dono/repo + 9 jobs com erro + MoneyPrinter/testes).
+  Ficam: img-*, episódios do Historiador, char-*, repo-auto-f67cd018 (sem post no Postiz).
+
+## 24/11: piloto parado desde 06/11 (incidente resolvido)
+
+- Causa: combo `codigo-gratis` do OmniRoute (CT102) tinha `antigravity/gemini-3.7-flash-medium` em 1º desde 28/09.
+  Até 06/11 ele dava 404/429 → lockout → fallback para Gemini/Codestral. Desde 07/11 08:22 UTC o Google responde
+  **HTTP 200** com "This version of Antigravity is no longer supported…" → OmniRoute conta sucesso, sem fallback →
+  `myrepos_editorial` sem JSON → ciclo adiado de hora em hora (~315 vezes).
+- Correção: antigravity removido do `codigo-gratis` com `CT102:/root/omniroute-drop-antigravity-codigo.sh`
+  (para o serviço, edita, sobe, testa, rollback automático). Backup: `CT102:/root/backup-omniroute-db-20261124-173156`.
+  Editar `storage.sqlite` com o serviço rodando NÃO funciona (sql.js em memória regrava ao parar).
+- Teste: ciclo manual 17:33 UTC, `editorial.source == "llm"`, job repo-auto-4b7b9a1e (mvanhorn/last30days-skill),
+  vídeo 1080x1920 24,0 s, agendado na Postiz para 2026-11-24T22:00:00Z (19h BRT).
+- Pendente: `imagem-gratis` ainda começa por antigravity; `docker logs` do opensuite-jaaz parado desde 20/11.
+
+## 24/11: mascotes falantes Beto/Bia + narração animada (@ b73aeb3, aguardando deploy)
+
+- Pedido do Paolo: "mascote do MyRepos ... quando o mascote for feminino, voz feminina; masculino, alternar também".
+- Piloto alterna Beto (openai:echo) e Bia (openai:nova); reel que falhou não conta a vez; `mascot_rotation=false` desliga.
+  Narração do piloto com preset `punchy` (instrução de criador de Reels no gpt-4o-mini-tts; `conversational` inalterado).
+- Renderizador: `Mascot.tsx` (SVG original, boca pelos tempos das palavras, pisca, balança), à esquerda acima da legenda.
+  Fonte em `deploy/renderer-mascote/` (branch) e `CT100:/root/deploy/renderer-mascote/` (originais em `orig/`).
+  Teste isolado (container renderer-mascote-test): quadros conferidos para os dois.
+- Testes: 16 novos; suíte 348 com `-s --continue-on-collection-errors` (stdout fecha sem `-s`), só as 3 falhas antigas.
+- Amostras de voz (timbre, ainda com a instrução antiga): repo-2e41f993 (echo), repo-b5629fc1 (nova), não publicadas.
+- Deploy (ordem): `pct exec 100 -- bash /root/deploy/renderer-mascote/deploy-renderer-mascote.sh` e depois
+  `pct exec 100 -- bash /root/deploy/deploy-jaaz-v0322.sh` (= v0.3.21 nunca publicada + mascote; rollback automático p/ v0.3.19).
+- **No ar 24/11 ~19:39 UTC** (Paolo rodou os dois `!`): renderizador com mascote (backup `opensuite-renderer:pre-mascote-20261124-193742`)
+  e Jaaz `v0.3.22-n1-myrepos-mascote` (inclui v0.3.20/21: trava de seguidor ligada em 58 automações, backup
+  `/root/deploy/backup-openreply-automation-20261124-193841.sql`; limpeza diária de vídeos publicados).
+  Histórico real sem mascote → 1º reel automático (25/11 05:33 UTC) = Beto, depois Bia.
+
+## 24/11: elenco de cartoon — leva 1 (no ar desde 24/11; v0.3.25 em 25/11)
+
+- Design: `docs/superpowers/specs/2026-11-24-myrepos-elenco-design.md`; plano: `docs/superpowers/plans/2026-11-24-myrepos-elenco-leva1.md`.
+- 4 personagens (Beto Bug, Bia Deploy, Capitão Commit, Dona Neide), sorteio em baralho (`services/myrepos_cast.py`),
+  voz/estilo/velocidade por personagem, persona no roteiro, trilha de bocas (`tools/repo_explainer/visemes.py`),
+  boneco retrô no renderizador (`deploy/renderer-elenco/`). Suíte 376, só as 3 falhas antigas.
+- Render isolado: +12% a +20% de tempo com personagem. Quadros conferidos.
+- Deploy (ordem obrigatória): `pct exec 100 -- bash /root/deploy/renderer-elenco/deploy-renderer-elenco.sh` e depois
+  `pct exec 100 -- bash /root/deploy/deploy-jaaz-v0323.sh` (este confere o renderizador antes; rollback p/ v0.3.22).
+
+## 24–25/11: elenco no ar, sincronia e roteiro curto
+
+- 24/11: renderizador do elenco + Jaaz `v0.3.23-n1-myrepos-elenco`; depois `v0.3.24-n1-myrepos-sincronia`
+  (Whisper recebia áudio que o PyAV não lia e caía em palavras igualmente espaçadas; agora decodifica com ffmpeg,
+  boca fecha nos quadros sem voz, roteiro cita o nome do projeto e fatos do README). Concordância boca×fala 0,70 → 0,86.
+- Lote de teste na v0.3.24 saiu longo: 23–38 s, 61–81 palavras (meta ~22 s / ~40 palavras).
+- 25/11: `fit_script_length` reescreve uma vez o roteiro acima de 1,2× a meta; mantém o original se falhar, não encurtar
+  ou perder a palavra do "Comente X". Jaaz **`v0.3.25-n1-myrepos-roteiro` no ar** (Paolo rodou o `!`; rollback p/ v0.3.24).
+- Lote de teste v0.3.25 (não publicado): repo-fde92f88 Beto 15,2 s, repo-7575b49c Bia 16,5 s, repo-2cf6b56a Capitão 19,4 s,
+  repo-eee907ce Dona Neide 19,8 s; 36–40 palavras, todos com /last30days e RESUMO. Aprovado pelo Paolo.
+- Suíte 389, só as 3 falhas antigas.
+- **Git (25/11):** branch `feat/MYREPOS-CRESCIMENTO-001` @ `dc557de` enviada e `origin/jaaz` (branch oficial do
+  estudio-visual, ver `VCS_PLAYBOOK.md`) avançado por fast-forward `9b3c102..dc557de`. O `main` do remoto é outro histórico
+  (ai-lab) — não usar para o Jaaz.
+- Pendente: `Character.fallback_voice` definido mas não usado; Beto pode ficar curto (15 s) — subir meta p/ ~50 palavras se quiser.
+
